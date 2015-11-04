@@ -55,3 +55,7 @@ docs/_build/
 
 # PyBuilder
 target/
+
+# Local ignores
+.vagrant/
+shakespeare400/settings/local.py
