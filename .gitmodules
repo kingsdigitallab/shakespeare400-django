@@ -1,0 +1,3 @@
+[submodule "wagtailbase"]
+	path = wagtailbase
+	url = git@github.com:kingsdigitallab/wagtailbase.git
