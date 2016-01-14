@@ -11,6 +11,17 @@
 
 /** Global **/
 
+body {
+	background: url("/static/images/header.jpg") center 35px no-repeat transparent !important;
+}
+
+.black-bar {
+	width: 100%;
+	height: 55px;
+	background: black;
+	display: block;
+}
+
 /** Header **/
 
 header,
@@ -19,23 +30,50 @@ footer {
 	a {
 		color: white;
 	}
+	h1 {
+		margin: 0;
+		line-height: 0;
+		img {
+			// max-width: 200px;
+			padding: 0 20px 20px;
+			background: white;
+		}
+	}
 }
+
+.kcl {
+	// position: absolute;
+	// top: 0;
+	margin-top: -55px;
+	background: white;
+	// max-width: 200px;
+}
+
 /** Navigation **/
 
-nav {
-	background-color: scale-color($secondary-color, $lightness: 60%)
+// nav {
+// 	background-color: black;
+// }
+
+.menu.vertical {
+	// background: rgba(95, 85, 80, .7);
+	background: $primary-color;
+	color: white;
+	//max-width: 200px;
+	margin-top: 100px;
+	a {
+		color: white;
+		&:hover {
+			background: scale-color($primary-color, $lightness: -20%);
+		}
+	}
+	li {
+		border-bottom: 1px solid scale-color($primary-color, $lightness: -20%);
+	}
 }
 
 /** Main content **/
-main,
-.main {
-	background: $tertiary-color;	
-}
-main {
-	background: url("/static/images/header.jpg") top center no-repeat;
-	background-size: cover;
-	height: 600px;
-}
+
 
 /** Footer **/
 

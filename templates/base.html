@@ -2,61 +2,64 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>{% block meta_title %}{% endblock %} @ Shakespeare400</title>
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>{% block meta_title %}{% endblock %} @ Shakespeare400</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  {% compress css %}
-  {# SCSS compilation relies on django compressor #}
-  <link rel="stylesheet" type="text/x-scss" href="{% static 'scss/main.scss' %}">
-  {% endcompress %}
+	{% compress css %}
+	{# SCSS compilation relies on django compressor #}
+	<link rel="stylesheet" type="text/x-scss" href="{% static 'scss/main.scss' %}">
+	{% endcompress %}
 
-  <!-- define requirejs config settings. -->
-  <script type="text/javascript">
-    {% include 'includes/config.js' %}
-  </script>
-  {% require_module 'config' %}
+	<!-- define requirejs config settings. -->
+	<script type="text/javascript">
+		{% include 'includes/config.js' %}
+	</script>
+	{% require_module 'config' %}
 
 </head>
 <body>
-  <header>
-    {% include 'includes/header.html' %}
-  </header>
+	<div class="black-bar">
+	</div>
+	<div class="row">
+		<div class="medium-3 columns">
+			<header>
+				{% include 'includes/header.html' %}
+			</header>
+			<nav>
+				{% include 'includes/navigation.html' %}
+			</nav>
+		</div>
 
-  <nav>
-    {% include 'includes/navigation.html' %}
-  </nav>
+		<div class="medium-9 columns">
+			<section class="main">
+				{% block title %}{% endblock %}
+				{% block main %}
+				{% endblock %}
+			</section>
+		</div>
 
-  <main>
-    <div class="row">
-      <div class="large-12 columns">
-        <section class="main">
-          {% block title %}{% endblock %}
-          {% block main %}
-          {% endblock %}
-        </section>
-      </div>
-    </div>
-  </main>
+		<div class="large-12 columns">
+			<footer>
+				{% block footer %}
+				{% include 'includes/footer.html' %}
+				{% endblock %}
+			</footer>
+		</div>
+	</div>
 
-  <footer>
-    {% block footer %}
-    {% include 'includes/footer.html' %}
-    {% endblock %}
-  </footer>
+	{# Foundation and JQuery stuff #}
+	<script src="{% static 'vendor/jquery/dist/jquery.min.js' %}"></script>
+	<script src="{% static 'vendor/foundation-sites/dist/foundation.min.js' %}"></script>
 
-  {# Foundation and JQuery stuff #}
-  <script src="{% static 'vendor/jquery/dist/jquery.min.js' %}"></script>
-  <script src="{% static 'vendor/foundation-sites/dist/foundation.min.js' %}"></script>
+	{% compress js %}
+	<script src="{% static 'js/app.js' %}"></script>
+	{% endcompress %}
 
-  {% compress js %}
-  <script src="{% static 'js/app.js' %}"></script>
-  {% endcompress %}
-
-  <script>
-    $(document).foundation();
-  </script>
+	<script>
+		$(document).foundation();
+	</script>
 </body>
 </html>

@@ -1,6 +1,7 @@
 {% load staticfiles wagtailbase_tags %}
+<!-- 
 <div class="row">
-  <div class="large-12 columns">
+  <div class="large-12 large columns">
     <div class="title-bar" data-responsive-toggle="top-menu" data-hide-for="medium">
       <button class="menu-icon" type="button" data-toggle></button>
       <div class="title-bar-title">Menu</div>
@@ -8,15 +9,16 @@
 
     <div class="top-bar" id="top-menu">
       <div class="top-bar-left">
-
+-->
         {% block main_menu %}
         {% get_site_root as site_root %}
         {% main_menu root=site_root current_page=self %}
         {% endblock %}
-
+<!-- 
       </div>
       <div class="top-bar-right">
       </div>
     </div>
   </div>
 </div>
+-->

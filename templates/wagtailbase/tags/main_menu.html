@@ -1,6 +1,7 @@
 {% load wagtailcore_tags wagtailbase_tags %}
 
-<ul class="vertical medium-horizontal menu dropdown" data-dropdown-menu>
+<!-- <ul class="vertical medium-horizontal menu dropdown" data-dropdown-menu> -->
+<ul class="menu vertical">
     <li{% if current_page and root.url == current_page.url %} class="active"{% endif %}>
         <a href="{% pageurl root %}">{{ root.title }}</a>
     </li>
@@ -9,6 +10,7 @@
     <li{% if current_page and page|is_current_or_ancestor:current_page %} class="active"{% endif %}>
         <a href="{% pageurl page %}">{{ page.title }}</a>
 
+        {% comment %}
         {% if page.get_children %}
     	<ul class="menu">
     		{% for child in page.get_children %}
@@ -16,6 +18,7 @@
     		{% endfor %}
     	</ul>
     	{% endif %}
+        {% endcomment %}
     </li>
     {% endfor %}
 </ul>
