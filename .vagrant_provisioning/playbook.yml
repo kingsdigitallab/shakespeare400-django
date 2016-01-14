@@ -270,8 +270,12 @@
     tags:
       - django
 
-  - name: django | migrations
+  - name: django | makemigrations
     command: "{{ user_home }}/venv/bin/python {{ project_root }}/manage.py makemigrations"
+    tags:
+      - django
+
+  - name: django | migrate
     command: "{{ user_home }}/venv/bin/python {{ project_root }}/manage.py migrate"
     tags:
       - django
