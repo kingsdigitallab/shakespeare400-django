@@ -34,7 +34,6 @@ footer {
 		margin: 0;
 		line-height: 0;
 		img {
-			// max-width: 200px;
 			padding: 0 20px 20px;
 			background: white;
 		}
@@ -51,15 +50,9 @@ footer {
 
 /** Navigation **/
 
-// nav {
-// 	background-color: black;
-// }
-
 .menu.vertical {
-	// background: rgba(95, 85, 80, .7);
 	background: $primary-color;
 	color: white;
-	//max-width: 200px;
 	margin-top: 100px;
 	a {
 		color: white;
