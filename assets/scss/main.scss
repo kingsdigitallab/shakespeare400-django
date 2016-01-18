@@ -193,5 +193,15 @@ footer {
 	background: scale-color($secondary-color, $lightness: 60%);
 }
 
+// Fixes image overflow on small screens
+@media #{$small-only} {
+	.sidebar {
+		img.smoke {
+			width: 100% !important;
+			max-width: 100% !important;
+		}
+	}
+}
+
 @include motion-ui-transitions;
 @include foundation-everything;
