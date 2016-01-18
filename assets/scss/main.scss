@@ -170,7 +170,7 @@ footer {
 
 .callout.alert {
 	margin-top: 1rem;
-	border: 1px solid $primary-color !important;
+	border: 1px solid scale-color($primary-color, $lightness: 70%) !important;
 }
 
 /** Footer **/
@@ -190,7 +190,7 @@ footer {
 }
 
 .footer {
-	background: scale-color($secondary-color, $lightness: 70%);
+	background: scale-color($secondary-color, $lightness: 60%);
 }
 
 @include motion-ui-transitions;
