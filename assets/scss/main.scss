@@ -3,16 +3,18 @@
 
 /**
  *	Global
+ *		Categories (colours)
  *	Header
  *	Navigation
  *	Main content
+ *		Panels / Callouts
  *	Footer
  */
 
 /** Global **/
 
 body {
-	background: url("/static/images/header.jpg") center 35px no-repeat transparent !important;
+	//background: url("/static/images/header.jpg") center 35px no-repeat transparent !important;
 }
 
 .black-bar {
@@ -20,6 +22,69 @@ body {
 	height: 55px;
 	background: black;
 	display: block;
+}
+
+.date,
+.place,
+address,
+date {
+	color: scale-color(black, $lightness: 50%);
+	margin: 0;
+	font-size: .875rem;
+}
+
+/* Categories (colours) */
+
+.category {
+	text-transform: uppercase;
+}
+
+.conference {
+	color: #e05924;
+}
+
+.conference-bg {
+	background-color: #e05924;
+}
+
+.exhibition {
+	color: #004b63;
+}
+
+.exhibition-bg {
+	background-color: #004b63;
+}
+
+.performance {
+	color: #126953;
+}
+
+.performance-bg {
+	background-color: #126953;
+}
+
+.publication {
+	color: #ffab80;
+}
+
+.publication-bg {
+	background-color: #ffab80;
+}
+
+.screening {
+	color: #ff9e2f;
+}
+
+.screening-bg {
+	background-color: #ff9e2f;
+}
+
+.talk {
+	color: #720039;
+}
+
+.talk-bg {
+	background-color: #720039;
 }
 
 /** Header **/
@@ -40,6 +105,10 @@ footer {
 	}
 }
 
+// header {
+// 	margin-bottom: 70px;
+// }
+
 .kcl {
 	// position: absolute;
 	// top: 0;
@@ -50,10 +119,23 @@ footer {
 
 /** Navigation **/
 
+// .sidebar {
+// 	background: url("/static/images/header.jpg") center 600px no-repeat;
+// 	background-size: 100%;
+// }
+
+.sidebar {
+	img.smoke {
+		width: 115% !important;
+		max-width: 115% !important;
+	}
+}
+
 .menu.vertical {
 	background: $primary-color;
 	color: white;
-	margin-top: 100px;
+	margin-top: 30px;
+	margin-bottom: 30px;
 	a {
 		color: white;
 		&:hover {
@@ -67,6 +149,27 @@ footer {
 
 /** Main content **/
 
+/* Panels / Callouts */
+
+.callout {
+	border: none !important;
+	border-top: 7px solid scale-color($primary-color, $lightness: 60%) !important;
+	// box-shadow: 3px 3px 4px $primary-color;
+
+	h5 {
+		font-weight: 700;
+		color: $primary-color;
+
+		a {
+			color: $primary-color;
+		}
+	}
+}
+
+.callout.alert {
+	margin-top: 1rem;
+	border: 1px solid $primary-color !important;
+}
 
 /** Footer **/
 
@@ -78,6 +181,14 @@ footer {
 			max-width: 120px;
 		}
 	}
+
+	a {
+		color: $primary-color;
+	}
+}
+
+.footer {
+	background: scale-color($secondary-color, $lightness: 70%);
 }
 
 @include foundation-everything;

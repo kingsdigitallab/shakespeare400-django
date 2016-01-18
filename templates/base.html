@@ -11,6 +11,7 @@
 	{% compress css %}
 	{# SCSS compilation relies on django compressor #}
 	<link rel="stylesheet" type="text/x-scss" href="{% static 'scss/main.scss' %}">
+	<link rel="stylesheet" type="text/x-scss" href="{% static 'vendor/font-awesome/scss/font-awesome.scss' %}">
 	{% endcompress %}
 
 	<!-- define requirejs config settings. -->
@@ -24,7 +25,7 @@
 	<div class="black-bar">
 	</div>
 	<div class="row">
-		<div class="medium-3 columns">
+		<div class="medium-3 columns sidebar">
 			<header>
 				{% include 'includes/header.html' %}
 			</header>
@@ -41,7 +42,7 @@
 			</section>
 		</div>
 
-		<div class="large-12 columns">
+		<div class="large-12 columns footer">
 			<footer>
 				{% block footer %}
 				{% include 'includes/footer.html' %}

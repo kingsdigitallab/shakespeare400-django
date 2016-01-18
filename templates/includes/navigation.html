@@ -1,24 +1,41 @@
 {% load staticfiles wagtailbase_tags %}
 <!-- 
 <div class="row">
-  <div class="large-12 large columns">
-    <div class="title-bar" data-responsive-toggle="top-menu" data-hide-for="medium">
-      <button class="menu-icon" type="button" data-toggle></button>
-      <div class="title-bar-title">Menu</div>
-    </div>
+	<div class="large-12 large columns">
+		<div class="title-bar" data-responsive-toggle="top-menu" data-hide-for="medium">
+			<button class="menu-icon" type="button" data-toggle></button>
+			<div class="title-bar-title">Menu</div>
+		</div>
 
-    <div class="top-bar" id="top-menu">
-      <div class="top-bar-left">
+		<div class="top-bar" id="top-menu">
+			<div class="top-bar-left">
 -->
-        {% block main_menu %}
-        {% get_site_root as site_root %}
-        {% main_menu root=site_root current_page=self %}
-        {% endblock %}
+				<img src="/static/images/header.jpg" alt="Shakespeare400" class="smoke">
+
+				<ul class="menu">
+					<li><input type="search" placeholder="Search"></li>
+					<li><button type="button" class="button">Search</button></li>
+				</ul>
+				{% block main_menu %}
+				{% get_site_root as site_root %}
+				{% main_menu root=site_root current_page=self %}
+				{% endblock %}
+
+				<h5>Filter by category</h5>
+				<ul class="no-bullet">
+					<li><a href="#"><i class="fa fa-circle conference"></i> Conference</a></li>
+					<li><a href="#"><i class="fa fa-circle exhibition"></i> Exhibition</a></li>
+					<li><a href="#"><i class="fa fa-circle performance"></i> Performance</a></li>
+					<li><a href="#"><i class="fa fa-circle publication"></i> Publication</a></li>
+					<li><a href="#"><i class="fa fa-circle screening"></i> Screening</a></li>
+					<li><a href="#"><i class="fa fa-circle talk"></i> Talk</a></li>
+				</ul>
+
 <!-- 
-      </div>
-      <div class="top-bar-right">
-      </div>
-    </div>
-  </div>
+			</div>
+			<div class="top-bar-right">
+			</div>
+		</div>
+	</div>
 </div>
 -->
