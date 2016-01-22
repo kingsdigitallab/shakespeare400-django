@@ -1,6 +1,6 @@
 {% load wagtailcore_tags %}
 
-<ul class="{{ class }}">
+<ul class="{{ class }} no-bullet">
     {% for post in posts %}
     <li>
         {% include "wagtailbase/includes/blog_post_preview.html" with post=post %}
