@@ -71,6 +71,7 @@ INSTALLED_APPS = (
 INSTALLED_APPS += ws.INSTALLED_APPS
 
 INSTALLED_APPS += (
+    'latesttweets',
     'shakespeare400',
     'wagtailbase',
 )

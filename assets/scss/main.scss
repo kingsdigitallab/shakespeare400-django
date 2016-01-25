@@ -7,6 +7,7 @@
  *	Global
  *		Categories (colours)
  *		Responsive iframes
+ *		Pagination
  *	Header
  *	Navigation
  *	Main content
@@ -18,7 +19,7 @@
 /** Global **/
 
 body {
-	background: url("/static/images/half-right2.png") right 35px no-repeat, url("/static/images/half-left.png") left 35px no-repeat !important;
+	background: url("/static/images/half-right2.png") right 0 fixed no-repeat, url("/static/images/half-left.png") left 0 fixed no-repeat !important;
 }
 
 a {
@@ -120,6 +121,14 @@ date {
 	    width: 100%;
 	    height: 100%;
 	}
+}
+
+/* Pagination */
+
+.pagination {
+	display: block;
+	clear: both;
+	color: $black;
 }
 
 /** Header **/
