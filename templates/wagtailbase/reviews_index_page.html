@@ -1,0 +1,33 @@
+{% extends "wagtailbase/index_page.html" %}
+
+{% load wagtailcore_tags wagtailbase_tags %}
+
+{% block title %}<h1 class="cat-title"><span>Reviews</span></h1>{% endblock %}
+
+{% block main %}
+
+{% block posts_by %}
+{% if filter_type == 'author' %}
+<h2>Showing reviews by {{ filter|safe }} <a href="{% pageurl self %}">Show all</a></h2>
+{% endif %}
+{% endblock %}
+
+{% block posts_tagged_as %}
+{% if filter_type == 'tag' %}
+<h2>Showing reviews tagged as {{ filter|safe }} <a href="{% pageurl self %}">Show all</a></h2>
+{% endif %}
+{% endblock %}
+
+{% block posts_by_date %}
+{% if filter_type == 'date' %}
+<h2>Showing reviews on {{ filter|date:filter_format }} <a href="{% pageurl self %}">Show all</a></h2>
+{% endif %}
+{% endblock %}
+
+{% block index_page_children %}
+{% include "wagtailbase/includes/reviews_index_posts.html" with class="reviews" %}
+{% endblock %}
+
+{% block latest_reviews %}{% endblock %}
+
+{% endblock %}

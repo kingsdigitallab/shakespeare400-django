@@ -12,6 +12,8 @@
  *	Navigation
  *	Main content
  *		Blog
+ *		Feeds
+ *		Homepage
  *		Panels / Callouts
  *	Footer
  */
@@ -22,8 +24,12 @@ body {
 	background: url("/static/images/half-right2.png") right 0 fixed no-repeat, url("/static/images/half-left.png") left 0 fixed no-repeat !important;
 }
 
-a {
-	color: $secondary-color;
+// a {
+// 	color: $kings-red;
+// }
+
+p a {
+	font-weight: 700;
 }
 
 .black-bar {
@@ -33,13 +39,27 @@ a {
 	display: block;
 }
 
-.date,
-.place,
 address,
-date {
-	color: scale-color(black, $lightness: 50%);
-	margin: 0;
+.place,
+time,
+.type {
+	color: scale-color(black, $lightness: 20%);
+	margin: 0 0 .5rem 0;
 	font-size: .875rem;
+	line-height: 1.25;
+}
+
+.post-meta {
+	font-style: italic;
+	font-size: .875rem;
+}
+
+.type {
+	text-transform: uppercase;
+	padding-left: 2rem;
+	a {
+		font-weight: 400 !important;
+	}
 }
 
 .left {
@@ -51,6 +71,7 @@ date {
 
 .category {
 	text-transform: uppercase;
+	color: $dark-gray;
 }
 
 .conference {
@@ -182,9 +203,12 @@ footer {
 // 	}
 // }
 
-	.sidebar {
-		background: rgba(255, 255, 255, .7);
+.sidebar {
+	background: rgba(255, 255, 255, .7);
+	h3 {
+		font-size: 1.25rem;
 	}
+}
 
 .menu.search {
 	margin-top: 3rem;
@@ -193,7 +217,7 @@ footer {
 .menu.vertical {
 	background: $primary-color;
 	color: white;
-	margin-top: 30px;
+	margin-top: 50px;
 	margin-bottom: 30px;
 	a {
 		color: white;
@@ -219,12 +243,14 @@ footer {
 	}
 }
 
-.blog-title {
-	margin-top: 0 !important;
+article {
+	a {
+		color: $kings-red !important;
+	}
 }
 
-.main a {
-	font-weight: 700;
+.cat-title {
+	margin-top: 0 !important;
 }
 
 .image {
@@ -232,10 +258,31 @@ footer {
 	display: block;
 }
 
+.bookmark {
+	position: absolute;
+	top: 0;
+	left: 1rem;
+	min-width: 25px;
+	padding: .9375rem .25rem .25rem;
+	background: scale-color($primary-color, $lightness: 60%);
+	text-align: center;
+}
+
+.announcement {
+	padding: 1rem;
+	background: scale-color($primary-color, $lightness: 70%);
+
+	img {
+		border: 1px solid white;
+		padding: 3px;
+		width: 100%;
+		margin-bottom: 1rem;
+	}
+}
+
 /* Blog */
 
-
-.blog-title {
+.cat-title {
 	color: white !important;
 	font-size: 2rem;
 	margin: 0;
@@ -263,11 +310,43 @@ footer {
 	margin-bottom: 1rem;
 }
 
+/* Feeds */
+
+.feeds {
+	color: #333;
+	a {
+		color: $secondary-color;
+	}
+
+	h3 {
+		font-size: 1.25rem;
+		border-top: 1px solid $secondary-color;
+		border-bottom: 1px solid $secondary-color;
+	}
+
+	p {
+		font-size: .9375rem;
+		margin-bottom: .5rem;
+		line-height: 1.5;
+	}
+
+	li {
+		border-bottom: 1px solid $secondary-color;
+		padding: .75rem 0 .25rem;
+	}
+}
+
+/* Homepage */
+
+// .home-splash {
+// 	clear: both;
+// }
+
 /* Panels / Callouts */
 
 .callout {
 	border: none !important;
-	border-top: 7px solid scale-color($primary-color, $lightness: 60%) !important;
+	border-top: 1px solid scale-color($primary-color, $lightness: 60%) !important;
 	// box-shadow: 3px 3px 4px $primary-color;
 	background-color: rgba(255, 255, 255, .7) !important;
 
@@ -278,6 +357,11 @@ footer {
 		a {
 			color: $primary-color;
 		}
+	}
+
+	.thumbnail,
+	.thumbnail img {
+		width: 100%;
 	}
 }
 

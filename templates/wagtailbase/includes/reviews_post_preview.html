@@ -1,0 +1,18 @@
+{% extends "wagtailbase/includes/reviews_post_body.html" %}
+
+{% if post %}
+{% load wagtailcore_tags %}
+
+{% block reviews_post_title %}
+<h2 class="posttitle">
+    <a href="{% pageurl post %}">{{ post.title }}</a>
+</h2>
+{% endblock %}
+
+{% block reviews_post_content %}
+<section class="postcontent">
+    {{ post.content|richtext|truncatewords_html:75 }}
+</section>
+{% endblock %}
+
+{% endif %}
