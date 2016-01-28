@@ -24,10 +24,6 @@ body {
 	background: url("/static/images/half-right2.png") right 0 fixed no-repeat, url("/static/images/half-left.png") left 0 fixed no-repeat !important;
 }
 
-// a {
-// 	color: $kings-red;
-// }
-
 p a {
 	font-weight: 700;
 }
@@ -174,34 +170,15 @@ footer {
 	}
 }
 
-// header {
-// 	margin-bottom: 70px;
-// }
-
 .kcl {
-	// position: absolute;
-	// top: 0;
 	margin-top: -55px;
 	background: white;
 	img {
 		width: 100%;
 	}
-	// max-width: 200px;
 }
 
 /** Navigation **/
-
-// .sidebar {
-// 	background: url("/static/images/header.jpg") center 600px no-repeat;
-// 	background-size: 100%;
-// }
-
-// .sidebar {
-// 	img.smoke {
-// 		width: 115% !important;
-// 		max-width: 115% !important;
-// 	}
-// }
 
 .sidebar {
 	background: rgba(255, 255, 255, .7);
@@ -283,15 +260,13 @@ article {
 /* Blog */
 
 .cat-title {
-	color: white !important;
-	font-size: 2rem;
-	margin: 0;
-	span {
-		background: black;
-		padding: 1rem;
-	}
-	a {
-		color: white;
+	position: relative;
+	padding-left: 4rem;
+	padding-top: 1rem;
+
+	.bookmark {
+		left: 0 !important;
+		width: 60px;
 	}
 }
 
@@ -338,16 +313,23 @@ article {
 
 /* Homepage */
 
-// .home-splash {
-// 	clear: both;
-// }
+.home-splash {
+	padding: 1rem;
+	h5 {
+		font-weight: 700;
+		color: $primary-color;
+
+		a {
+			color: $primary-color;
+		}
+	}
+}
 
 /* Panels / Callouts */
 
 .callout {
 	border: none !important;
 	border-top: 1px solid scale-color($primary-color, $lightness: 60%) !important;
-	// box-shadow: 3px 3px 4px $primary-color;
 	background-color: rgba(255, 255, 255, .7) !important;
 
 	h5 {
@@ -392,13 +374,6 @@ footer {
 
 
 @media #{$small-only} {
-	// Fixes image overflow on small screens
-	// .sidebar {
-	// 	img.smoke {
-	// 		width: 100% !important;
-	// 		max-width: 100% !important;
-	// 	}
-	// }
 	body {
 		background: none !important;
 	}
