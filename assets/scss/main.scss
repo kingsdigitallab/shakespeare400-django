@@ -36,6 +36,7 @@ p a {
 }
 
 address,
+.byline,
 .place,
 time,
 .type {
@@ -179,6 +180,17 @@ footer {
 }
 
 /** Navigation **/
+nav {
+	a {
+		&:hover {
+			background: scale-color($primary-color, $lightness: 20%);
+		}
+	}
+
+	.active {
+		background: scale-color($primary-color, $lightness: -20%);
+	}
+}
 
 .sidebar {
 	background: rgba(255, 255, 255, .7);
@@ -217,6 +229,9 @@ footer {
 		a {
 			color: $primary-color;
 		}
+	}
+	h2 {
+		color: $primary-color;
 	}
 }
 
@@ -259,6 +274,20 @@ article {
 
 /* Blog */
 
+.filter-description {
+	margin: 2rem 0 0;
+	color: $dark-gray;
+}
+
+.tags {
+	padding-top: 1rem;
+	a {
+		color: white !important;
+		background: $secondary-color;
+		padding: .5rem !important;
+	}
+}
+
 .cat-title {
 	position: relative;
 	padding-left: 4rem;
@@ -271,7 +300,7 @@ article {
 }
 
 .post {
-	margin-top: 50px;
+	margin-top: 20px;
 	color: $black;
 	header {
 		color: $black;
@@ -279,10 +308,33 @@ article {
 			color: $primary-color;
 		}
 	}
+	footer {
+		clear: both;
+		font-size: .875rem;
+		h3 {
+			line-height: 1;
+			font-size: 1rem;
+			color: $primary-color;
+			margin: 0;
+		}
+	}
 }
 
 .posttitle {
 	margin-bottom: 1rem;
+	a {
+		color: $primary-color !important;
+	}
+}
+
+ul.posts {
+	li {
+		border-bottom: 1px solid scale-color($primary-color, $lightness: 50%);
+	}
+
+	li li {
+		border-bottom: none;
+	}
 }
 
 /* Feeds */

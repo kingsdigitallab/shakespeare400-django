@@ -1,5 +1,9 @@
 {% extends "wagtailbase/base.html" %}
 
+{# The if clause in <h1> needs to be removed #}
+
+{% block title %}<h1 class="cat-title"><span class="bookmark">{% if self.title == "Reviews" %}<i class="fa fa-star"></i> {% else %}&nbsp;{% endif %}</span> {{ self.title }}</h1>{% endblock %}
+
 {% block main %}
 
 {% block index_page_introduction %}
