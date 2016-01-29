@@ -3,7 +3,11 @@ from __future__ import unicode_literals
 from django.db import models
 
 from modelcluster.fields import ParentalKey
+from modelcluster.tags import ClusterTaggableManager
 
+from taggit.models import TaggedItemBase
+
+from wagtail.contrib.wagtailroutablepage.models import RoutablePageMixin, route
 from wagtail.wagtailadmin.edit_handlers import (
     FieldPanel, InlinePanel, MultiFieldPanel, PageChooserPanel,
     StreamFieldPanel
@@ -13,9 +17,9 @@ from wagtail.wagtailcore.fields import RichTextField, StreamField
 from wagtail.wagtailcore.models import Page, Orderable
 from wagtail.wagtailsearch import index
 
+from .behaviours import WithFeedImage, WithIntroduction, WithStreamField
 from .carousel import AbstractCarouselItem
 from .links import AbstractRelatedLink
-from .streamfield import CMSStreamBlock
 
 
 # HomePage
@@ -27,8 +31,7 @@ class HomePageRelatedLink(Orderable, AbstractRelatedLink):
     page = ParentalKey('HomePage', related_name='related_links')
 
 
-class HomePage(Page):
-    body = StreamField(CMSStreamBlock())
+class HomePage(Page, WithStreamField):
     search_fields = Page.search_fields + (
         index.SearchField('body'),
     )
@@ -51,13 +54,7 @@ class IndexPageRelatedLink(Orderable, AbstractRelatedLink):
     page = ParentalKey('IndexPage', related_name='related_links')
 
 
-class IndexPage(Page):
-    intro = RichTextField(blank=True)
-    feed_image = models.ForeignKey(
-        'wagtailimages.Image', null=True, blank=True,
-        on_delete=models.SET_NULL, related_name='+'
-    )
-
+class IndexPage(Page, WithFeedImage, WithIntroduction):
     search_fields = Page.search_fields + (
         index.SearchField('intro'),
     )
@@ -82,13 +79,8 @@ class RichTextPageRelatedLink(Orderable, AbstractRelatedLink):
     page = ParentalKey('RichTextPage', related_name='related_links')
 
 
-class RichTextPage(Page):
-    intro = RichTextField(blank=True)
+class RichTextPage(Page, WithFeedImage, WithIntroduction):
     body = RichTextField(blank=True)
-    feed_image = models.ForeignKey(
-        'wagtailimages.Image', null=True, blank=True,
-        on_delete=models.SET_NULL, related_name='+'
-    )
 
     search_fields = Page.search_fields + (
         index.SearchField('intro'),
@@ -105,4 +97,64 @@ RichTextPage.content_panels = [
 
 RichTextPage.promote_panels = Page.promote_panels + [
     ImageChooserPanel('feed_image'),
+]
+
+
+# Blogs
+# BlogIndexPage
+class BlogIndexPageRelatedLink(Orderable, AbstractRelatedLink):
+    page = ParentalKey('BlogIndexPage', related_name='related_links')
+
+
+class BlogIndexPage(Page, RoutablePageMixin, WithIntroduction):
+    search_fields = Page.search_fields + (
+        index.SearchField('intro'),
+    )
+
+BlogIndexPage.content_panels = [
+    FieldPanel('title', classname='full title'),
+    FieldPanel('intro', classname='full'),
+    InlinePanel('related_links', label='Related links'),
+]
+
+BlogIndexPage.promote_panels = Page.promote_panels
+
+
+# BlogPost
+class BlogPostCarouselItem(Orderable, AbstractCarouselItem):
+    page = ParentalKey('BlogPost', related_name='carousel_items')
+
+
+class BlogPostRelatedLink(Orderable, AbstractRelatedLink):
+    page = ParentalKey('BlogPost', related_name='related_links')
+
+
+class BlogPostTag(TaggedItemBase):
+    content_object = ParentalKey('BlogPost', related_name='tagged_items')
+
+
+class BlogPost(Page, WithFeedImage, WithStreamField):
+    tags = ClusterTaggableManager(through=BlogPostTag, blank=True)
+    date = models.DateField('Post date')
+
+    search_fields = Page.search_fields + (
+        index.SearchField('body'),
+    )
+
+    @property
+    def blog_index(self):
+        # Find closest ancestor which is a blog index
+        return self.get_ancestors().type(BlogIndexPage).last()
+
+BlogPost.content_panels = [
+    FieldPanel('title', classname='full title'),
+    FieldPanel('date'),
+    StreamFieldPanel('body'),
+    InlinePanel('carousel_items', label='Carousel items'),
+    InlinePanel('related_links', label='Related links'),
+]
+
+BlogPost.promote_panels = Page.promote_panels + [
+    ImageChooserPanel('feed_image'),
+    FieldPanel('tags'),
 ]
