@@ -13,13 +13,13 @@ from wagtail.wagtailcore.fields import RichTextField, StreamField
 from wagtail.wagtailcore.models import Page, Orderable
 from wagtail.wagtailsearch import index
 
-from .carousel import CarouselItem
+from .carousel import AbstractCarouselItem
 from .links import AbstractRelatedLink
 from .streamfield import CMSStreamBlock
 
 
 # HomePage
-class HomePageCarouselItem(Orderable, CarouselItem):
+class HomePageCarouselItem(Orderable, AbstractCarouselItem):
     page = ParentalKey('HomePage', related_name='carousel_items')
 
 
@@ -63,11 +63,46 @@ class IndexPage(Page):
     )
 
 IndexPage.content_panels = [
-    FieldPanel('title', classname="full title"),
-    FieldPanel('intro', classname="full"),
-    InlinePanel('related_links', label="Related links"),
+    FieldPanel('title', classname='full title'),
+    FieldPanel('intro', classname='full'),
+    InlinePanel('related_links', label='Related links'),
 ]
 
 IndexPage.promote_panels = Page.promote_panels + [
+    ImageChooserPanel('feed_image'),
+]
+
+
+# RichTextPage
+class RichTextPageCarouselItem(Orderable, AbstractCarouselItem):
+    page = ParentalKey('RichTextPage', related_name='carousel_items')
+
+
+class RichTextPageRelatedLink(Orderable, AbstractRelatedLink):
+    page = ParentalKey('RichTextPage', related_name='related_links')
+
+
+class RichTextPage(Page):
+    intro = RichTextField(blank=True)
+    body = RichTextField(blank=True)
+    feed_image = models.ForeignKey(
+        'wagtailimages.Image', null=True, blank=True,
+        on_delete=models.SET_NULL, related_name='+'
+    )
+
+    search_fields = Page.search_fields + (
+        index.SearchField('intro'),
+        index.SearchField('body'),
+    )
+
+RichTextPage.content_panels = [
+    FieldPanel('title', classname='full title'),
+    FieldPanel('intro', classname='full'),
+    InlinePanel('carousel_items', label='Carousel items'),
+    FieldPanel('body', classname='full'),
+    InlinePanel('related_links', label='Related links'),
+]
+
+RichTextPage.promote_panels = Page.promote_panels + [
     ImageChooserPanel('feed_image'),
 ]

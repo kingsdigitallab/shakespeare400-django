@@ -8,7 +8,7 @@ from wagtail.wagtailadmin.edit_handlers import (
 from wagtail.wagtaildocs.edit_handlers import DocumentChooserPanel
 
 
-class WithLinkFields(models.Model):
+class AbstractLinkFields(models.Model):
     """Abstract class for link fields."""
     link_document = models.ForeignKey('wagtaildocs.Document', blank=True,
                                       null=True, related_name='+')
@@ -35,13 +35,13 @@ class WithLinkFields(models.Model):
         abstract = True
 
 
-class AbstractRelatedLink(WithLinkFields):
+class AbstractRelatedLink(AbstractLinkFields):
     """Abstract class for related links."""
     title = models.CharField(max_length=256, help_text='Link title')
 
     panels = [
         FieldPanel('title'),
-        MultiFieldPanel(WithLinkFields.panels, 'Link')
+        MultiFieldPanel(AbstractLinkFields.panels, 'Link')
     ]
 
     class Meta:

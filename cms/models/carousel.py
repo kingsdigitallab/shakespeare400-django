@@ -7,10 +7,10 @@ from wagtail.wagtailadmin.edit_handlers import (
 )
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
-from .links import WithLinkFields
+from .links import AbstractLinkFields
 
 
-class CarouselItem(WithLinkFields):
+class AbstractCarouselItem(AbstractLinkFields):
     image = models.ForeignKey(
         'wagtailimages.Image', null=True, blank=True,
         on_delete=models.SET_NULL, related_name='+'
@@ -22,7 +22,7 @@ class CarouselItem(WithLinkFields):
         ImageChooserPanel('image'),
         FieldPanel('embed_url'),
         FieldPanel('caption'),
-        MultiFieldPanel(WithLinkFields.panels, 'Link'),
+        MultiFieldPanel(AbstractLinkFields.panels, 'Link'),
     ]
 
     class Meta:
