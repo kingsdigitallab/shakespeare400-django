@@ -58,6 +58,7 @@ INSTALLED_APPS = (
     'taggit',
     'modelcluster',
     'rest_framework',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -65,11 +66,11 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'compressor',
     'require',
 )
 
 INSTALLED_APPS += (
-    'compressor',
     'wagtail.wagtailcore',
     'wagtail.wagtailadmin',
     'wagtail.wagtaildocs',
@@ -84,7 +85,7 @@ INSTALLED_APPS += (
     )
 
 INSTALLED_APPS += (
-    'latesttweets',
+    'cms',
     'shakespeare400',
 )
 
