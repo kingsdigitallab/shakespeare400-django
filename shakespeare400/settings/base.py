@@ -7,16 +7,13 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 For production settings see
 https://docs.djangoproject.com/en/dev/howto/deployment/checklist/
 """
-# from ddhldap.settings import *
-
-from wagtailbase import settings as ws
-
 import os
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 
 PROJECT_NAME = 'shakespeare400'
-PROJECT_TITLE = 'Change the title in the settings'
+PROJECT_TITLE = 'Shakespeare400'
 
 # -----------------------------------------------------------------------------
 # Core Settings
@@ -58,6 +55,9 @@ TEMPLATE_DEBUG = False
 
 INSTALLED_APPS = (
     'grappelli',
+    'taggit',
+    'modelcluster',
+    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -68,12 +68,24 @@ INSTALLED_APPS = (
     'require',
 )
 
-INSTALLED_APPS += ws.INSTALLED_APPS
+INSTALLED_APPS += (
+    'compressor',
+    'wagtail.wagtailcore',
+    'wagtail.wagtailadmin',
+    'wagtail.wagtaildocs',
+    'wagtail.wagtailsnippets',
+    'wagtail.wagtailusers',
+    'wagtail.wagtailimages',
+    'wagtail.wagtailembeds',
+    'wagtail.wagtailsearch',
+    'wagtail.wagtailredirects',
+    'wagtail.wagtailforms',
+    'wagtail.wagtailsites',
+    )
 
 INSTALLED_APPS += (
     'latesttweets',
     'shakespeare400',
-    'wagtailbase',
 )
 
 INTERNAL_IPS = ('127.0.0.1', )
@@ -336,5 +348,3 @@ WAGTAILSEARCH_BACKENDS = {
         'FORCE_NEW': False,
     }
 }
-
-ITEMS_PER_PAGE = ws.ITEMS_PER_PAGE

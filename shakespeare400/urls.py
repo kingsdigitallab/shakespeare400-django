@@ -5,10 +5,11 @@ from django.conf import settings
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 
-from wagtailbase import urls as ws_urls
-
 admin.autodiscover()
-# ddhldap_register_signal_handlers()
+
+from wagtail.wagtailadmin import urls as wagtailadmin_urls
+from wagtail.wagtaildocs import urls as wagtaildocs_urls
+from wagtail.wagtailcore import urls as wagtail_urls
 
 urlpatterns = patterns('',
                        url(r'^grappelli/', include('grappelli.urls')),
@@ -19,7 +20,12 @@ urlpatterns = patterns('',
 # Wagtail CMS
 # -----------------------------------------------------------------------------
 
-urlpatterns += ws_urls.urlpatterns
+urlpatterns += patterns('',
+                        url(r'^wagtail/', include(wagtailadmin_urls)),
+                        url(r'^documents/', include(wagtaildocs_urls)),
+
+                        url(r'', include(wagtail_urls)),
+                        )
 
 # -----------------------------------------------------------------------------
 # Django Debug Toolbar URLS
