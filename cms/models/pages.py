@@ -2,14 +2,17 @@ from __future__ import unicode_literals
 
 from datetime import date
 
+from django.conf import settings
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db import models
+from django.shortcuts import render
 
 from modelcluster.fields import ParentalKey
 from modelcluster.tags import ClusterTaggableManager
 
 from taggit.models import TaggedItemBase
 
-from wagtail.contrib.wagtailroutablepage.models import RoutablePageMixin
+from wagtail.contrib.wagtailroutablepage.models import RoutablePageMixin, route
 from wagtail.wagtailadmin.edit_handlers import (
     FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel, StreamFieldPanel
 )
@@ -23,6 +26,10 @@ from wagtail.wagtailsnippets.models import register_snippet
 from .behaviours import WithFeedImage, WithIntroduction, WithStreamField
 from .carousel import AbstractCarouselItem
 from .links import AbstractRelatedLink
+
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 # HomePage
@@ -102,16 +109,33 @@ RichTextPage.promote_panels = Page.promote_panels + [
 ]
 
 
+def _paginate(request, items):
+    # Pagination
+    page = request.GET.get('page', 1)
+    paginator = Paginator(items, settings.ITEMS_PER_PAGE)
+
+    try:
+        items = paginator.page(page)
+    except EmptyPage:
+        items = paginator.page(paginator.num_pages)
+    except PageNotAnInteger:
+        items = paginator.page(1)
+
+    return items
+
+
 # Blogs
 # BlogIndexPage
 class BlogIndexPageRelatedLink(Orderable, AbstractRelatedLink):
     page = ParentalKey('BlogIndexPage', related_name='related_links')
 
 
-class BlogIndexPage(Page, RoutablePageMixin, WithIntroduction):
+class BlogIndexPage(RoutablePageMixin, Page, WithIntroduction):
     search_fields = Page.search_fields + (
         index.SearchField('intro'),
     )
+
+    subpage_types = ['BlogPost']
 
     @property
     def posts(self):
@@ -122,6 +146,46 @@ class BlogIndexPage(Page, RoutablePageMixin, WithIntroduction):
         posts = posts.order_by('-date')
 
         return posts
+
+    @route(r'^$')
+    def all_posts(self, request):
+        posts = self.posts
+        logger.debug('Posts: {}'.format(posts))
+
+        return render(request, self.get_template(request),
+                      {'self': self, 'posts': _paginate(request, posts)})
+
+    @route(r'^author/(?P<author>[\w ]+)/$')
+    def author(self, request, author=None):
+        if not author:
+            # Invalid author filter
+            logger.error('Invalid author filter')
+            return self.all_posts(request)
+
+        posts = self.posts.filter(owner__username=author)
+
+        return render(
+            request, self.get_template(request), {
+                'self': self, 'posts': _paginate(request, posts),
+                'filter_type': 'author', 'filter': author
+            }
+        )
+
+    @route(r'^tag/(?P<tag>[\w ]+)/$')
+    def tag(self, request, tag=None):
+        if not tag:
+            # Invalid tag filter
+            logger.error('Invalid tag filter')
+            return self.all_posts(request)
+
+        posts = self.posts.filter(tags__name=tag)
+
+        return render(
+            request, self.get_template(request), {
+                'self': self, 'posts': self._paginate(request, posts),
+                'filter_type': 'tag', 'filter': tag
+            }
+        )
 
 BlogIndexPage.content_panels = [
     FieldPanel('title', classname='full title'),
@@ -152,6 +216,8 @@ class BlogPost(Page, WithFeedImage, WithStreamField):
     search_fields = Page.search_fields + (
         index.SearchField('body'),
     )
+
+    subpage_types = ['BlogPost']
 
     @property
     def blog_index(self):
