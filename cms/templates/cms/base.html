@@ -11,7 +11,11 @@
 {% endblock %}
 
 {% block main %}
-{{ self.content | richtext }}
+{% if self.intro %}
+{{ self.intro | richtext }}
+{% endif %}
+
+{{ self.body | richtext }}
 {% endblock %}
 
 {% block footer_scripts %}{% endblock %}
