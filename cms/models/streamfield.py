@@ -38,6 +38,14 @@ class ImageBlock(StructBlock):
     alignment = ImageFormatChoiceBlock()
 
 
+class PageLinkBlock(StructBlock):
+    page = PageChooserBlock()
+    label = CharBlock()
+
+    class Meta:
+        icon = 'link'
+
+
 class PullQuoteBlock(StructBlock):
     quote = TextBlock('quote title')
     attribution = CharBlock()
@@ -50,13 +58,14 @@ class CMSStreamBlock(StreamBlock):
     h2 = CharBlock(icon='title', classname='title')
     h3 = CharBlock(icon='title', classname='title')
     h4 = CharBlock(icon='title', classname='title')
+    h5 = CharBlock(icon='title', classname='title')
     intro = RichTextBlock(icon='pilcrow')
     paragraph = RichTextBlock(icon='pilcrow')
     pullquote = PullQuoteBlock()
 
     image = ImageBlock(label='Aligned image', icon='image')
     document = DocumentChooserBlock(icon='doc-full-inverse')
-    page = PageChooserBlock(icon='link')
+    page = PageLinkBlock(icon='link')
 
     embed = EmbedBlock(icon='media')
 
