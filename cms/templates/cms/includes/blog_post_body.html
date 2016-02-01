@@ -23,7 +23,7 @@
 
     {% block blog_post_content %}
     <section class="postcontent">
-        {{ post.content|richtext }}
+        {% include "cms/includes/streamfield.html" with content=post.body %}
     </section>
     {% endblock %}
 
