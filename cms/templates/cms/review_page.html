@@ -1,11 +1,11 @@
-{% extends "wagtailbase/rich_text_page.html" %}
-{% load wagtailcore_tags wagtailbase_tags %}
+{% extends "cms/rich_text_page.html" %}
+{% load cms_tags wagtailcore_tags %}
 
 {% block title %}{% endblock %}
 
 {% block main %}
 
-{% include "wagtailbase/includes/reviews_post_body.html" with post=self %}
+{% include "cms/includes/review.html" with review=self %}
 
 {% block attachments %}
 {{ block.super }}
@@ -27,6 +27,6 @@
 {% are_comments_allowed as allow_comments %}
 {% if allow_comments %}
 {% block footer_scripts %}
-{% include "wagtailbase/includes/disqus_setup.html" %}
+{% include "cms/includes/disqus_setup.html" %}
 {% endblock %}
 {% endif %}
