@@ -127,22 +127,22 @@ LOGGING = {
         }
     },
     'loggers': {
+        'cms': {
+            'handlers': ['console', 'file'],
+            'level': LOGGING_LEVEL,
+            'propagate': True
+        },
         'django': {
             'handlers': ['file'],
             'level': LOGGING_LEVEL,
             'propagate': True
         },
-        # 'django_auth_ldap': {
-        #     'handlers': ['file'],
-        #     'level': LOGGING_LEVEL,
-        #     'propagate': True
-        # },
-        'shakespeare400': {
+        'elasticsearch': {
             'handlers': ['file'],
             'level': LOGGING_LEVEL,
             'propagate': True
         },
-        'elasticsearch': {
+        'shakespeare400': {
             'handlers': ['file'],
             'level': LOGGING_LEVEL,
             'propagate': True
@@ -358,3 +358,5 @@ WAGTAILSEARCH_BACKENDS = {
         'FORCE_NEW': False,
     }
 }
+
+ITEMS_PER_PAGE = 10
