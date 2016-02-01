@@ -16,6 +16,7 @@ DATABASES = {
 
 LOGGING_LEVEL = logging.DEBUG
 
+LOGGING['loggers']['cms']['level'] = LOGGING_LEVEL
 LOGGING['loggers']['shakespeare400']['level'] = LOGGING_LEVEL
 
 TEMPLATES[0]['OPTIONS']['debug'] = True
