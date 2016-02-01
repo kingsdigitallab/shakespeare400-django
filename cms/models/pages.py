@@ -46,6 +46,9 @@ class HomePage(Page, WithStreamField):
         index.SearchField('body'),
     )
 
+    subpage_types = ['IndexPage', 'RichTextPage', 'BlogIndexPage',
+                     'ReviewIndexPage']
+
     class Meta:
         verbose_name = 'Homepage'
 
@@ -244,7 +247,7 @@ class EventIndexPageRelatedLink(Orderable, AbstractRelatedLink):
     page = ParentalKey('EventIndexPage', related_name='related_links')
 
 
-class EventIndexPage(Page, RoutablePageMixin, WithIntroduction):
+class EventIndexPage(RoutablePageMixin, Page, WithIntroduction):
     search_fields = Page.search_fields + (
         index.SearchField('intro'),
     )
@@ -287,7 +290,6 @@ register_snippet(EventCategory)
 
 class EventPageCategory(Orderable):
     page = ParentalKey('EventPage', related_name='categories')
-
     category = models.ForeignKey(EventCategory)
 
     panels = [
@@ -355,10 +357,12 @@ class ReviewIndexPageRelatedLink(Orderable, AbstractRelatedLink):
     page = ParentalKey('ReviewIndexPage', related_name='related_links')
 
 
-class ReviewIndexPage(Page, RoutablePageMixin, WithIntroduction):
+class ReviewIndexPage(RoutablePageMixin, Page, WithIntroduction):
     search_fields = Page.search_fields + (
         index.SearchField('intro'),
     )
+
+    subpage_types = ['ReviewPage']
 
     @property
     def reviews(self):
@@ -369,6 +373,47 @@ class ReviewIndexPage(Page, RoutablePageMixin, WithIntroduction):
         reviews = reviews.order_by('-date')
 
         return reviews
+
+    @route(r'^$')
+    def all_reviews(self, request):
+        reviews = self.reviews
+        logger.debug('Reviews: {}'.format(reviews))
+
+        return render(request, self.get_template(request),
+                      {'self': self, 'reviews': _paginate(request, reviews)})
+
+    @route(r'^author/(?P<author>[\w ]+)/$')
+    def author(self, request, author=None):
+        if not author:
+            # Invalid author filter
+            logger.error('Invalid author filter')
+            return self.all_posts(request)
+
+        reviews = self.reviews.filter(owner__username=author)
+
+        return render(
+            request, self.get_template(request), {
+                'self': self, 'reviews': _paginate(request, reviews),
+                'filter_type': 'author', 'filter': author
+            }
+        )
+
+    @route(r'^category/(?P<category>[\w ]+)/$')
+    def category(self, request, category=None):
+        if not category:
+            # Invalid category filter
+            logger.error('Invalid category filter')
+            return self.all_posts(request)
+
+        reviews = self.reviews.filter(
+            categories__category__title=category)
+
+        return render(
+            request, self.get_template(request), {
+                'self': self, 'reviews': _paginate(request, reviews),
+                'filter_type': 'category', 'filter': category
+            }
+        )
 
 ReviewIndexPage.content_panels = [
     FieldPanel('title', classname='full title'),
@@ -388,6 +433,9 @@ class ReviewPageCategory(Orderable):
     panels = [
         SnippetChooserPanel('category')
     ]
+
+    def __unicode__(self):
+        return self.category.title
 
 
 class ReviewPageCarouselItem(Orderable, AbstractCarouselItem):
@@ -421,5 +469,4 @@ ReviewPage.content_panels = [
 
 ReviewPage.promote_panels = Page.promote_panels + [
     ImageChooserPanel('feed_image'),
-    FieldPanel('tags'),
 ]
