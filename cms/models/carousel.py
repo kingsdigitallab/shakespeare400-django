@@ -15,12 +15,10 @@ class AbstractCarouselItem(AbstractLinkFields):
         'wagtailimages.Image', null=True, blank=True,
         on_delete=models.SET_NULL, related_name='+'
     )
-    embed_url = models.URLField('Embed URL', blank=True)
     caption = models.CharField(max_length=255, blank=True)
 
     panels = [
         ImageChooserPanel('image'),
-        FieldPanel('embed_url'),
         FieldPanel('caption'),
         MultiFieldPanel(AbstractLinkFields.panels, 'Link'),
     ]
