@@ -1,0 +1,18 @@
+{% extends "cms/includes/review.html" %}
+
+{% if review %}
+{% load wagtailcore_tags %}
+
+{% block review_title %}
+<h2 class="posttitle">
+    <a href="{% pageurl review %}">{{ review.title }}</a>
+</h2>
+{% endblock %}
+
+{% block review_content %}
+<section class="postcontent">
+    {{ review.search_description }}
+</section>
+{% endblock %}
+
+{% endif %}
