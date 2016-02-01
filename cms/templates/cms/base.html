@@ -3,7 +3,11 @@
 
 {% block meta_title %}{{ self.title }}{% endblock %}
 
-{% block title %}{{ self.title }}{% endblock %}
+{% block title %}
+<h1 class="cat-title">
+    <span class="bookmark">&nbsp;</span> {{ self.title }}
+</h1>
+{% endblock %}
 
 {% block main_menu %}
 {% get_site_root as site_root %}
@@ -11,10 +15,6 @@
 {% endblock %}
 
 {% block main %}
-{% if self.intro %}
-{{ self.intro | richtext }}
-{% endif %}
-
 {{ self.body | richtext }}
 {% endblock %}
 
