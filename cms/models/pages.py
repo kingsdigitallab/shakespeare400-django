@@ -1,5 +1,7 @@
 from __future__ import unicode_literals
 
+from datetime import date
+
 from django.db import models
 
 from modelcluster.fields import ParentalKey
@@ -112,6 +114,16 @@ class BlogIndexPage(Page, RoutablePageMixin, WithIntroduction):
     search_fields = Page.search_fields + (
         index.SearchField('intro'),
     )
+
+    @property
+    def posts(self):
+        # gets list of live blog posts that are descendants of this page
+        posts = BlogPost.objects.live().descendant_of(self)
+
+        # orders by most recent date first
+        posts = posts.order_by('-date')
+
+        return posts
 
 BlogIndexPage.content_panels = [
     FieldPanel('title', classname='full title'),
