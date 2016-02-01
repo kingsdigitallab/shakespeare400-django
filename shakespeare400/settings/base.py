@@ -82,6 +82,7 @@ INSTALLED_APPS += (
     'wagtail.wagtailredirects',
     'wagtail.wagtailforms',
     'wagtail.wagtailsites',
+    'wagtail.contrib.wagtailroutablepage',
     )
 
 INSTALLED_APPS += (
@@ -248,6 +249,14 @@ SESSION_COOKIE_SECURE = True
 # -----------------------------------------------------------------------------
 # Installed Applications Settings
 # -----------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
+# DISQUS
+# http://.disqus.com/admin/settings/universalcode/
+# -----------------------------------------------------------------------------
+
+ALLOW_COMMENTS = False
+DISQUS_SHORTNAME = ''
 
 # -----------------------------------------------------------------------------
 # Django Compressor
