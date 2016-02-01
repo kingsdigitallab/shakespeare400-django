@@ -9,13 +9,12 @@ from modelcluster.tags import ClusterTaggableManager
 
 from taggit.models import TaggedItemBase
 
-from wagtail.contrib.wagtailroutablepage.models import RoutablePageMixin, route
+from wagtail.contrib.wagtailroutablepage.models import RoutablePageMixin
 from wagtail.wagtailadmin.edit_handlers import (
-    FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel, PageChooserPanel,
-    StreamFieldPanel
+    FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel, StreamFieldPanel
 )
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
-from wagtail.wagtailcore.fields import RichTextField, StreamField
+from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailcore.models import Page, Orderable
 from wagtail.wagtailsearch import index
 from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
@@ -282,4 +281,80 @@ EventPage.content_panels = [
 
 EventPage.promote_panels = Page.promote_panels + [
     ImageChooserPanel('feed_image'),
+]
+
+
+# Reviews
+# ReviewIndexPage
+class ReviewIndexPageRelatedLink(Orderable, AbstractRelatedLink):
+    page = ParentalKey('ReviewIndexPage', related_name='related_links')
+
+
+class ReviewIndexPage(Page, RoutablePageMixin, WithIntroduction):
+    search_fields = Page.search_fields + (
+        index.SearchField('intro'),
+    )
+
+    @property
+    def reviews(self):
+        # gets list of live review pages that are descendants of this page
+        reviews = ReviewPage.objects.live().descendant_of(self)
+
+        # orders by most recent date first
+        reviews = reviews.order_by('-date')
+
+        return reviews
+
+ReviewIndexPage.content_panels = [
+    FieldPanel('title', classname='full title'),
+    FieldPanel('intro', classname='full'),
+    InlinePanel('related_links', label='Related links'),
+]
+
+ReviewIndexPage.promote_panels = Page.promote_panels
+
+
+# ReviewPage
+class ReviewPageCategory(Orderable):
+    page = ParentalKey('ReviewPage', related_name='categories')
+
+    category = models.ForeignKey(EventCategory)
+
+    panels = [
+        SnippetChooserPanel('category')
+    ]
+
+
+class ReviewPageCarouselItem(Orderable, AbstractCarouselItem):
+    page = ParentalKey('ReviewPage', related_name='carousel_items')
+
+
+class ReviewPageRelatedLink(Orderable, AbstractRelatedLink):
+    page = ParentalKey('ReviewPage', related_name='related_links')
+
+
+class ReviewPage(Page, WithFeedImage, WithStreamField):
+    date = models.DateField('Post date')
+
+    search_fields = Page.search_fields + (
+        index.SearchField('body'),
+    )
+
+    @property
+    def review_index(self):
+        # finds closest ancestor which is a review index
+        return self.get_ancestors().type(ReviewIndexPage).last()
+
+ReviewPage.content_panels = [
+    FieldPanel('title', classname='full title'),
+    FieldPanel('date'),
+    InlinePanel('categories', label='Categories'),
+    StreamFieldPanel('body'),
+    InlinePanel('carousel_items', label='Carousel items'),
+    InlinePanel('related_links', label='Related links'),
+]
+
+ReviewPage.promote_panels = Page.promote_panels + [
+    ImageChooserPanel('feed_image'),
+    FieldPanel('tags'),
 ]
