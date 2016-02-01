@@ -82,7 +82,7 @@ class RichTextPageRelatedLink(Orderable, AbstractRelatedLink):
     page = ParentalKey('RichTextPage', related_name='related_links')
 
 
-class RichTextPage(Page, WithFeedImage, WithIntroduction):
+class RichTextPage(Page, WithFeedImage):
     body = RichTextField(blank=True)
 
     search_fields = Page.search_fields + (
@@ -92,7 +92,6 @@ class RichTextPage(Page, WithFeedImage, WithIntroduction):
 
 RichTextPage.content_panels = [
     FieldPanel('title', classname='full title'),
-    FieldPanel('intro', classname='full'),
     InlinePanel('carousel_items', label='Carousel items'),
     FieldPanel('body', classname='full'),
     InlinePanel('related_links', label='Related links'),
