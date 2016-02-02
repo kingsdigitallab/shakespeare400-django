@@ -7,13 +7,16 @@ requirejs.config({
     baseUrl: "/static/assets/js",
     urlArgs: "bust=" + (new Date()).getTime(),
     paths: {
-        "jquery": "../vendor/jquery/dist/jquery",
+        "jquery": "../vendor/jquery/dist/jquery.min",
 
-        'foundation': '../vendor/foundation/js/foundation.min',
+        'foundation': '../vendor/foundation-sites/dist/foundation.min',
 
-        "modernizr": "../vendor/modernizr/modernizr",
+        "modernizr": "../vendor/modernizr/bin/modernizr",
     },
     shim: {
+        'modernizr': {
+            exports: 'Modernizr'
+        },
         /* Foundation */
         'foundation': {
             deps: [
@@ -22,7 +25,6 @@ requirejs.config({
             ],
             exports: 'Foundation'
         },
-
         'ga': {
             exports: '__ga__'
         }
