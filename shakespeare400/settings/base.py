@@ -252,11 +252,10 @@ SESSION_COOKIE_SECURE = True
 
 # -----------------------------------------------------------------------------
 # DISQUS
-# http://.disqus.com/admin/settings/universalcode/
+# http://shakespeare400.disqus.com/
 # -----------------------------------------------------------------------------
 
-ALLOW_COMMENTS = False
-DISQUS_SHORTNAME = ''
+ALLOW_COMMENTS = True
 
 # -----------------------------------------------------------------------------
 # Django Compressor
