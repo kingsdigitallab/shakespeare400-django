@@ -2,7 +2,7 @@ define([
     'module',
     'jquery',
     'foundation'
-], function(module, $, fn) {
+], function(module, $, foundation) {
     'use strict';
 
     $(document).ready(function() {
