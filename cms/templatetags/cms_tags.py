@@ -10,11 +10,6 @@ def are_comments_allowed():
     """Returns True if commenting on the site is allowed, False otherwise."""
     return getattr(settings, 'ALLOW_COMMENTS', False)
 
-@register.assignment_tag(takes_context=False)
-def get_disqus_shortname():
-    """Returns the DISCUS shortname setting for comments."""
-    return settings.DISQUS_SHORTNAME
-
 
 @register.assignment_tag(takes_context=True)
 def get_request_parameters(context, exclude=None):
