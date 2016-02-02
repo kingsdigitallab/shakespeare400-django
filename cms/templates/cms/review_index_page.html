@@ -1,0 +1,30 @@
+{% extends "cms/index_page.html" %}
+{% load wagtailcore_tags %}
+
+{% block title %}<h1 class="cat-title"><span class="bookmark"><i class="fa fa-star"></i></span> Reviews</h1>{% endblock %}
+
+{% block main %}
+
+{% block posts_by %}
+{% if filter_type == 'author' %}
+<h2>Showing reviews by {{ filter|safe }} <a href="{% pageurl self %}">Show all</a></h2>
+{% endif %}
+{% endblock %}
+
+{% block posts_tagged_as %}
+{% if filter_type == 'category' %}
+<h2>Showing reviews for {{ filter|safe }} <a href="{% pageurl self %}">Show all</a></h2>
+{% endif %}
+{% endblock %}
+
+{% block posts_by_date %}
+{% if filter_type == 'date' %}
+<h2>Showing reviews on {{ filter|date:filter_format }} <a href="{% pageurl self %}">Show all</a></h2>
+{% endif %}
+{% endblock %}
+
+{% block index_page_children %}
+{% include "cms/includes/review_index_reviews.html" with class="reviews" %}
+{% endblock %}
+
+{% endblock %}

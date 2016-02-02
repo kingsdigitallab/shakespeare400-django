@@ -1,0 +1,20 @@
+{% extends "cms/includes/blog_post_body.html" %}
+
+{% if post %}
+{% load wagtailcore_tags %}
+
+{% block blog_post_title %}
+<h2 class="posttitle">
+    <a href="{% pageurl post %}">{{ post.title }}</a>
+</h2>
+{% endblock %}
+
+{% block blog_post_content %}
+<section class="postcontent">
+    {% if post.search_description %}
+    {{ post.search_description }}
+    {% endif %}
+</section>
+{% endblock %}
+
+{% endif %}

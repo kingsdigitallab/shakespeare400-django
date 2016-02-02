@@ -1,0 +1,138 @@
+{% extends "cms/base.html" %}
+{% load wagtailcore_tags %}
+
+{% block title %}{% endblock %}
+
+{% block main %}
+
+<div class="row">
+    <div class="large-12 columns">
+        <div class="home-splash">
+            {% include "cms/includes/streamfield.html" with content=self.body %}
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="medium-8 columns">
+        <div class="row" data-equalizer data-equalize-on="medium">
+            <div class="medium-12 large-6 columns">
+                <div class="callout" data-equalizer-watch>
+                    <p class="type"><span class="bookmark"><i class="fa fa-star fa-lg"></i></span> <a href="/reviews/">Reviews</a> <i class="fa fa-circle screening float-right"></i></p>
+                    <div class="thumbnail">
+                        <a href="#" title="This is an event"><img src="/static/images/placeholder-300x160.png" alt="Thumbnail placeholder"></a>
+                    </div>
+                    <p class="category screening">Screening</p>
+                    <h5><a href="#">Review title number two</a></h5>
+                    <p class="post-meta">Posted on <time>Jan. 22, 2016</time><br>by <a href="#" rel="author">Author's Name</a></p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore <a href="#">magna</a> aliqua. Ut enim ad minim veniam.</p>
+                </div>
+                <a href="#" class="button expanded">Find out more</a>
+            </div>
+            <div class="medium-12 large-6 columns">
+                <div class="callout" data-equalizer-watch>
+                    <p class="type"><span class="bookmark"><i class="fa fa-pencil"></i></span> <a href="/blog/">Blog</a></p>
+                    <div class="thumbnail">
+                        <a href="#" title="This is an event"><img src="/static/images/placeholder-300x160.png" alt="Thumbnail placeholder"></a>
+                    </div>
+                    <p class="category">King's Shakespeare Blog</p>
+                    <h5><a href="#">This is a blog title</a></h5>
+                    <p class="post-meta">Posted on <time>Jan. 17, 2016</time><br>by <a href="#" rel="author">Author's Name</a></p>
+                    <p>It has an easy to override visual style, and is appropriately subdued. Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                </div>
+                <a href="#" class="button expanded">Find out more</a>
+            </div>
+            <div class="medium-12 large-6 columns">
+                <div class="callout" data-equalizer-watch>
+                    <p class="type"><span class="bookmark"><i class="fa fa-calendar"></i></span> <a href="/events/">Events</a> <i class="fa fa-circle talk float-right"></i><i class="fa fa-circle conference float-right">&nbsp;</i></p>
+                    <div class="thumbnail">
+                        <a href="#" title="This is an event"><img src="/static/images/placeholder-300x160.png" alt="Thumbnail placeholder"></a>
+                    </div>
+                    <p class="category"><span class="conference">Conference</span> + <span class="talk">Talk</span></p>
+                    <h5><a href="#">This is a blog title</a></h5>
+                    <p class="post-meta"><i class="fa fa-calendar"></i> <time>Jan. 13, 2016</time><br>
+                    <i class="fa fa-map-marker"></i> Somewhere over the rainbow, London, UK</p>
+                    <p>It has an easy to override visual style, and is appropriately subdued.</p>
+                </div>
+                <a href="#" class="button expanded">Find out more</a>
+            </div>
+            <div class="medium-12 large-6 columns">
+                <div class="callout" data-equalizer-watch>
+                    <p class="type"><span class="bookmark"><i class="fa fa-star fa-lg"></i></span> <a href="/reviews/">Reviews</a> <i class="fa fa-circle performance float-right"></i></p>
+                    <div class="thumbnail">
+                        <a href="#" title="This is an event"><img src="/static/images/placeholder-300x160.png" alt="Thumbnail placeholder"></a>
+                    </div>
+                    <p class="category performance">Performance</p>
+                    <h5><a href="#">Review title number one</a></h5>
+                    <p class="post-meta">Posted on <time>Jan. 2, 2016</time><br>by <a href="#" rel="author">Author's Name</a></p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore <a href="#">magna</a> aliqua. Ut enim ad minim veniam.</p>
+                </div>
+                <a href="#" class="button expanded">Find out more</a>
+            </div>
+            <div class="medium-12 large-6 columns">
+                <div class="callout" data-equalizer-watch>
+                    <p class="type"><span class="bookmark"><i class="fa fa-pencil"></i></span> <a href="/blog/">Blog</a></p>
+                    <div class="thumbnail">
+                        <a href="#" title="This is an event"><img src="/static/images/placeholder-300x160.png" alt="Thumbnail placeholder"></a>
+                    </div>
+                    <p class="category">King's Shakespeare Blog</p>
+                    <h5><a href="#">This is a blog title</a></h5>
+                    <p class="post-meta">Posted on <time>Jan. 2, 2016</time><br>by <a href="#" rel="author">Author's Name</a></p>
+                    <p>It has an easy to override visual style, and is appropriately subdued. Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                </div>
+                <a href="#" class="button expanded">Find out more</a>
+            </div>
+            <div class="medium-12 large-6 columns">
+                <div class="callout" data-equalizer-watch>
+                    <p class="type"><span class="bookmark"><i class="fa fa-pencil"></i></span> <a href="/blog/">Blog</a></p>
+                    <div class="thumbnail">
+                        <a href="#" title="This is an event"><img src="/static/images/placeholder-300x160.png" alt="Thumbnail placeholder"></a>
+                    </div>
+                    <p class="category">King's Shakespeare Blog</p>
+                    <h5><a href="#">This is a blog title</a></h5>
+                    <p class="post-meta">Posted on <time>Jan. 1, 2016</time><br>by <a href="#" rel="author">Author's Name</a></p>
+                    <p>It has an easy to override visual style, and is appropriately subdued. Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                </div>
+                <a href="#" class="button expanded">Find out more</a>
+            </div>
+            <div class="medium-12 large-6 columns">
+                <div class="callout" data-equalizer-watch>
+                    <p class="type"><span class="bookmark"><i class="fa fa-pencil"></i></span> <a href="/blog/">Blog</a></p>
+                    <div class="thumbnail">
+                        <a href="#" title="This is an event"><img src="/static/images/placeholder-300x160.png" alt="Thumbnail placeholder"></a>
+                    </div>
+                    <p class="category">King's Shakespeare Blog</p>
+                    <h5><a href="#">This is a blog title</a></h5>
+                    <p class="post-meta">Posted on <time>Dec. 19, 2015</time><br>by <a href="#" rel="author">Author's Name</a></p>
+                    <p>It has an easy to override visual style, and is appropriately subdued. Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                </div>
+                <a href="#" class="button expanded">Find out more</a>
+            </div>
+        </div>
+    </div>
+    <div class="medium-4 columns sidebar">
+        {% include "cms/includes/carousel.html" with carousel_items=self.carousel_items.all %}
+
+        <div class="feeds">
+            <h3><a href="//twitter.com/"><i class="fa fa-twitter-square"></i> Follow us on Twitter</a></h3>
+            <ul class="twitter no-bullet">
+                <li>
+                    <p><a href="#">@Shakespeare400</a> &#8226; <time>Jan. 27, 2016</time></p>
+                    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <a href="http://bit.ly/1QBqGT6" target="_blank">http://bit.ly/1QBqGT6</a></p>
+                </li>
+                <li>
+                    <p><a href="#">@Shakespeare400</a> &#8226; <time>Jan. 23, 2016</time></p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <a href="http://bit.ly/1QBqGT6" target="_blank">http://bit.ly/1QBqGT6</a></p>
+                </li>
+            </ul>
+        </div>
+        <div class="announcement">
+            <h3>Static content</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+            <img src="/static/images/placeholder-300x160.png" alt="Thumbnail">
+            <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,4 +1,4 @@
-{% load staticfiles compress require %}
+{% load compress require staticfiles wagtailuserbar %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -56,8 +56,7 @@
 		<div class="medium-9 columns">
 			<section class="main">
 				{% block title %}{% endblock %}
-				{% block main %}
-				{% endblock %}
+				{% block main %}{% endblock %}
 			</section>
 		</div>
 
@@ -81,5 +80,7 @@
 	<script>
 		$(document).foundation();
 	</script>
+
+	{% wagtailuserbar %}
 </body>
 </html>

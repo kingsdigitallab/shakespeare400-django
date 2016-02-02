@@ -1,0 +1,32 @@
+{% extends "cms/rich_text_page.html" %}
+{% load cms_tags wagtailcore_tags %}
+
+{% block title %}{% endblock %}
+
+{% block main %}
+
+{% include "cms/includes/review.html" with review=self %}
+
+{% block attachments %}
+{{ block.super }}
+{% endblock %}
+
+{% block related_links %}
+{{ block.super }}
+{% endblock %}
+
+{% are_comments_allowed as allow_comments %}
+{% if allow_comments %}
+{% block comments %}
+<div id="disqus_thread"></div>
+{% endblock %}
+{% endif %}
+
+{% endblock %}
+
+{% are_comments_allowed as allow_comments %}
+{% if allow_comments %}
+{% block footer_scripts %}
+{% include "cms/includes/disqus_setup.html" %}
+{% endblock %}
+{% endif %}

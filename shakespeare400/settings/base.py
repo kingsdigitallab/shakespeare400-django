@@ -7,16 +7,13 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 For production settings see
 https://docs.djangoproject.com/en/dev/howto/deployment/checklist/
 """
-# from ddhldap.settings import *
-
-from wagtailbase import settings as ws
-
 import os
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 
 PROJECT_NAME = 'shakespeare400'
-PROJECT_TITLE = 'Change the title in the settings'
+PROJECT_TITLE = 'Shakespeare400'
 
 # -----------------------------------------------------------------------------
 # Core Settings
@@ -58,6 +55,10 @@ TEMPLATE_DEBUG = False
 
 INSTALLED_APPS = (
     'grappelli',
+    'taggit',
+    'modelcluster',
+    'rest_framework',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -65,15 +66,28 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'compressor',
     'require',
 )
 
-INSTALLED_APPS += ws.INSTALLED_APPS
+INSTALLED_APPS += (
+    'wagtail.wagtailcore',
+    'wagtail.wagtailadmin',
+    'wagtail.wagtaildocs',
+    'wagtail.wagtailsnippets',
+    'wagtail.wagtailusers',
+    'wagtail.wagtailimages',
+    'wagtail.wagtailembeds',
+    'wagtail.wagtailsearch',
+    'wagtail.wagtailredirects',
+    'wagtail.wagtailforms',
+    'wagtail.wagtailsites',
+    'wagtail.contrib.wagtailroutablepage',
+    )
 
 INSTALLED_APPS += (
-    'latesttweets',
+    'cms',
     'shakespeare400',
-    'wagtailbase',
 )
 
 INTERNAL_IPS = ('127.0.0.1', )
@@ -113,22 +127,22 @@ LOGGING = {
         }
     },
     'loggers': {
+        'cms': {
+            'handlers': ['console', 'file'],
+            'level': LOGGING_LEVEL,
+            'propagate': True
+        },
         'django': {
             'handlers': ['file'],
             'level': LOGGING_LEVEL,
             'propagate': True
         },
-        # 'django_auth_ldap': {
-        #     'handlers': ['file'],
-        #     'level': LOGGING_LEVEL,
-        #     'propagate': True
-        # },
-        'shakespeare400': {
+        'elasticsearch': {
             'handlers': ['file'],
             'level': LOGGING_LEVEL,
             'propagate': True
         },
-        'elasticsearch': {
+        'shakespeare400': {
             'handlers': ['file'],
             'level': LOGGING_LEVEL,
             'propagate': True
@@ -237,6 +251,14 @@ SESSION_COOKIE_SECURE = True
 # -----------------------------------------------------------------------------
 
 # -----------------------------------------------------------------------------
+# DISQUS
+# http://.disqus.com/admin/settings/universalcode/
+# -----------------------------------------------------------------------------
+
+ALLOW_COMMENTS = False
+DISQUS_SHORTNAME = ''
+
+# -----------------------------------------------------------------------------
 # Django Compressor
 # http://django-compressor.readthedocs.org/en/latest/
 # -----------------------------------------------------------------------------
@@ -337,4 +359,4 @@ WAGTAILSEARCH_BACKENDS = {
     }
 }
 
-ITEMS_PER_PAGE = ws.ITEMS_PER_PAGE
+ITEMS_PER_PAGE = 10
