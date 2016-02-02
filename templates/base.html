@@ -70,6 +70,8 @@
 
     {% wagtailuserbar %}
 
+    {% compress js %}
     {% block footer_scripts %}{% endblock %}
+    {% endcompress %}
 </body>
 </html>

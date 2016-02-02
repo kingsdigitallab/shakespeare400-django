@@ -12,6 +12,8 @@ requirejs.config({
         'foundation': '../vendor/foundation-sites/dist/foundation.min',
 
         "modernizr": "../vendor/modernizr/modernizr",
+
+        "twitter": "//platform.twitter.com/widgets"
     },
     shim: {
         'modernizr': {

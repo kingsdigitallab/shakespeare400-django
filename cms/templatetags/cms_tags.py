@@ -35,6 +35,11 @@ def get_site_root(context):
     return context['request'].site.root_page
 
 
+@register.assignment_tag(takes_context=False)
+def get_twitter_widget_id():
+    return getattr(settings, 'TWITTER_WIDGET_ID')
+
+
 @register.inclusion_tag('cms/tags/main_menu.html', takes_context=True)
 def main_menu(context, root, current_page=None):
     """Returns the main menu items, the children of the root page. Only live

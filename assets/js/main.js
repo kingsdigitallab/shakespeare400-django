@@ -4,6 +4,7 @@ require([
     'foundation',
     'ga',
     'fn',
+    'twitter'
 ], function($, foundation, ga, fn) {
     'use strict';
 
