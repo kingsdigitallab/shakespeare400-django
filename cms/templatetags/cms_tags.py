@@ -41,6 +41,9 @@ def main_menu(context, root, current_page=None):
     pages that have the show_in_menus setting on are returned."""
     menu_pages = root.get_children().live().in_menu()
 
+    root.active = (current_page.url == root.url
+                   if current_page else False)
+
     for page in menu_pages:
         page.active = (current_page.url.startswith(page.url)
                        if current_page else False)
