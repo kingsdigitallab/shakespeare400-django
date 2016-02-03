@@ -14,7 +14,8 @@ from taggit.models import TaggedItemBase
 
 from wagtail.contrib.wagtailroutablepage.models import RoutablePageMixin, route
 from wagtail.wagtailadmin.edit_handlers import (
-    FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel, StreamFieldPanel
+    FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel, PageChooserPanel,
+    StreamFieldPanel
 )
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailcore.fields import RichTextField
@@ -37,6 +38,18 @@ class HomePageCarouselItem(Orderable, AbstractCarouselItem):
     page = ParentalKey('HomePage', related_name='carousel_items')
 
 
+class HomePageFeaturedPage(Orderable):
+    page = ParentalKey('HomePage', related_name='featured_pages')
+    featured_page = models.ForeignKey(Page)
+
+    panels = [
+        PageChooserPanel('featured_page')
+    ]
+
+    def __unicode__(self):
+        return self.featured_page
+
+
 class HomePageRelatedLink(Orderable, AbstractRelatedLink):
     page = ParentalKey('HomePage', related_name='related_links')
 
@@ -55,6 +68,7 @@ class HomePage(Page, WithStreamField):
 HomePage.content_panels = [
     FieldPanel('title', classname='full title'),
     StreamFieldPanel('body'),
+    InlinePanel('featured_pages', label='Featured pages'),
     InlinePanel('carousel_items', label='Carousel items'),
     InlinePanel('related_links', label='Related links'),
 ]
