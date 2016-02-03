@@ -41,6 +41,15 @@
         </ul>
         {% endif %}
         {% endwith %}
+
+
+        {% block share_on_twitter %}
+        <ul class="no-bullet">
+            <li>
+                <a href="https://twitter.com/share" class="twitter-share-button" data-via="shakespeare400" data-dnt="true"></a>
+            </li>
+        </ul>
+        {% endblock %}
     </footer>
     {% endblock %}
 </article>
