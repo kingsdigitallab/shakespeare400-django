@@ -29,6 +29,11 @@ requirejs.config({
         },
         'ga': {
             exports: '__ga__'
+        },
+        'twitter': {
+            deps: [
+                'modernizr'
+            ]
         }
     },
     deps: [
