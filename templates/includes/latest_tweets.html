@@ -1,0 +1,12 @@
+{% load cms_tags %}
+
+{% get_twitter_widget_id as twitter_widget_id %}
+
+<div class="feeds">
+    <h3>
+        <a href="//twitter.com/shakespeare400">
+            <i class="fa fa-twitter-square"></i> Follow us on Twitter
+        </a>
+    </h3>
+    <a class="twitter-timeline" data-dnt="true" href="https://twitter.com/shakespeare400" data-widget-id="{{ twitter_widget_id }}" data-chrome="nofooter noheader transparent" data-tweet-limit="2" data-aria-polite="assertive">Tweets by @shakespeare400</a>
+</div>

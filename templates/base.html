@@ -33,11 +33,6 @@
     <meta name="msapplication-TileImage" content="/static/images/favicon/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
 
-    <!-- define requirejs config settings. -->
-    <script type="text/javascript">
-        {% include 'includes/config.js' %}
-    </script>
-    {% require_module 'config' %}
 </head>
 <body>
     <div class="black-bar">
@@ -68,7 +63,12 @@
         </div>
     </div>
 
-    {% wagtailuserbar %}
+    <!-- {% wagtailuserbar %} -->
+
+    <script type="text/javascript">
+        {% include 'includes/config.js' %}
+    </script>
+    {% require_module 'config' %}
 
     {% block footer_scripts %}{% endblock %}
 </body>
