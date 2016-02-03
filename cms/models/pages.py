@@ -46,8 +46,8 @@ class HomePage(Page, WithStreamField):
         index.SearchField('body'),
     )
 
-    subpage_types = ['IndexPage', 'RichTextPage', 'BlogIndexPage',
-                     'ReviewIndexPage']
+    subpage_types = ['EventIndexPage', 'ReviewIndexPage', 'BlogIndexPage',
+                     'IndexPage', 'RichTextPage']
 
     class Meta:
         verbose_name = 'Homepage'
@@ -71,6 +71,8 @@ class IndexPage(Page, WithFeedImage, WithIntroduction):
     search_fields = Page.search_fields + (
         index.SearchField('intro'),
     )
+
+    subpage_types = ['RichTextPage']
 
 IndexPage.content_panels = [
     FieldPanel('title', classname='full title'),
@@ -99,6 +101,8 @@ class RichTextPage(Page, WithFeedImage):
         index.SearchField('intro'),
         index.SearchField('body'),
     )
+
+    subpage_types = []
 
 RichTextPage.content_panels = [
     FieldPanel('title', classname='full title'),
@@ -220,7 +224,7 @@ class BlogPost(Page, WithFeedImage, WithStreamField):
         index.SearchField('body'),
     )
 
-    subpage_types = ['BlogPost']
+    subpage_types = []
 
     @property
     def blog_index(self):
@@ -251,6 +255,8 @@ class EventIndexPage(RoutablePageMixin, Page, WithIntroduction):
     search_fields = Page.search_fields + (
         index.SearchField('intro'),
     )
+
+    subpage_types = ['EventPage']
 
     @property
     def events(self):
@@ -320,6 +326,8 @@ class EventPage(Page, WithFeedImage, WithStreamField):
         index.SearchField('location'),
         index.SearchField('body'),
     )
+
+    subpage_types = []
 
     @property
     def event_index(self):
@@ -452,6 +460,8 @@ class ReviewPage(Page, WithFeedImage, WithStreamField):
     search_fields = Page.search_fields + (
         index.SearchField('body'),
     )
+
+    subpage_types = []
 
     @property
     def review_index(self):
