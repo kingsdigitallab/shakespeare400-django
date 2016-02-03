@@ -1,6 +1,6 @@
 {% load wagtailcore_tags %}
 
-<ul class="no-bullet">
+<ul class="no-bullet index">
     {% for review in reviews %}
     <li>
         {% include "cms/includes/review_preview.html" with review=review %}

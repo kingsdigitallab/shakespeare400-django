@@ -11,7 +11,7 @@
  *	Header
  *	Navigation
  *	Main content
- *		Blog
+ *		Blog / Reviews / Events
  *		Feeds
  *		Homepage
  *		Panels / Callouts
@@ -272,7 +272,17 @@ article {
 	}
 }
 
-/* Blog */
+/* Blog / Reviews / Events */
+
+.index {
+	li {
+		border-bottom: 1px solid scale-color($primary-color, $lightness: 50%);
+	}
+
+	li li {
+		border-bottom: none;
+	}
+}
 
 .filter-description {
 	margin: 2rem 0 0;
@@ -297,6 +307,10 @@ article {
 		left: 0 !important;
 		width: 60px;
 	}
+}
+
+ul.categories {
+	margin-top: .5rem;
 }
 
 .post {
@@ -409,6 +423,7 @@ ul.posts {
 
 footer {
 	padding: 1rem 0;
+	color: $primary-color;
 
 	.logo {
 		img {
