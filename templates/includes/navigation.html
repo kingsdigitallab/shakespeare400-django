@@ -1,4 +1,4 @@
-{% load cms_tags staticfiles %}
+{% load cms_tags staticfiles wagtailroutablepage_tags %}
 
 {% block main_menu %}
 {% get_site_root as site_root %}
@@ -9,14 +9,20 @@
     <li><a href="{% get_facebook_url %}"><i class="fa fa-facebook-square fa-2x"></i></a> <a href="{% get_twitter_url %}"><i class="fa fa-twitter-square fa-2x"></i></a></li>
 </ul>
 
+{% get_event_categories as categories %}
+{% get_event_index_page as eip %}
+
 <div class="more-menu">
-    <h5>Browse by category</h5>
+    <h5>Events by category</h5>
     <ul class="no-bullet category">
-        <li><a href="#" class="conference"><i class="fa fa-circle conference"></i> Conference</a></li>
-        <li><a href="#" class="exhibition"><i class="fa fa-circle exhibition"></i> Exhibition</a></li>
-        <li><a href="#" class="performance"><i class="fa fa-circle performance"></i> Performance</a></li>
-        <li><a href="#" class="publication"><i class="fa fa-circle publication"></i> Publication</a></li>
-        <li><a href="#" class="screening"><i class="fa fa-circle screening"></i> Screening</a></li>
-        <li><a href="#" class="talk"><i class="fa fa-circle talk"></i> Talk</a></li>
+        {% for category in categories %}
+        {% with title=category.title %}
+        <li>
+            <a href="{%if eip %}{% routablepageurl eip 'category' title %}{% else %}#{% endif %}" class="{{ title|lower }}">
+                <i class="fa fa-circle {{ title|lower }}"></i> {{ title }}
+            </a>
+        </li>
+        {% endwith %}
+        {% endfor %}
     </ul>
 </div>
