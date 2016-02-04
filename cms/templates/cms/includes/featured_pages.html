@@ -69,6 +69,21 @@
         {% else %}
         <p>{{ page.body|truncatechars_html:120 }}</p>
         {% endif %}
+
+        {% if type == 'blogpost' %}
+        {% with page.tags.all as tags %}
+        {% if tags %}
+        <h3><i class="fa fa-tag"></i> Tags</h3>
+        <ul class="tags menu simple">
+            {% for tag in tags %}
+            <li class="tag">
+                <a href="{% routablepageurl page.get_parent.specific 'tag' tag %}">{{ tag }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        {% endif %}
     </div>
 
     <a href="{% pageurl page %}" class="button expanded">Find out more</a>
