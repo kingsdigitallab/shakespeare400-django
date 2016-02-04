@@ -272,6 +272,31 @@ class EventIndexPage(RoutablePageMixin, Page, WithIntroduction):
 
         return events
 
+    @route(r'^$')
+    def all_events(self, request):
+        events = self.events
+        logger.debug('Events: {}'.format(events))
+
+        return render(request, self.get_template(request),
+                      {'self': self, 'events': _paginate(request, events)})
+
+    @route(r'^category/(?P<category>[\w ]+)/$')
+    def category(self, request, category=None):
+        if not category:
+            # Invalid category filter
+            logger.error('Invalid category filter')
+            return self.all_posts(request)
+
+        events = self.events.filter(
+            categories__category__title=category)
+
+        return render(
+            request, self.get_template(request), {
+                'self': self, 'events': _paginate(request, events),
+                'filter_type': 'category', 'filter': category
+            }
+        )
+
 EventIndexPage.content_panels = [
     FieldPanel('title', classname='full title'),
     FieldPanel('intro', classname='full'),
@@ -349,7 +374,7 @@ EventPage.content_panels = [
     FieldPanel('location'),
     InlinePanel('categories', label='Categories'),
     InlinePanel('carousel_items', label='Carousel items'),
-    FieldPanel('body', classname='full'),
+    StreamFieldPanel('body'),
     FieldPanel('signup_link'),
     InlinePanel('related_links', label='Related links'),
 ]

@@ -31,11 +31,10 @@
     <footer>
         {% with review.categories.all as categories %}
         {% if categories %}
-        <h3>Categories</h3>
         <ul class="categories no-bullet">
             {% for category in categories %}
             <li class="category">
-                <a href="{% routablepageurl review.review_index.specific 'category' category.category.title %}">
+                <a href="{% routablepageurl review.review_index.specific 'category' category.category.title %}" class="{{ category.category.title|lower }}">
                     <i class="fa fa-circle {{ category.category.title|lower }}"></i>
                     {{ category.category.title|unslugify }}
                 </a>
