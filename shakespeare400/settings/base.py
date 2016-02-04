@@ -337,9 +337,13 @@ FABRIC_USER = getpass.getuser()
 GA_ID = ''
 
 # -----------------------------------------------------------------------------
-# Twitter
+# Facebook and Twitter
 # -----------------------------------------------------------------------------
 
+FACEBOOK_URL = '//www.facebook.com/kclshakespeare/'
+
+TWITTER_NAME = 'shakespeare_400'
+TWITTER_URL = '//twitter.com/{}/'.format(TWITTER_NAME)
 TWITTER_WIDGET_ID = ''
 
 # -----------------------------------------------------------------------------

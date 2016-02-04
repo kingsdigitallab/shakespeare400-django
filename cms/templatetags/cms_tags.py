@@ -11,6 +11,11 @@ def are_comments_allowed():
     return getattr(settings, 'ALLOW_COMMENTS', False)
 
 
+@register.assignment_tag(takes_context=False)
+def get_facebook_url():
+    return getattr(settings, 'FACEBOOK_URL')
+
+
 @register.assignment_tag(takes_context=True)
 def get_request_parameters(context, exclude=None):
     """Returns a string with all the request parameters except the exclude
@@ -33,6 +38,16 @@ def get_site_root(context):
     :rtype: `wagtail.wagtailcore.models.Page`
     """
     return context['request'].site.root_page
+
+
+@register.assignment_tag(takes_context=False)
+def get_twitter_name():
+    return getattr(settings, 'TWITTER_NAME')
+
+
+@register.assignment_tag(takes_context=False)
+def get_twitter_url():
+    return getattr(settings, 'TWITTER_URL')
 
 
 @register.assignment_tag(takes_context=False)
