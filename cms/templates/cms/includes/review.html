@@ -10,13 +10,6 @@
         {% block review_author %}
         <p class="byline">posted by <a href="{% routablepageurl review.review_index.specific 'author' review.owner %}">{{ review.owner|unslugify }}</a>
             <time datetime="{{ review.date|date:'c' }}">on {{ review.date }}</time>
-
-            {% are_comments_allowed as allow_comments %}
-            {% if allow_comments %}
-            {% block reviews_post_comments_link %}
-            <a href="#disqus_thread" data-disqus-identifier="{{ review.id }}">Comments</a>
-            {% endblock %}
-            {% endif %}
         </p>
         {% endblock %}
     </header>
