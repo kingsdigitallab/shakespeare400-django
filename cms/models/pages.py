@@ -197,7 +197,7 @@ class BlogIndexPage(RoutablePageMixin, Page, WithIntroduction):
             }
         )
 
-    @route(r'^tag/(?P<tag>[\w ]+)/$')
+    @route(r'^tag/(?P<tag>[\w\- ]+)/$')
     def tag(self, request, tag=None):
         if not tag:
             # Invalid tag filter
