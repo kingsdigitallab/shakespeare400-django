@@ -19,7 +19,7 @@
 
             {% if type == 'eventpage' or 'reviewpage' %}
             {% for c in page.categories.all %}
-            <i class="fa fa-circle {{ c.category.title|lower }} float-right"></i>
+            <i class="fa fa-circle {{ c.category.title|lower }} float-right">&#160;</i>
             {% endfor %}
             {% endif %}
         </p>
@@ -29,7 +29,7 @@
                 <a href="{% pageurl page %}" title="{{ page.title }}">
                     {% if page.feed_image %}
                     {% image page.feed_image width-200 as img %}
-                    <img class="media-object" src="{{ img.url }}" alt="{{ img.title }}" />
+                    <img src="{{ img.url }}" alt="{{ img.title }}" />
                     {% else %}
                     <img src="{% static 'images/placeholder-300x160.png' %}" alt="Thumbnail placeholder">
                     {% endif %}
