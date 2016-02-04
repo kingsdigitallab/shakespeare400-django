@@ -208,7 +208,7 @@ class BlogIndexPage(RoutablePageMixin, Page, WithIntroduction):
 
         return render(
             request, self.get_template(request), {
-                'self': self, 'posts': self._paginate(request, posts),
+                'self': self, 'posts': _paginate(request, posts),
                 'filter_type': 'tag', 'filter': tag
             }
         )
