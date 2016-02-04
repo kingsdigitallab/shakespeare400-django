@@ -18,7 +18,7 @@ from wagtail.wagtailadmin.edit_handlers import (
     StreamFieldPanel
 )
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
-from wagtail.wagtailcore.fields import RichTextField
+from wagtail.wagtailcore.fields import RichTextField, StreamField
 from wagtail.wagtailcore.models import Page, Orderable
 from wagtail.wagtailsearch import index
 from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
@@ -27,6 +27,7 @@ from wagtail.wagtailsnippets.models import register_snippet
 from .behaviours import WithFeedImage, WithIntroduction, WithStreamField
 from .carousel import AbstractCarouselItem
 from .links import AbstractRelatedLink
+from .streamfield import CMSStreamBlock
 
 import logging
 
@@ -55,8 +56,11 @@ class HomePageRelatedLink(Orderable, AbstractRelatedLink):
 
 
 class HomePage(Page, WithStreamField):
+    announcement = StreamField(CMSStreamBlock())
+
     search_fields = Page.search_fields + (
         index.SearchField('body'),
+        index.SearchField('announcement'),
     )
 
     subpage_types = ['EventIndexPage', 'ReviewIndexPage', 'BlogIndexPage',
@@ -70,6 +74,7 @@ HomePage.content_panels = [
     StreamFieldPanel('body'),
     InlinePanel('featured_pages', label='Featured pages'),
     InlinePanel('carousel_items', label='Carousel items'),
+    StreamFieldPanel('announcement'),
     InlinePanel('related_links', label='Related links'),
 ]
 
