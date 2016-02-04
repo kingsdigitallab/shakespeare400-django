@@ -31,17 +31,15 @@
     <footer>
         {% with post.tags.all as tags %}
         {% if tags %}
-        <h3><i class="fa fa-tag"></i> Tags</h3>
         <ul class="tags menu simple">
             {% for tag in tags %}
             <li class="tag">
-                <a href="{% routablepageurl post.blog_index.specific 'tag' tag %}">{{ tag|unslugify }}</a>
+                <a href="{% routablepageurl post.blog_index.specific 'tag' tag %}">{{ tag }}</a>
             </li>
             {% endfor %}
         </ul>
         {% endif %}
         {% endwith %}
-
 
         {% block share_on_twitter %}
         <ul class="no-bullet">

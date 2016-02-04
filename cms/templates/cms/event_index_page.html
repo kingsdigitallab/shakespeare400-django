@@ -7,13 +7,13 @@
 
 {% block posts_tagged_as %}
 {% if filter_type == 'category' %}
-<h2>Showing events for {{ filter|safe }} <a href="{% pageurl self %}">Show all</a></h2>
+<h4 class="filter-description">Events in <strong>{{ filter|safe }}</strong> <a href="{% pageurl self %}" class="small button float-right">Show all</a></h4>
 {% endif %}
 {% endblock %}
 
 {% block posts_by_date %}
 {% if filter_type == 'date' %}
-<h2>Showing events on {{ filter|date:filter_format }} <a href="{% pageurl self %}">Show all</a></h2>
+<h4 class="filter-description">Events on <strong>{{ filter|date:filter_format }}</strong> <a href="{% pageurl self %}">Show all</a></h4>
 {% endif %}
 {% endblock %}
 

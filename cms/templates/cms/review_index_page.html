@@ -7,19 +7,19 @@
 
 {% block posts_by %}
 {% if filter_type == 'author' %}
-<h2>Showing reviews by {{ filter|safe }} <a href="{% pageurl self %}">Show all</a></h2>
+<h4 class="filter-description">Reviews by <strong>{{ filter|safe }}</strong> <a href="{% pageurl self %}" class="small button float-right">Show all</a></h4>
 {% endif %}
 {% endblock %}
 
 {% block posts_tagged_as %}
 {% if filter_type == 'category' %}
-<h2>Showing reviews for {{ filter|safe }} <a href="{% pageurl self %}">Show all</a></h2>
+<h4 class="filter-description">Reviews for <strong>{{ filter|safe }}</strong> <a href="{% pageurl self %}" class="small button float-right">Show all</a></h4>
 {% endif %}
 {% endblock %}
 
 {% block posts_by_date %}
 {% if filter_type == 'date' %}
-<h2>Showing reviews on {{ filter|date:filter_format }} <a href="{% pageurl self %}">Show all</a></h2>
+<h4 class="filter-description">Reviews on <strong>{{ filter|date:filter_format }}</strong> <a href="{% pageurl self %}" class="small button float-right">Show all</a></h4>
 {% endif %}
 {% endblock %}
 
