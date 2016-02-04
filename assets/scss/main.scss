@@ -71,48 +71,54 @@ time,
 	color: $dark-gray;
 }
 
-.conference {
-	color: #e05924;
+.conference,
+a.conference {
+	color: #e05924 !important;
 }
 
 .conference-bg {
 	background-color: #e05924;
 }
 
-.exhibition {
-	color: #004b63;
+.exhibition,
+a.exhibition {
+	color: #004b63 !important;
 }
 
 .exhibition-bg {
 	background-color: #004b63;
 }
 
-.performance {
-	color: #126953;
+.performance,
+a.performance {
+	color: #126953 !important;
 }
 
 .performance-bg {
 	background-color: #126953;
 }
 
-.publication {
-	color: #ffab80;
+.publication,
+a.publication {
+	color: #ffab80 !important;
 }
 
 .publication-bg {
 	background-color: #ffab80;
 }
 
-.screening {
-	color: #ff9e2f;
+.screening,
+a.screening {
+	color: #ff9e2f !important;
 }
 
 .screening-bg {
 	background-color: #ff9e2f;
 }
 
-.talk {
-	color: #720039;
+.talk,
+a.talk {
+	color: #720039 !important;
 }
 
 .talk-bg {
@@ -221,6 +227,10 @@ nav {
 
 /** Main content **/
 
+.content-block {
+	background: rgba(255, 255, 255, .7);
+}
+
 .main,
 .post {
 	h1 {
@@ -258,6 +268,24 @@ article {
 	padding: .9375rem .25rem .25rem;
 	background: scale-color($primary-color, $lightness: 60%);
 	text-align: center;
+
+	&.blogpost:before,
+	&.eventpage:before,
+	&.reviewpage:before {
+		font-family: "FontAwesome";
+	}
+
+	&.blogpost:before {
+		content: "\f040";
+	}
+
+	&.eventpage:before {
+		content: "\f073";
+	}
+
+	&.reviewpage:before {
+		content: "\f005";
+	}
 }
 
 .announcement {
