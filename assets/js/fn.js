@@ -1,8 +1,11 @@
 define([
     'module',
     'jquery',
-    'foundation'
-], function(module, $, foundation) {
+    'modernizr',
+    'foundation.dropdown',
+    'foundation.equalizer',
+    'foundation.orbit',
+], function(module, $) {
     'use strict';
 
     $(document).ready(function() {
