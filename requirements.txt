@@ -5,10 +5,11 @@ django-libsass
 django-model-utils
 django-modelcluster
 django-redis
-django-require
+#django-require
+-e git+git://github.com/etianen/django-require.git#egg=django-require
 django-taggit
 elasticsearch
-libsass
+libsass==0.10.0
 pillow
 psycopg2
 wagtail
