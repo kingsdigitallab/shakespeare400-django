@@ -38,11 +38,13 @@
         {% elif child.block_type == 'page' %}
             <a href="{% pageurl child.value.page %}" class="button">{{ child.value.label }}</a>
         {% elif child.block_type == 'html' %}
+            <div class="iframe-container">
             {% if child.value.alignment == 'normal' %}
                 {{ child.value.bound_blocks.html.render }}
             {% else %}
                 {{ child.value.bound_blocks.html.render }}
             {% endif %}
+            </div>
         {% else %}
             {{ child }}
         {% endif %}

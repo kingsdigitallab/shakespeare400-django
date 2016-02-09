@@ -349,7 +349,7 @@ GA_ID = ''
 
 FACEBOOK_URL = '//www.facebook.com/kclshakespeare/'
 
-TWITTER_NAME = 'shakespeare_400'
+TWITTER_NAME = 'Shakespeare_400'
 TWITTER_URL = '//twitter.com/{}/'.format(TWITTER_NAME)
 TWITTER_WIDGET_ID = ''
 

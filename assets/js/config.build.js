@@ -12,6 +12,10 @@
 ({
     mainConfigFile: "config.js",
 
+    name: "main",
+
+    out: "config-built.js",
+
     /*
      * Wraps the module in an anonymous function to remove require() and define()
      * from the global namespace. Set to false if you wish to use these functions
@@ -38,6 +42,6 @@
      * This option will turn off the auto-preservation, but you will need
      * work out how best to surface the license information.
      */
-    preserveLicenseComments: true,
+    preserveLicenseComments: false,
 
 })
