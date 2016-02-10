@@ -209,5 +209,6 @@ def clear_cache():
 def touch_wsgi():
     require('srvr', 'path', 'within_virtualenv', provided_by=env.servers)
 
-    with cd(os.path.join(env.path, 'kdl')), prefix(env.within_virtualenv):
+    with cd(os.path.join(env.path, 'shakespeare400')), \
+            prefix(env.within_virtualenv):
         run('touch wsgi.py')
