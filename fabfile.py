@@ -66,10 +66,11 @@ def set_srvr_vars():
 
 
 @task
-def setup_environment():
+def setup_environment(version=None):
     require('srvr', 'path', 'within_virtualenv', provided_by=env.servers)
     create_virtualenv()
     clone_repo()
+    update(version)
     install_requirements()
 
 
@@ -112,7 +113,7 @@ def install_requirements():
         reqs = 'requirements.txt'
 
     with cd(env.path), prefix(env.within_virtualenv):
-        run('pip install -U -r {}'.format(reqs))
+        run('pip install --no-cache -U -r {}'.format(reqs))
 
 
 @task
@@ -157,15 +158,12 @@ def update(version=None):
 @task
 def own_django_log():
     """ make sure logs/django.log is owned by www-data"""
-
     require('srvr', 'path', 'within_virtualenv', provided_by=env.servers)
 
-    if env.srvr in ['local', 'vagrant']:
-        print(yellow('Do not change ownership of django log on local servers'))
-        return
-    sudo(
-        'chown www-data:www-data {}'.format(
-            os.path.join(env.path, 'logs', 'django.log')))
+    with quiet():
+        log_path = os.path.join(env.path, 'logs', 'django.log')
+        if run('ls {}'.format(log_path)).succeeded:
+            sudo('chown www-data:www-data {}'.format(log_path))
 
 
 @task
