@@ -66,34 +66,38 @@ def set_srvr_vars():
 
 
 @task
-def deploy(version=None):
-    update(version)
+def setup_environment():
+    require('srvr', 'path', 'within_virtualenv', provided_by=env.servers)
+    create_virtualenv()
+    clone_repo()
     install_requirements()
-    own_django_log()
-    migrate()
-    collect_static()
-    update_index()
-    clear_cache()
-    touch_wsgi()
 
 
 @task
-def update(version=None):
+def create_virtualenv():
     require('srvr', 'path', 'within_virtualenv', provided_by=env.servers)
+    with quiet():
+        env_vpath = os.path.join(env.envs_path, env.srvr)
+        if run('ls {}'.format(env_vpath)).succeeded:
+            print(
+                green('virtual environment at [{}] exists'.format(env_vpath)))
+            return
 
-    if version:
-        # try specified version first
-        to_version = version
-    elif not version and env.srvr in ['local', 'vagrant', 'dev']:
-        # if local, vagrant or dev deploy to develop branch
-        to_version = 'develop'
-    else:
-        # else deploy to master branch
-        to_version = 'master'
+    print(yellow('setting up virtual environment in [{}]'.format(env_vpath)))
+    run('virtualenv {}'.format(env_vpath))
 
-    with cd(env.path), prefix(env.within_virtualenv):
-        run('git pull')
-        run('git checkout {}'.format(to_version))
+
+@task
+def clone_repo():
+    require('srvr', 'path', 'within_virtualenv', provided_by=env.servers)
+    with quiet():
+        if run('ls {}'.format(os.path.join(env.path, '.git'))).succeeded:
+            print(green(('repository at'
+                         ' [{}] exists').format(env.path)))
+            return
+
+    print(yellow('cloneing repository to [{}]'.format(env.path)))
+    run('git clone {} {}'.format(REPOSITORY, env.path))
 
 
 @task
@@ -117,6 +121,37 @@ def reinstall_requirement(which):
 
     with cd(env.path), prefix(env.within_virtualenv):
         run('pip uninstall {0} && pip install --no-deps {0}'.format(which))
+
+
+@task
+def deploy(version=None):
+    update(version)
+    install_requirements()
+    own_django_log()
+    migrate()
+    collect_static()
+    # update_index()
+    # clear_cache()
+    touch_wsgi()
+
+
+@task
+def update(version=None):
+    require('srvr', 'path', 'within_virtualenv', provided_by=env.servers)
+
+    if version:
+        # try specified version first
+        to_version = version
+    elif not version and env.srvr in ['local', 'vagrant', 'dev']:
+        # if local, vagrant or dev deploy to develop branch
+        to_version = 'develop'
+    else:
+        # else deploy to master branch
+        to_version = 'master'
+
+    with cd(env.path), prefix(env.within_virtualenv):
+        run('git pull')
+        run('git checkout {}'.format(to_version))
 
 
 @task
@@ -176,38 +211,3 @@ def touch_wsgi():
 
     with cd(os.path.join(env.path, 'kdl')), prefix(env.within_virtualenv):
         run('touch wsgi.py')
-
-
-@task
-def setup_environment():
-    require('srvr', 'path', 'within_virtualenv', provided_by=env.servers)
-    create_virtualenv()
-    clone_repo()
-    install_requirements()
-
-
-@task
-def create_virtualenv():
-    require('srvr', 'path', 'within_virtualenv', provided_by=env.servers)
-    with quiet():
-        env_vpath = os.path.join(env.envs_path, env.srvr)
-        if run('ls {}'.format(env_vpath)).succeeded:
-            print(
-                green('virtual environment at [{}] exists'.format(env_vpath)))
-            return
-
-    print(yellow('setting up virtual environment in [{}]'.format(env_vpath)))
-    run('virtualenv {}'.format(env_vpath))
-
-
-@task
-def clone_repo():
-    require('srvr', 'path', 'within_virtualenv', provided_by=env.servers)
-    with quiet():
-        if run('ls {}'.format(os.path.join(env.path, '.git'))).succeeded:
-            print(green(('repository at'
-                         ' [{}] exists').format(env.path)))
-            return
-
-    print(yellow('cloneing repository to [{}]'.format(env.path)))
-    run('git clone {} {}'.format(REPOSITORY, env.path))
