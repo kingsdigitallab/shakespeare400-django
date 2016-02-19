@@ -4,12 +4,12 @@
 //except for "app" ones, which are in a sibling
 //directory.
 requirejs.config({
-    baseUrl: "",
+    baseUrl: "/static/js",
     urlArgs: "bust=" + (new Date()).getTime(),
     paths: {
         "jquery": "../vendor/jquery/dist/jquery",
 
-        /* Foundation */
+        // Foundation
         "foundation": "../vendor/foundation-sites/js/foundation.core",
         "foundation.dropdown": "../vendor/foundation-sites/js/foundation.dropdown",
         "foundation.equalizer": "../vendor/foundation-sites/js/foundation.equalizer",
@@ -18,10 +18,8 @@ requirejs.config({
         "foundation.util.keyboard": "../vendor/foundation-sites/js/foundation.util.keyboard",
         "foundation.util.mediaQuery": "../vendor/foundation-sites/js/foundation.util.mediaQuery",
         "foundation.util.motion": "../vendor/foundation-sites/js/foundation.util.motion",
-        // "foundation.util.nest": "../vendor/foundation-sites/js/foundation.util.nest",
         "foundation.util.timerAndImageLoader": "../vendor/foundation-sites/js/foundation.util.timerAndImageLoader",
         "foundation.util.touch": "../vendor/foundation-sites/js/foundation.util.touch",
-        // "foundation.util.triggers": "../vendor/foundation-sites/js/foundation.util.triggers",
 
         "modernizr": "../vendor/modernizr/modernizr",
 
