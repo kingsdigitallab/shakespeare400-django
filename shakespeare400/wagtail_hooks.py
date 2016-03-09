@@ -2,7 +2,8 @@ from django.conf import settings
 from django.utils.html import format_html, format_html_join
 
 from wagtail.wagtailcore import hooks
-from wagtail.wagtailcore.whitelist import attribute_rule, check_url, allow_without_attributes
+from wagtail.wagtailcore.whitelist import (
+    attribute_rule, check_url, allow_without_attributes)
 
 
 def whitelister_element_rules():
@@ -11,7 +12,10 @@ def whitelister_element_rules():
         'a': attribute_rule({'href': check_url, 'id': True, 'class': True}),
         'span': attribute_rule({'class': True}),
         'i': attribute_rule({'class': True}),
-        'iframe': attribute_rule({'id': True, 'class': True, 'src': True, 'style': True, 'frameborder': True, 'allowfullscreen': True, 'width': True, 'height': True }),
+        'iframe': attribute_rule(
+            {'id': True, 'class': True, 'src': True, 'style': True,
+             'frameborder': True, 'allowfullscreen': True, 'width': True,
+             'height': True}),
     }
 
 hooks.register('construct_whitelister_element_rules',
@@ -35,8 +39,9 @@ def editor_js():
     ]
 
     js_includes = format_html_join('\n', '<script src="{0}{1}"></script>',
-        ((settings.STATIC_URL, filename) for filename in js_files)
-    )
+                                   ((settings.STATIC_URL, filename)
+                                    for filename in js_files)
+                                   )
 
     return js_includes + format_html("""
         <script>

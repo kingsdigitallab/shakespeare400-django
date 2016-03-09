@@ -1,6 +1,7 @@
 from base import *
 
 DEBUG = True
+REQUIRE_DEBUG = DEBUG
 
 INTERNAL_IPS = INTERNAL_IPS + ('', )
 
@@ -16,6 +17,7 @@ DATABASES = {
 
 LOGGING_LEVEL = logging.DEBUG
 
+LOGGING['loggers']['cms']['level'] = LOGGING_LEVEL
 LOGGING['loggers']['shakespeare400']['level'] = LOGGING_LEVEL
 
 TEMPLATES[0]['OPTIONS']['debug'] = True

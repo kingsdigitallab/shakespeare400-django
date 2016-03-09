@@ -11,8 +11,9 @@
  *	Header
  *	Navigation
  *	Main content
- *		Blog
+ *		Blog / Reviews / Events
  *		Feeds
+ *		Images
  *		Homepage
  *		Panels / Callouts
  *	Footer
@@ -71,48 +72,54 @@ time,
 	color: $dark-gray;
 }
 
-.conference {
-	color: #e05924;
+.conference,
+a.conference {
+	color: #e05924 !important;
 }
 
 .conference-bg {
 	background-color: #e05924;
 }
 
-.exhibition {
-	color: #004b63;
+.exhibition,
+a.exhibition {
+	color: #004b63 !important;
 }
 
 .exhibition-bg {
 	background-color: #004b63;
 }
 
-.performance {
-	color: #126953;
+.performance,
+a.performance {
+	color: #126953 !important;
 }
 
 .performance-bg {
 	background-color: #126953;
 }
 
-.publication {
-	color: #ffab80;
+.publication,
+a.publication {
+	color: #ffab80 !important;
 }
 
 .publication-bg {
 	background-color: #ffab80;
 }
 
-.screening {
-	color: #ff9e2f;
+.screening,
+a.screening {
+	color: #ff9e2f !important;
 }
 
 .screening-bg {
 	background-color: #ff9e2f;
 }
 
-.talk {
-	color: #720039;
+.talk,
+a.talk {
+	color: #720039 !important;
 }
 
 .talk-bg {
@@ -129,8 +136,8 @@ time,
     margin: 1rem 0;
     height: 0;
     overflow: hidden;
-    border: 3px solid scale-color($primary-color, $lightness: 50%);
     clear: both;
+    border: 1px solid scale-color($primary-color, $lightness: 50%);
 
     iframe {
 	    position: absolute;
@@ -181,12 +188,6 @@ footer {
 
 /** Navigation **/
 nav {
-	a {
-		&:hover {
-			background: scale-color($primary-color, $lightness: 20%);
-		}
-	}
-
 	.active {
 		background: scale-color($primary-color, $lightness: -20%);
 	}
@@ -221,6 +222,10 @@ nav {
 
 /** Main content **/
 
+.content-block {
+	background: rgba(255, 255, 255, .7);
+}
+
 .main,
 .post {
 	h1 {
@@ -239,15 +244,17 @@ article {
 	a {
 		color: $kings-red !important;
 	}
+	footer {
+		padding: .25rem 0;
+		ul {
+			margin-bottom: 0;
+		}
+	}
 }
 
 .cat-title {
 	margin-top: 0 !important;
-}
-
-.image {
-	margin-bottom: 1rem;
-	display: block;
+	margin-bottom: 1.25rem;
 }
 
 .bookmark {
@@ -258,6 +265,24 @@ article {
 	padding: .9375rem .25rem .25rem;
 	background: scale-color($primary-color, $lightness: 60%);
 	text-align: center;
+
+	&.blogpost:before,
+	&.eventpage:before,
+	&.reviewpage:before {
+		font-family: "FontAwesome";
+	}
+
+	&.blogpost:before {
+		content: "\f040";
+	}
+
+	&.eventpage:before {
+		content: "\f073";
+	}
+
+	&.reviewpage:before {
+		content: "\f005";
+	}
 }
 
 .announcement {
@@ -272,7 +297,23 @@ article {
 	}
 }
 
-/* Blog */
+/* Blog / Reviews / Events */
+
+.index {
+	li {
+		border-bottom: 1px solid scale-color($primary-color, $lightness: 50%);
+	}
+
+	li li {
+		border-bottom: none;
+	}
+}
+
+.preview {
+	p {
+		margin-bottom: 0;
+	}
+}
 
 .filter-description {
 	margin: 2rem 0 0;
@@ -280,11 +321,16 @@ article {
 }
 
 .tags {
-	padding-top: 1rem;
+	padding: .5rem 0;
 	a {
 		color: white !important;
 		background: $secondary-color;
-		padding: .5rem !important;
+		padding: .3125rem !important;
+		&:before {
+			content:"\f02b";
+			font-family: "FontAwesome";
+			padding-right: 3px;
+		}
 	}
 }
 
@@ -297,6 +343,10 @@ article {
 		left: 0 !important;
 		width: 60px;
 	}
+}
+
+ul.categories {
+	margin-top: .5rem;
 }
 
 .post {
@@ -363,6 +413,23 @@ ul.posts {
 	}
 }
 
+/* Images */
+
+.image {
+	margin-bottom: 1rem;
+	display: block;
+}
+
+.caption {
+	padding: .3125rem;
+	background: scale-color($primary-color, $lightness: 80%);
+	font-style: italic;
+	color: scale-color($primary-color, $lightness: -20%);
+	p {
+		margin-bottom: 0;
+	}
+}
+
 /* Homepage */
 
 .home-splash {
@@ -384,6 +451,7 @@ ul.posts {
 	border: none !important;
 	border-top: 1px solid scale-color($primary-color, $lightness: 60%) !important;
 	background-color: rgba(255, 255, 255, .7) !important;
+	margin-bottom: 0 !important;
 
 	h5 {
 		font-weight: 700;
@@ -409,6 +477,7 @@ ul.posts {
 
 footer {
 	padding: 1rem 0;
+	color: $primary-color;
 
 	.logo {
 		img {
@@ -432,5 +501,6 @@ footer {
 	}
 }
 
+@include foundation-menu-icon;
 @include motion-ui-transitions;
 @include foundation-everything;

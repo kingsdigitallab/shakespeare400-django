@@ -7,16 +7,13 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 For production settings see
 https://docs.djangoproject.com/en/dev/howto/deployment/checklist/
 """
-# from ddhldap.settings import *
-
-from wagtailbase import settings as ws
-
 import os
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 
 PROJECT_NAME = 'shakespeare400'
-PROJECT_TITLE = 'Change the title in the settings'
+PROJECT_TITLE = 'Shakespeare400'
 
 # -----------------------------------------------------------------------------
 # Core Settings
@@ -58,6 +55,10 @@ TEMPLATE_DEBUG = False
 
 INSTALLED_APPS = (
     'grappelli',
+    'taggit',
+    'modelcluster',
+    'rest_framework',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -65,15 +66,28 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'compressor',
     'require',
 )
 
-INSTALLED_APPS += ws.INSTALLED_APPS
+INSTALLED_APPS += (
+    'wagtail.wagtailcore',
+    'wagtail.wagtailadmin',
+    'wagtail.wagtaildocs',
+    'wagtail.wagtailsnippets',
+    'wagtail.wagtailusers',
+    'wagtail.wagtailimages',
+    'wagtail.wagtailembeds',
+    'wagtail.wagtailsearch',
+    'wagtail.wagtailredirects',
+    'wagtail.wagtailforms',
+    'wagtail.wagtailsites',
+    'wagtail.contrib.wagtailroutablepage',
+)
 
 INSTALLED_APPS += (
-    'latesttweets',
+    'cms',
     'shakespeare400',
-    'wagtailbase',
 )
 
 INTERNAL_IPS = ('127.0.0.1', )
@@ -113,22 +127,22 @@ LOGGING = {
         }
     },
     'loggers': {
+        'cms': {
+            'handlers': ['console', 'file'],
+            'level': LOGGING_LEVEL,
+            'propagate': True
+        },
         'django': {
             'handlers': ['file'],
             'level': LOGGING_LEVEL,
             'propagate': True
         },
-        # 'django_auth_ldap': {
-        #     'handlers': ['file'],
-        #     'level': LOGGING_LEVEL,
-        #     'propagate': True
-        # },
-        'shakespeare400': {
+        'elasticsearch': {
             'handlers': ['file'],
             'level': LOGGING_LEVEL,
             'propagate': True
         },
-        'elasticsearch': {
+        'shakespeare400': {
             'handlers': ['file'],
             'level': LOGGING_LEVEL,
             'propagate': True
@@ -237,6 +251,20 @@ SESSION_COOKIE_SECURE = True
 # -----------------------------------------------------------------------------
 
 # -----------------------------------------------------------------------------
+# CMS
+# -----------------------------------------------------------------------------
+
+EVENT_CATEGORIES = ['Conference', 'Exhibition', 'Performance', 'Publication',
+                    'Screening', 'Talk']
+
+# -----------------------------------------------------------------------------
+# DISQUS
+# http://shakespeare400.disqus.com/
+# -----------------------------------------------------------------------------
+
+ALLOW_COMMENTS = True
+
+# -----------------------------------------------------------------------------
 # Django Compressor
 # http://django-compressor.readthedocs.org/en/latest/
 # -----------------------------------------------------------------------------
@@ -265,14 +293,14 @@ GRAPPELLI_ADMIN_TITLE = PROJECT_TITLE
 # -----------------------------------------------------------------------------
 
 # The baseUrl to pass to the r.js optimizer, relative to STATIC_ROOT.
-REQUIRE_BASE_URL = 'assets/js/'
+REQUIRE_BASE_URL = 'js'
 
 # The name of a build profile to use for your project, relative to
 # REQUIRE_BASE_URL. A sensible value would be 'app.build.js'.
 # Leave blank to use the built-in default build profile. Set to False to
 # disable running the default profile (e.g. if only using it to build
 # Standalone Modules)
-REQUIRE_BUILD_PROFILE = False
+REQUIRE_BUILD_PROFILE = None
 
 # The name of the require.js script used by your project, relative to
 # REQUIRE_BASE_URL.
@@ -316,6 +344,16 @@ FABRIC_USER = getpass.getuser()
 GA_ID = ''
 
 # -----------------------------------------------------------------------------
+# Facebook and Twitter
+# -----------------------------------------------------------------------------
+
+FACEBOOK_URL = '//www.facebook.com/kclshakespeare/'
+
+TWITTER_NAME = 'Shakespeare_400'
+TWITTER_URL = '//twitter.com/{}/'.format(TWITTER_NAME)
+TWITTER_WIDGET_ID = ''
+
+# -----------------------------------------------------------------------------
 # Wagtail
 # http://wagtail.readthedocs.org/en/latest/
 # -----------------------------------------------------------------------------
@@ -337,4 +375,4 @@ WAGTAILSEARCH_BACKENDS = {
     }
 }
 
-ITEMS_PER_PAGE = ws.ITEMS_PER_PAGE
+ITEMS_PER_PAGE = 10

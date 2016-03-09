@@ -1,0 +1,24 @@
+{% extends "cms/index_page.html" %}
+{% load wagtailcore_tags %}
+
+{% block title %}<h1 class="cat-title"><span class="bookmark eventpage"></span> Events</h1>{% endblock %}
+
+{% block main %}
+
+{% block posts_tagged_as %}
+{% if filter_type == 'category' %}
+<h4 class="filter-description">Events in <strong>{{ filter|safe }}</strong> <a href="{% pageurl self %}" class="small button float-right">Show all</a></h4>
+{% endif %}
+{% endblock %}
+
+{% block posts_by_date %}
+{% if filter_type == 'date' %}
+<h4 class="filter-description">Events on <strong>{{ filter|date:filter_format }}</strong> <a href="{% pageurl self %}">Show all</a></h4>
+{% endif %}
+{% endblock %}
+
+{% block index_page_children %}
+{% include "cms/includes/event_index_events.html" with class="events" %}
+{% endblock %}
+
+{% endblock %}
