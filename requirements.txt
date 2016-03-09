@@ -5,8 +5,8 @@ django-libsass
 django-model-utils
 django-modelcluster
 django-redis
-#django-require
--e git+git://github.com/etianen/django-require.git#egg=django-require
+django-require
+# -e git+git://github.com/etianen/django-require.git#egg=django-require
 django-taggit
 elasticsearch
 libsass==0.10.0
