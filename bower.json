@@ -3,13 +3,13 @@
     "version": "0.1",
     "dependencies": {
         "almond": null,
-        "babel": null,
         "jquery": null,
         "foundation-sites": null,
         "font-awesome": null,
         "motion-ui": null,
         "r.js": null,
-        "requirejs": null
+        "requirejs": null,
+        "requirejs-babel": null
     },
     "main": "assets/js/main.js",
     "ignore": [
