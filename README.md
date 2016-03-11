@@ -9,4 +9,3 @@ Features:
 * Generic pages and streamfield
 * Carousels
 * Twitter/Facebook integration
-* Disqus integration

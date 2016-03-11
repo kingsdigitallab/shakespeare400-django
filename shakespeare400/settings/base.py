@@ -351,7 +351,7 @@ FACEBOOK_URL = '//www.facebook.com/kclshakespeare/'
 
 TWITTER_NAME = 'Shakespeare_400'
 TWITTER_URL = '//twitter.com/{}/'.format(TWITTER_NAME)
-TWITTER_WIDGET_ID = ''
+TWITTER_WIDGET_ID = '707508707500892161'
 
 # -----------------------------------------------------------------------------
 # Wagtail
