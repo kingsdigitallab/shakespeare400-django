@@ -10,11 +10,11 @@
  *   - 'out' will be overidden by django-require during the build process.
  */
 ({
-    mainConfigFile: "config.js",
+    name: 'main',
 
-    name: "main",
+    mainConfigFile: 'config.require.js',
 
-    out: "config-built.js",
+    out: 'config-built.js',
 
     /*
      * Wraps the module in an anonymous function to remove require() and define()
@@ -26,13 +26,13 @@
     /*
      * How to optimize all the JS files in the build output directory.
      * Right now only the following values are supported:
-     * - "uglify": Uses UglifyJS to minify the code.
-     * - "uglify2": Uses UglifyJS2.
-     * - "closure": Uses Google's Closure Compiler in simple optimization
-     * mode to minify the code. Only available if REQUIRE_ENVIRONMENT is "rhino" (the default).
-     * - "none": No minification will be done.
+     * - 'uglify': Uses UglifyJS to minify the code.
+     * - 'uglify2': Uses UglifyJS2.
+     * - 'closure': Uses Google's Closure Compiler in simple optimization
+     * mode to minify the code. Only available if REQUIRE_ENVIRONMENT is 'rhino' (the default).
+     * - 'none': No minification will be done.
      */
-    optimize: "uglify2",
+    optimize: 'uglify2',
 
     /*
      * By default, comments that have a license in them are preserved in the
@@ -44,4 +44,17 @@
      */
     preserveLicenseComments: false,
 
+    'config': {
+        'es6': {
+            'resolveModuleSource': function(source) {
+                return 'es6!' + source;
+            }
+        }
+    },
+
+    exclude: ['babel'],
+
+    pragmasOnSave: {
+        'excludeBabel': true
+    }
 })

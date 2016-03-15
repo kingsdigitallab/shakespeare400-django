@@ -12,6 +12,7 @@
  *	Navigation
  *	Main content
  *		Blog / Reviews / Events
+ *		Carousel
  *		Feeds
  *		Images
  *		Homepage
@@ -385,6 +386,17 @@ ul.posts {
 	li li {
 		border-bottom: none;
 	}
+}
+
+/* Carousel */
+
+.orbit {
+	margin-bottom: 1rem;
+}
+
+.orbit-previous,
+.orbit-next {
+	background: rgba(0, 0, 0, .5);
 }
 
 /* Feeds */
