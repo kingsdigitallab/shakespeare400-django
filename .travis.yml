@@ -4,7 +4,7 @@ python:
   - 2.7
 
 env:
-  - TOX_ENV=py27
+  - TOX_ENV=py27 DJANGO_SETTINGS_MODULE=shakespeare400.settings.test
   - TOX_ENV=flake8
 
 install:
