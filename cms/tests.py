@@ -5,7 +5,6 @@ from cms.models.pages import (BlogIndexPage, BlogPost, EventIndexPage,
                               ReviewPage, RichTextPage, _paginate)
 from django.test import RequestFactory, TestCase
 from wagtail.tests.utils import WagtailPageTests
-from wagtail.wagtailcore.models import Page
 
 
 class TestPages(TestCase):
