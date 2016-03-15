@@ -91,7 +91,7 @@ class IndexPage(Page, WithFeedImage, WithIntroduction):
         index.SearchField('intro'),
     )
 
-    subpage_types = ['RichTextPage']
+    subpage_types = ['IndexPage', 'RichTextPage']
 
 IndexPage.content_panels = [
     FieldPanel('title', classname='full title'),
@@ -137,17 +137,17 @@ RichTextPage.promote_panels = Page.promote_panels + [
 
 def _paginate(request, items):
     # Pagination
-    page = request.GET.get('page', 1)
+    page_number = request.GET.get('page', 1)
     paginator = Paginator(items, settings.ITEMS_PER_PAGE)
 
     try:
-        items = paginator.page(page)
+        page = paginator.page(page_number)
     except EmptyPage:
-        items = paginator.page(paginator.num_pages)
+        page = paginator.page(paginator.num_pages)
     except PageNotAnInteger:
-        items = paginator.page(1)
+        page = paginator.page(1)
 
-    return items
+    return page
 
 
 # Blogs
