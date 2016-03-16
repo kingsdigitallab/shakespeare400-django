@@ -392,7 +392,7 @@
     "model": "cms.eventpage",
     "pk": 12,
     "fields": {
-        "feed_image": 5,
+        "feed_image": null,
         "body": "[{x}]",
         "date_from": "2016-02-10",
         "date_to": "2016-02-17",
@@ -438,7 +438,7 @@
     "model": "cms.reviewpage",
     "pk": 10,
     "fields": {
-        "feed_image": 1,
+        "feed_image": null,
         "body": "[{x}]",
         "date": "2016-02-01"
     }
