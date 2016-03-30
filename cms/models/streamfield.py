@@ -70,3 +70,4 @@ class CMSStreamBlock(StreamBlock):
     embed = EmbedBlock(icon='media')
 
     html = AlignedHTMLBlock(icon='code', label='Raw HTML')
+    map_html = AlignedHTMLBlock(icon='code', label='Map HTML')
