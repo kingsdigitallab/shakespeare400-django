@@ -1,8 +1,8 @@
 import datetime
 
 from cms.models.pages import (
-    BlogIndexPage, BlogPost, EventIndexPage, EventPage, HomePage, IndexPage,
-    ReviewIndexPage, ReviewPage, RichTextPage, _paginate
+    BlogIndexPage, BlogPost, EventIndexPage, EventPage, Gallery, HomePage,
+    IndexPage, ReviewIndexPage, ReviewPage, RichTextPage, _paginate
 )
 from django.contrib.auth.models import User
 from django.test import RequestFactory, TestCase
