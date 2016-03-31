@@ -37,7 +37,7 @@ class TestHomePage(WagtailPageTests):
     def test_subpage_types(self):
         self.assertAllowedSubpageTypes(HomePage, {
             BlogIndexPage, EventIndexPage, IndexPage, ReviewIndexPage,
-            RichTextPage}
+            RichTextPage, Gallery}
         )
 
 

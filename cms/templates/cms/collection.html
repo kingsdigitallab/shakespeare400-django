@@ -1,0 +1,25 @@
+{% extends "cms/base.html" %}
+{% load wagtailimages_tags %}
+
+{% block meta_title %}{{ self.title }} | {{ collection.collection.name }}{% endblock %}
+
+{% block title %}
+<h1 class="cat-title">
+    <span class="bookmark">&nbsp;</span>
+    {{ self.title }}: {{ collection.collection.name }}
+</h1>
+{% endblock %}
+
+{% block main %}
+
+<div class="row">
+    {% for image in collection.images %}
+    <div class="small-6 medium-3 large-2 columns">
+        {% image image width-200 as thumb %}
+
+        <img class="thumbnail" src="{{ thumb.url }}" alt="{{ thumb.title }}" />
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

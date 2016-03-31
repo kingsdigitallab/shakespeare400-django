@@ -19,13 +19,14 @@ from wagtail.wagtailadmin.edit_handlers import (
 from wagtail.wagtailcore.fields import RichTextField, StreamField
 from wagtail.wagtailcore.models import Orderable, Page
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
+from wagtail.wagtailimages.models import Image
 from wagtail.wagtailsearch import index
 from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
 from wagtail.wagtailsnippets.models import register_snippet
 
 from .behaviours import WithFeedImage, WithIntroduction, WithStreamField
 from .carousel import AbstractCarouselItem
-from .links import AbstractRelatedLink
+from .links import AbstractLinkFields, AbstractRelatedLink
 from .streamfield import CMSStreamBlock
 
 logger = logging.getLogger(__name__)
@@ -61,7 +62,7 @@ class HomePage(Page, WithStreamField):
     )
 
     subpage_types = ['EventIndexPage', 'ReviewIndexPage', 'BlogIndexPage',
-                     'IndexPage', 'RichTextPage']
+                     'IndexPage', 'RichTextPage', 'Gallery']
 
     class Meta:
         verbose_name = 'Homepage'
@@ -537,3 +538,61 @@ ReviewPage.content_panels = [
 ReviewPage.promote_panels = Page.promote_panels + [
     ImageChooserPanel('feed_image'),
 ]
+
+
+class GalleryCollection(Orderable, AbstractLinkFields):
+    page = ParentalKey('Gallery', related_name='collections')
+
+    collection = models.ForeignKey(
+        'wagtailcore.Collection', null=True, blank=True,
+        on_delete=models.SET_NULL, related_name='+'
+    )
+    description = models.CharField(max_length=255, blank=True)
+
+    panels = [
+        FieldPanel('collection'),
+        FieldPanel('description'),
+    ]
+
+    @property
+    def images(self):
+        return Image.objects.filter(collection=self.collection)
+
+    @property
+    def preview(self):
+        return self.images.first()
+
+    def __unicode__(self):
+        return self.description
+
+
+class Gallery(RoutablePageMixin, Page, WithIntroduction):
+    search_fields = Page.search_fields + (
+        index.SearchField('intro'),
+    )
+
+    subpage_types = []
+
+    @route(r'^$')
+    def gallery(self, request):
+        return render(request, self.get_template(request), {'self': self})
+
+    @route(r'^collection/(?P<collection_id>\d+)/$', name='gallery_collection')
+    def category(self, request, collection_id):
+        if not collection_id:
+            # invalid collection filter
+            logger.error('Invalid collection filter')
+            return self.gallery(request)
+
+        collection = self.collections.get(id=collection_id)
+
+        return render(request, 'cms/collection.html',
+                      {'self': self, 'collection': collection})
+
+Gallery.content_panels = [
+    FieldPanel('title', classname='full title'),
+    FieldPanel('intro', classname='full'),
+    InlinePanel('collections', label='Collections'),
+]
+
+Gallery.promote_panels = Page.promote_panels
