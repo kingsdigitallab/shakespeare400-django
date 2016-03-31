@@ -1,25 +1,24 @@
 from __future__ import unicode_literals
 
 from datetime import date
+import logging
 
 from django.conf import settings
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db import models
+from django.db.models import Q
 from django.shortcuts import render
-
 from modelcluster.fields import ParentalKey
 from modelcluster.tags import ClusterTaggableManager
-
 from taggit.models import TaggedItemBase
-
 from wagtail.contrib.wagtailroutablepage.models import RoutablePageMixin, route
 from wagtail.wagtailadmin.edit_handlers import (
     FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel, PageChooserPanel,
     StreamFieldPanel
 )
-from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailcore.fields import RichTextField, StreamField
-from wagtail.wagtailcore.models import Page, Orderable
+from wagtail.wagtailcore.models import Orderable, Page
+from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailsearch import index
 from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
 from wagtail.wagtailsnippets.models import register_snippet
@@ -28,8 +27,6 @@ from .behaviours import WithFeedImage, WithIntroduction, WithStreamField
 from .carousel import AbstractCarouselItem
 from .links import AbstractRelatedLink
 from .streamfield import CMSStreamBlock
-
-import logging
 
 logger = logging.getLogger(__name__)
 
@@ -278,23 +275,39 @@ class EventIndexPage(RoutablePageMixin, Page, WithIntroduction):
     subpage_types = ['EventPage']
 
     @property
-    def events(self):
+    def all_events(self):
         # gets list of live event pages that are descendants of this page
         events = EventPage.objects.live().descendant_of(self)
 
-        # filters events list to get ones that are either
-        # running now or start in the future
-        events = events.filter(date_from__gte=date.today())
-
         # orders by date
-        events = events.order_by('date_from')
+        events = events.order_by('-date_from')
 
         return events
 
-    @route(r'^$')
-    def all_events(self, request):
-        events = self.events
-        logger.debug('Events: {}'.format(events))
+    @property
+    def live_events(self):
+        # gets list of live event pages that are descendants of this page
+        events = self.all_events.order_by('date_from')
+
+        # filters events list to get ones that are either
+        # running now or start in the future
+        today = date.today()
+        events = events.filter(Q(date_from__gte=today) | Q(date_to__gte=today))
+
+        return events
+
+    @route(r'^$', name='live_events')
+    def get_live_events(self, request):
+        events = self.live_events
+        logger.debug('Live events: {}'.format(events))
+
+        return render(request, self.get_template(request),
+                      {'self': self, 'events': _paginate(request, events)})
+
+    @route(r'^all/$', name='all_events')
+    def get_all_events(self, request):
+        events = self.all_events
+        logger.debug('All events: {}'.format(events))
 
         return render(request, self.get_template(request),
                       {'self': self, 'events': _paginate(request, events)})

@@ -1,16 +1,20 @@
 import datetime
 
-from cms.models.pages import (BlogIndexPage, BlogPost, EventIndexPage,
-                              EventPage, HomePage, IndexPage, ReviewIndexPage,
-                              ReviewPage, RichTextPage, _paginate)
+from cms.models.pages import (
+    BlogIndexPage, BlogPost, EventIndexPage, EventPage, HomePage, IndexPage,
+    ReviewIndexPage, ReviewPage, RichTextPage, _paginate
+)
+from django.contrib.auth.models import User
 from django.test import RequestFactory, TestCase
 from wagtail.tests.utils import WagtailPageTests
+from wagtail.wagtailcore.models import Site
 
 
 class TestPages(TestCase):
 
     def test__paginate(self):
         items = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+
         factory = RequestFactory()
 
         request = factory.get('/test?page=1')
@@ -80,19 +84,52 @@ class TestBlogPost(WagtailPageTests):
 class TestEventIndexPage(WagtailPageTests):
     fixtures = ['test.json']
 
+    def setUp(self):
+        factory = RequestFactory()
+        self.request = factory.get('/home/events/')
+        self.request.site = Site.find_for_request(self.request)
+        self.request.user = User.objects.create_user(username='test')
+
     def test_subpage_types(self):
         self.assertAllowedSubpageTypes(EventIndexPage, {EventPage})
 
-    def test_events(self):
+    def test_all_events(self):
+        # property
         eip = EventIndexPage.objects.get(url_path='/home/events/')
 
-        self.assertEqual(0, eip.events.count())
+        all_events = eip.all_events
+        self.assertEqual(2, all_events.count())
+        self.assertEqual('event-1', all_events.first().slug)
 
-        event = EventPage.objects.last()
+        # view
+        response = eip.get_all_events(self.request)
+        self.assertEqual(200, response.status_code)
+
+    def test_live_events(self):
+        # property
+        eip = EventIndexPage.objects.get(url_path='/home/events/')
+
+        live_events = eip.live_events
+        self.assertEqual(0, live_events.count())
+
+        event = EventPage.objects.get(pk=12)
         event.date_from = datetime.date.today()
         event.save()
 
-        self.assertEqual(1, eip.events.count())
+        live_events = eip.live_events
+        self.assertEqual(1, live_events.count())
+
+        event = EventPage.objects.get(pk=13)
+        event.date_from = datetime.date.today()
+        event.save()
+
+        live_events = eip.live_events
+        self.assertEqual(2, live_events.count())
+        self.assertEqual('event-1', live_events.first().slug)
+
+        # view
+        response = eip.get_live_events(self.request)
+        self.assertEqual(200, response.status_code)
 
 
 class TestEventPage(WagtailPageTests):
