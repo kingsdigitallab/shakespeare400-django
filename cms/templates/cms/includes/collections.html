@@ -1,0 +1,13 @@
+{% load wagtailimages_tags wagtailroutablepage_tags %}
+
+<div class="row">
+    {% for collection in collections %}
+    <div class="small-6 medium-3 large-2 columns">
+        {% image collection.preview width-200 as img %}
+
+        <a href="{% routablepageurl self 'gallery_collection' collection.id %}" rel="collection">
+            <img class="thumbnail" src="{{ img.url }}" alt="{{ img.title }}" />
+        </a>
+    </div>
+    {% endfor %}
+</div>
