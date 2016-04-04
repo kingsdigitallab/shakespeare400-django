@@ -7,6 +7,8 @@ from django.conf import settings
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db import models
 from django.db.models import Q
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 from django.shortcuts import render
 from modelcluster.fields import ParentalKey
 from modelcluster.tags import ClusterTaggableManager
@@ -276,24 +278,26 @@ class EventIndexPage(RoutablePageMixin, Page, WithIntroduction):
     subpage_types = ['EventPage']
 
     @property
-    def all_events(self):
-        # gets list of live event pages that are descendants of this page
-        events = EventPage.objects.live().descendant_of(self)
-
-        # orders by date
-        events = events.order_by('-date_from')
-
-        return events
-
-    @property
     def live_events(self):
         # gets list of live event pages that are descendants of this page
-        events = self.all_events.order_by('date_from')
+        events = EventPage.objects.live().descendant_of(self)
 
         # filters events list to get ones that are either
         # running now or start in the future
         today = date.today()
         events = events.filter(Q(date_from__gte=today) | Q(date_to__gte=today))
+        events = events.order_by('date_from')
+
+        return events
+
+    @property
+    def past_events(self):
+        # gets list of live event pages that are descendants of this page
+        events = EventPage.objects.live().descendant_of(self)
+
+        today = date.today()
+        events = events.filter(date_to__lte=today)
+        events = events.order_by('-date_from')
 
         return events
 
@@ -305,10 +309,10 @@ class EventIndexPage(RoutablePageMixin, Page, WithIntroduction):
         return render(request, self.get_template(request),
                       {'self': self, 'events': _paginate(request, events)})
 
-    @route(r'^all/$', name='all_events')
-    def get_all_events(self, request):
-        events = self.all_events
-        logger.debug('All events: {}'.format(events))
+    @route(r'^past/$', name='past_events')
+    def get_past_events(self, request):
+        events = self.past_events
+        logger.debug('Past events: {}'.format(events))
 
         return render(request, self.get_template(request),
                       {'self': self, 'events': _paginate(request, events)})
@@ -415,6 +419,14 @@ EventPage.content_panels = [
 EventPage.promote_panels = Page.promote_panels + [
     ImageChooserPanel('feed_image'),
 ]
+
+
+@receiver(pre_save, sender=EventPage)
+def default_date_to(sender, instance, **kwargs):
+    # checks the date to is empty
+    if not instance.date_to:
+        # sets date_to to the same as date_from
+        instance.date_to = instance.date_from
 
 
 # Reviews

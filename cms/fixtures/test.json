@@ -408,7 +408,7 @@
         "feed_image": null,
         "body": "[{x}]",
         "date_from": "2016-02-04",
-        "date_to": null,
+        "date_to": "2016-02-04",
         "time_from": null,
         "time_to": null,
         "location": "KDL",
