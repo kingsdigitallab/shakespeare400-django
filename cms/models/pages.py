@@ -315,17 +315,19 @@ class EventIndexPage(RoutablePageMixin, Page, WithIntroduction):
         logger.debug('Past events: {}'.format(events))
 
         return render(request, self.get_template(request),
-                      {'self': self, 'events': _paginate(request, events)})
+                      {'self': self, 'filter_type': 'past',
+                      'events': _paginate(request, events)})
 
     @route(r'^category/(?P<category>[\w ]+)/$')
     def category(self, request, category=None):
         if not category:
             # Invalid category filter
             logger.error('Invalid category filter')
-            return self.all_posts(request)
+            return self.get_live_events(request)
 
         events = self.events.filter(
             categories__category__title=category)
+        events = events.order_by(date_from)
 
         return render(
             request, self.get_template(request), {
