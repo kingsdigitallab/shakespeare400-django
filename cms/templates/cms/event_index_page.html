@@ -1,7 +1,7 @@
 {% extends "cms/index_page.html" %}
 {% load wagtailcore_tags wagtailroutablepage_tags %}
 
-{% block title %}<h1 class="cat-title"><span class="bookmark eventpage"></span> Events <a href="{% if filter_type == 'past_events' %}{% routablepageurl self 'live_events' %}{% else %}{% routablepageurl self 'past_events' %}{% endif %}" class="button secondary float-right">Show {% if routablepageurl == 'past_events' %}live{% else %}past{% endif %} events</a></h1>{% endblock %}
+{% block title %}<h1 class="cat-title"><span class="bookmark eventpage"></span> {% if filter_type == 'past' %}Past{% else %} Live{% endif %} events <a href="{% if filter_type == 'past' %}{% routablepageurl self 'live_events' %}{% else %}{% routablepageurl self 'past_events' %}{% endif %}" class="button secondary float-right">Show {% if filter_type == 'past' %}live{% else %}past{% endif %} events</a></h1>{% endblock %}
 
 {% block main %}
 
