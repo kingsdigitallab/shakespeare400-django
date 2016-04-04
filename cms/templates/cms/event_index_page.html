@@ -1,19 +1,13 @@
 {% extends "cms/index_page.html" %}
-{% load wagtailcore_tags %}
+{% load wagtailcore_tags wagtailroutablepage_tags %}
 
-{% block title %}<h1 class="cat-title"><span class="bookmark eventpage"></span> Events</h1>{% endblock %}
+{% block title %}<h1 class="cat-title"><span class="bookmark eventpage"></span> {% if filter_type == 'past' %}Past{% else %} Live{% endif %} events <a href="{% if filter_type == 'past' %}{% routablepageurl self 'live_events' %}{% else %}{% routablepageurl self 'past_events' %}{% endif %}" class="button secondary float-right">Show {% if filter_type == 'past' %}live{% else %}past{% endif %} events</a></h1>{% endblock %}
 
 {% block main %}
 
 {% block posts_tagged_as %}
 {% if filter_type == 'category' %}
 <h4 class="filter-description">Events in <strong>{{ filter|safe }}</strong> <a href="{% pageurl self %}" class="small button float-right">Show all</a></h4>
-{% endif %}
-{% endblock %}
-
-{% block posts_by_date %}
-{% if filter_type == 'date' %}
-<h4 class="filter-description">Events on <strong>{{ filter|date:filter_format }}</strong> <a href="{% pageurl self %}">Show all</a></h4>
 {% endif %}
 {% endblock %}
 
