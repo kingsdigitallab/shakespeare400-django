@@ -131,6 +131,17 @@ class TestEventIndexPage(WagtailPageTests):
         response = eip.get_live_events(self.request)
         self.assertEqual(200, response.status_code)
 
+    def test_pre_save_signal(self):
+        event = EventPage.objects.get(pk=13)
+        event.date_to = None
+
+        self.assertIsNone(event.date_to)
+
+        event.save()
+
+        self.assertIsNotNone(event.date_to)
+        self.assertEqual(event.date_from, event.date_to)
+
 
 class TestEventPage(WagtailPageTests):
     fixtures = ['test.json']
