@@ -14,7 +14,7 @@
 
 <div class="row">
     {% for image in collection.images %}
-    <div class="small-6 medium-3 large-2 columns">
+    <div class="small-6 medium-3 large-2 columns end">
         {% image image width-200 as thumb %}
 
         <img class="thumbnail" src="{{ thumb.url }}" alt="{{ thumb.title }}" />
