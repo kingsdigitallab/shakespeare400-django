@@ -13,6 +13,7 @@
  *	Main content
  *		Blog / Reviews / Events
  *		Carousel
+ *		Collections / Albums
  *		Feeds
  *		Images
  *		Homepage
@@ -268,6 +269,7 @@ article {
 	text-align: center;
 
 	&.blogpost:before,
+	&.collectionpage:before,
 	&.eventpage:before,
 	&.reviewpage:before {
 		font-family: "FontAwesome";
@@ -275,6 +277,12 @@ article {
 
 	&.blogpost:before {
 		content: "\f040";
+	}
+
+	&.collectionpage:before {
+		content: "\f00a";
+		font-size: .75em;
+		padding-left: 8px;
 	}
 
 	&.eventpage:before {
@@ -397,6 +405,30 @@ ul.posts {
 .orbit-previous,
 .orbit-next {
 	background: rgba(0, 0, 0, .5);
+}
+
+/* Collections / Albums */
+
+.collection-preview {
+	h3 {
+		font-size: 1.25rem;
+		line-height: 1.125;
+		padding: 1rem;
+		background: scale-color($primary-color, $lightness: 90%);
+		margin-bottom: 0;
+		border: 1px solid scale-color($primary-color, $lightness: 60%);
+		border-bottom: none;
+	}
+
+	.thumbnail {
+		border: 1px solid scale-color($primary-color, $lightness: 60%);
+		box-shadow: none;
+		padding: 0;
+	}
+
+	img {
+		width: 100%;
+	}
 }
 
 /* Feeds */

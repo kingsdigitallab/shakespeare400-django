@@ -5,7 +5,7 @@
 
 {% block title %}
 <h1 class="cat-title">
-    <span class="bookmark">&nbsp;</span>
+    <span class="bookmark collectionpage">&nbsp;</span>
     {{ self.title }}: {{ collection.collection.name }}
 </h1>
 {% endblock %}
@@ -16,8 +16,7 @@
     {% for image in collection.images %}
     <div class="small-6 medium-3 large-2 columns end">
         {% image image width-200 as thumb %}
-
-        <img class="thumbnail" src="{{ thumb.url }}" alt="{{ thumb.title }}" />
+        <img class="thumbnail" src="{{ thumb.url }}" alt="{{ thumb.title }}">
     </div>
     {% endfor %}
 </div>
