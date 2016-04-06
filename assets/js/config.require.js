@@ -30,6 +30,8 @@ requirejs.config({
 
         'requirejs': '../vendor/requirejs/require',
 
+        'slick-carousel': '../vendor/slick-carousel/slick/slick',
+
         'twitter': 'widgets'
     },
     shim: {
@@ -109,6 +111,12 @@ requirejs.config({
         },
         'modernizr': {
             exports: 'Modernizr'
+        },
+        'slick-carousel': {
+            deps: [
+                'jquery'
+            ],
+            exports: 'Slick'
         },
         'twitter': {
             deps: [

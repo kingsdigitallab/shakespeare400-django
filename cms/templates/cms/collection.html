@@ -16,13 +16,23 @@
     {% for image in collection.images %}
     <div class="small-6 medium-3 large-2 columns end">
         {% image image width-200 as thumb %}
-        <a data-open="{{ thumb.id }}"><img class="thumbnail" src="{{ thumb.url }}" alt="{{ thumb.image.title }} thumbnail"></a>
-    </div>
-    <div class="reveal" id="{{ thumb.id }}" data-reveal>
-    	{% image image original as fullsize %}
-    	<img src="{{ fullsize.image.url }}" alt="{{ fullsize.image.title }}">
+        <a data-open="open-reveal"><img class="thumbnail" src="{{ thumb.url }}" alt="{{ thumb.image.title }} thumbnail"></a>
     </div>
     {% endfor %}
+
+    <div class="reveal large" id="open-reveal" data-reveal>
+	    <div class="slick-slider" aria-label="{{ collection.collection.name }}">
+	    	
+	    		{% for image in collection.images %}
+	    		<div>
+	    			{% image image width-600 as fullsize %}
+	    			<img src="{{ fullsize.url }}" alt="{{ fullsize.image.title }}">
+	    			<figcaption>{{ fullsize.image.title }}</figcaption>
+	    		</div>
+	    		{% endfor %}
+
+	    </div>
+    </div>
 </div>
 
 {% endblock %}
