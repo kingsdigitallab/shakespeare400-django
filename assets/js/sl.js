@@ -6,6 +6,9 @@ define([
     'use strict';
 
     $(document).ready(function() {
+
+        $('.slider-home').slick();
+        
         $('.slider-for').slick({
             slidesToShow: 1,
             slidesToScroll: 1,

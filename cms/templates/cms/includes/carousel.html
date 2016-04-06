@@ -1,29 +1,18 @@
 {% load wagtailimages_tags wagtailembeds_tags %}
 
 {% if self.carousel_items %}
-<div class="orbit" role="region" aria-label="Favorite Space Pictures" data-orbit data-use-m-u-i="false">
-    <ul class="orbit-container">
-        <button class="orbit-previous" aria-label="previous">
-            <span class="show-for-sr">Previous Slide</span>&#9664;
-        </button>
-        <button class="orbit-next" aria-label="next">
-            <span class="show-for-sr">Next Slide</span>&#9654;
-        </button>
+<div class="slider-home">
+    {% for item in carousel_items %}
+    <div>
+        <a href="{{ item.link }}" class="image">
+            {% image item.image width-500 as carouselimage %}
+            <img src="{{ carouselimage.url }}" alt="{{ carouselimage.alt }}">
+        </a>
 
-        {% for item in carousel_items %}
-        <li class="{% if forloop.first %}is-active {% endif %}orbit-slide">
-            <div>
-                <a href="{{ item.link }}" class="image">
-                    {% image item.image width-500 as carouselimage %}
-                    <img src="{{ carouselimage.url }}" alt="{{ carouselimage.alt }}" />
-                </a>
-
-                {% if item.caption %}
-                <figcaption class="orbit-caption">{{ item.caption }}</figcaption>
-                {% endif %}
-            </div>
-        </li>
-        {% endfor %}
-    </ul>
+        {% if item.caption %}
+        <figcaption class="orbit-caption">{{ item.caption }}</figcaption>
+        {% endif %}
+    </div>
+    {% endfor %}
 </div>
 {% endif %}
