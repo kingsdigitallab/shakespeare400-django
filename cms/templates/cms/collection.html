@@ -6,7 +6,7 @@
 {% block title %}
 <h1 class="cat-title">
     <span class="bookmark collectionpage">&nbsp;</span>
-    {{ self.title }}: {{ collection.collection.name }}
+    {{ collection.collection.name }}
 </h1>
 {% endblock %}
 
@@ -16,7 +16,11 @@
     {% for image in collection.images %}
     <div class="small-6 medium-3 large-2 columns end">
         {% image image width-200 as thumb %}
-        <img class="thumbnail" src="{{ thumb.url }}" alt="{{ thumb.title }}">
+        <a data-open="{{ thumb.id }}"><img class="thumbnail" src="{{ thumb.url }}" alt="{{ thumb.image.title }} thumbnail"></a>
+    </div>
+    <div class="reveal" id="{{ thumb.id }}" data-reveal>
+    	{% image image original as fullsize %}
+    	<img src="{{ fullsize.image.url }}" alt="{{ fullsize.image.title }}">
     </div>
     {% endfor %}
 </div>
