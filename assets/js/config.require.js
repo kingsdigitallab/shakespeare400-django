@@ -17,20 +17,18 @@ requirejs.config({
         'foundation.dropdown': '../vendor/foundation-sites/js/foundation.dropdown',
         'foundation.equalizer': '../vendor/foundation-sites/js/foundation.equalizer',
         'foundation.orbit': '../vendor/foundation-sites/js/foundation.orbit',
-        'foundation.reveal': '../vendor/foundation-sites/js/foundation.reveal',
         'foundation.util.box': '../vendor/foundation-sites/js/foundation.util.box',
         'foundation.util.keyboard': '../vendor/foundation-sites/js/foundation.util.keyboard',
         'foundation.util.mediaQuery': '../vendor/foundation-sites/js/foundation.util.mediaQuery',
         'foundation.util.motion': '../vendor/foundation-sites/js/foundation.util.motion',
         'foundation.util.timerAndImageLoader': '../vendor/foundation-sites/js/foundation.util.timerAndImageLoader',
         'foundation.util.touch': '../vendor/foundation-sites/js/foundation.util.touch',
-        'foundation.util.triggers': '../vendor/foundation-sites/js/foundation.util.triggers',
 
         'modernizr': '../vendor/modernizr/modernizr',
 
         'requirejs': '../vendor/requirejs/require',
 
-        'slick-carousel': '../vendor/slick-carousel/slick/slick',
+        'slick': '../vendor/slick-carousel/slick/slick',
 
         'twitter': 'widgets'
     },
@@ -72,11 +70,6 @@ requirejs.config({
                 'foundation'
             ],
         },
-        'foundation.util.triggers': {
-            deps: [
-                'foundation'
-            ],
-        },
         'foundation.dropdown': {
             deps: [
                 'foundation',
@@ -99,20 +92,10 @@ requirejs.config({
                 'foundation.util.touch'
             ],
         },
-        'foundation.reveal': {
-            deps: [
-                'foundation',
-                'foundation.util.keyboard',
-                'foundation.util.box',
-                'foundation.util.triggers',
-                'foundation.util.mediaQuery',
-                'foundation.util.motion'
-            ],
-        },
         'modernizr': {
             exports: 'Modernizr'
         },
-        'slick-carousel': {
+        'slick': {
             deps: [
                 'jquery'
             ],
