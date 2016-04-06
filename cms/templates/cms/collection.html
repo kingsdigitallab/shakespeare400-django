@@ -13,25 +13,27 @@
 {% block main %}
 
 <div class="row">
-    {% for image in collection.images %}
-    <div class="small-6 medium-3 large-2 columns end">
-        {% image image width-200 as thumb %}
-        <a data-open="open-reveal"><img class="thumbnail" src="{{ thumb.url }}" alt="{{ thumb.image.title }} thumbnail"></a>
+    <div class="slider-nav">
+        {% for image in collection.images %}
+        <div>
+            {% image image height-150 as thumb %}
+            <img class="thumbnail" src="{{ thumb.url }}" alt="{{ thumb.image.title }} thumbnail">
+        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
 
-    <div class="reveal large" id="open-reveal" data-reveal>
-	    <div class="slick-slider" aria-label="{{ collection.collection.name }}">
-	    	
-	    		{% for image in collection.images %}
-	    		<div>
-	    			{% image image width-600 as fullsize %}
-	    			<img src="{{ fullsize.url }}" alt="{{ fullsize.image.title }}">
-	    			<figcaption>{{ fullsize.image.title }}</figcaption>
-	    		</div>
-	    		{% endfor %}
-
-	    </div>
+    <div class="slider-for" aria-label="{{ collection.collection.name }}">
+        {% for image in collection.images %}
+        <div>
+            {% image image width-600 as fullsize %}
+            {% if forloop.first %}
+            <img src="{{ fullsize.url }}" alt="{{ fullsize.image.title }}">
+            {% else %}
+            <img data-lazy="{{ fullsize.url }}" alt="{{ fullsize.image.title }}">
+            {% endif %}
+            <figcaption>{{ fullsize.image.title }}</figcaption>
+        </div>
+        {% endfor %}
     </div>
 </div>
 

@@ -1,12 +1,27 @@
 define([
     'module',
     'jquery',
-    'slick-carousel'
+    'slick'
 ], function(module, $) {
     'use strict';
 
     $(document).ready(function() {
-        $('.slick-slider').slick({});        
+        $('.slider-for').slick({
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            arrows: false,
+            fade: true,
+            asNavFor: '.slider-nav'
+        });
+        $('.slider-nav').slick({
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            asNavFor: '.slider-for',
+            dots: true,
+            centerMode: true,
+            focusOnSelect: true,
+            lazyLoad: 'ondemand'
+        });
     });
 
     return module;
