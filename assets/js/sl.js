@@ -12,6 +12,7 @@ define([
         $('.slider-for').slick({
             slidesToShow: 1,
             slidesToScroll: 1,
+            adaptiveHeight: true,
             arrows: false,
             fade: true,
             asNavFor: '.slider-nav'
@@ -22,6 +23,7 @@ define([
             asNavFor: '.slider-for',
             dots: true,
             centerMode: true,
+            variableWidth: true,
             focusOnSelect: true,
             lazyLoad: 'ondemand'
         });
