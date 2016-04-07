@@ -151,7 +151,7 @@ def update(version=None):
         to_version = 'master'
 
     with cd(env.path), prefix(env.within_virtualenv):
-        run('git pull')
+        run('git pull origin {}'.format(to_version))
         run('git checkout {}'.format(to_version))
 
 

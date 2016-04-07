@@ -3,6 +3,9 @@
 
 @import '../vendor/motion-ui/motion-ui';
 
+@import '../vendor/slick-carousel/slick/slick.scss';
+@import 'slick-theme';
+
 /**
  *	Global
  *		Categories (colours)
@@ -13,6 +16,7 @@
  *	Main content
  *		Blog / Reviews / Events
  *		Carousel
+ *		Collections / Albums
  *		Feeds
  *		Images
  *		Homepage
@@ -189,8 +193,8 @@ footer {
 
 /** Navigation **/
 nav {
-	.active {
-		background: scale-color($primary-color, $lightness: -20%);
+	.active a {
+		background: scale-color($primary-color, $lightness: -50%) !important;
 	}
 }
 
@@ -268,6 +272,7 @@ article {
 	text-align: center;
 
 	&.blogpost:before,
+	&.collectionpage:before,
 	&.eventpage:before,
 	&.reviewpage:before {
 		font-family: "FontAwesome";
@@ -275,6 +280,12 @@ article {
 
 	&.blogpost:before {
 		content: "\f040";
+	}
+
+	&.collectionpage:before {
+		content: "\f00a";
+		font-size: .75em;
+		padding-left: 8px;
 	}
 
 	&.eventpage:before {
@@ -390,13 +401,69 @@ ul.posts {
 
 /* Carousel */
 
-.orbit {
-	margin-bottom: 1rem;
+// Slides navigation arrows
+
+.slick-prev,
+.slick-next {
+	width: 40px;
+	height: 40px;
+	top: 45%;
 }
 
-.orbit-previous,
-.orbit-next {
-	background: rgba(0, 0, 0, .5);
+.slick-prev:before,
+.slick-next:before {
+	font-size: 40px;
+	color: $primary-color;
+}
+
+.slick-prev {
+	left: 0;
+	z-index: 1;
+}
+
+.slick-next {
+	right: 0;
+}
+
+.slick-active {
+	img {
+		margin: 0 auto;
+	}
+	figcaption {
+		text-align: center;
+		margin-top: 1rem;
+		color: scale-color($dark-gray, $lightness: -40%);
+		font-style: italic;
+	}
+}
+
+.slider-home {
+	background: scale-color($primary-color, $lightness: 85%);
+	padding-bottom: 1rem;
+}
+
+/* Collections / Albums */
+
+.collection-preview {
+	h3 {
+		font-size: 1.25rem;
+		line-height: 1.125;
+		padding: 1rem;
+		background: scale-color($primary-color, $lightness: 90%);
+		margin-bottom: 0;
+		border: 1px solid scale-color($primary-color, $lightness: 60%);
+		border-bottom: none;
+	}
+
+	.thumbnail {
+		border: 1px solid scale-color($primary-color, $lightness: 60%);
+		box-shadow: none;
+		padding: 0;
+	}
+
+	img {
+		width: 100%;
+	}
 }
 
 /* Feeds */
