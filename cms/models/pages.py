@@ -1,35 +1,35 @@
 from __future__ import unicode_literals
 
 from datetime import date
+import logging
 
 from django.conf import settings
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db import models
+from django.db.models import Q
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 from django.shortcuts import render
-
 from modelcluster.fields import ParentalKey
 from modelcluster.tags import ClusterTaggableManager
-
 from taggit.models import TaggedItemBase
-
 from wagtail.contrib.wagtailroutablepage.models import RoutablePageMixin, route
 from wagtail.wagtailadmin.edit_handlers import (
     FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel, PageChooserPanel,
     StreamFieldPanel
 )
-from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailcore.fields import RichTextField, StreamField
-from wagtail.wagtailcore.models import Page, Orderable
+from wagtail.wagtailcore.models import Orderable, Page
+from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
+from wagtail.wagtailimages.models import Image
 from wagtail.wagtailsearch import index
 from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
 from wagtail.wagtailsnippets.models import register_snippet
 
 from .behaviours import WithFeedImage, WithIntroduction, WithStreamField
 from .carousel import AbstractCarouselItem
-from .links import AbstractRelatedLink
+from .links import AbstractLinkFields, AbstractRelatedLink
 from .streamfield import CMSStreamBlock
-
-import logging
 
 logger = logging.getLogger(__name__)
 
@@ -64,7 +64,7 @@ class HomePage(Page, WithStreamField):
     )
 
     subpage_types = ['EventIndexPage', 'ReviewIndexPage', 'BlogIndexPage',
-                     'IndexPage', 'RichTextPage']
+                     'IndexPage', 'RichTextPage', 'Gallery']
 
     class Meta:
         verbose_name = 'Homepage'
@@ -91,7 +91,7 @@ class IndexPage(Page, WithFeedImage, WithIntroduction):
         index.SearchField('intro'),
     )
 
-    subpage_types = ['RichTextPage']
+    subpage_types = ['IndexPage', 'RichTextPage']
 
 IndexPage.content_panels = [
     FieldPanel('title', classname='full title'),
@@ -137,17 +137,17 @@ RichTextPage.promote_panels = Page.promote_panels + [
 
 def _paginate(request, items):
     # Pagination
-    page = request.GET.get('page', 1)
+    page_number = request.GET.get('page', 1)
     paginator = Paginator(items, settings.ITEMS_PER_PAGE)
 
     try:
-        items = paginator.page(page)
+        page = paginator.page(page_number)
     except EmptyPage:
-        items = paginator.page(paginator.num_pages)
+        page = paginator.page(paginator.num_pages)
     except PageNotAnInteger:
-        items = paginator.page(1)
+        page = paginator.page(1)
 
-    return items
+    return page
 
 
 # Blogs
@@ -278,36 +278,56 @@ class EventIndexPage(RoutablePageMixin, Page, WithIntroduction):
     subpage_types = ['EventPage']
 
     @property
-    def events(self):
+    def live_events(self):
         # gets list of live event pages that are descendants of this page
         events = EventPage.objects.live().descendant_of(self)
 
         # filters events list to get ones that are either
         # running now or start in the future
-        events = events.filter(date_from__gte=date.today())
-
-        # orders by date
+        today = date.today()
+        events = events.filter(Q(date_from__gte=today) | Q(date_to__gte=today))
         events = events.order_by('date_from')
 
         return events
 
-    @route(r'^$')
-    def all_events(self, request):
-        events = self.events
-        logger.debug('Events: {}'.format(events))
+    @property
+    def past_events(self):
+        # gets list of live event pages that are descendants of this page
+        events = EventPage.objects.live().descendant_of(self)
+
+        today = date.today()
+        events = events.filter(date_to__lte=today)
+        events = events.order_by('-date_from')
+
+        return events
+
+    @route(r'^$', name='live_events')
+    def get_live_events(self, request):
+        events = self.live_events
+        logger.debug('Live events: {}'.format(events))
 
         return render(request, self.get_template(request),
                       {'self': self, 'events': _paginate(request, events)})
+
+    @route(r'^past/$', name='past_events')
+    def get_past_events(self, request):
+        events = self.past_events
+        logger.debug('Past events: {}'.format(events))
+
+        return render(request, self.get_template(request),
+                      {'self': self, 'filter_type': 'past',
+                      'events': _paginate(request, events)})
 
     @route(r'^category/(?P<category>[\w ]+)/$')
     def category(self, request, category=None):
         if not category:
             # Invalid category filter
             logger.error('Invalid category filter')
-            return self.all_posts(request)
+            return self.get_live_events(request)
 
         events = self.events.filter(
             categories__category__title=category)
+        events = events.order_by(date_from)
 
         return render(
             request, self.get_template(request), {
@@ -401,6 +421,14 @@ EventPage.content_panels = [
 EventPage.promote_panels = Page.promote_panels + [
     ImageChooserPanel('feed_image'),
 ]
+
+
+@receiver(pre_save, sender=EventPage)
+def default_date_to(sender, instance, **kwargs):
+    # checks the date to is empty
+    if not instance.date_to:
+        # sets date_to to the same as date_from
+        instance.date_to = instance.date_from
 
 
 # Reviews
@@ -524,3 +552,61 @@ ReviewPage.content_panels = [
 ReviewPage.promote_panels = Page.promote_panels + [
     ImageChooserPanel('feed_image'),
 ]
+
+
+class GalleryCollection(Orderable, AbstractLinkFields):
+    page = ParentalKey('Gallery', related_name='collections')
+
+    collection = models.ForeignKey(
+        'wagtailcore.Collection', null=True, blank=True,
+        on_delete=models.SET_NULL, related_name='+'
+    )
+    description = models.CharField(max_length=255, blank=True)
+
+    panels = [
+        FieldPanel('collection'),
+        FieldPanel('description'),
+    ]
+
+    @property
+    def images(self):
+        return Image.objects.filter(collection=self.collection)
+
+    @property
+    def preview(self):
+        return self.images.first()
+
+    def __unicode__(self):
+        return self.description
+
+
+class Gallery(RoutablePageMixin, Page, WithIntroduction):
+    search_fields = Page.search_fields + (
+        index.SearchField('intro'),
+    )
+
+    subpage_types = []
+
+    @route(r'^$')
+    def gallery(self, request):
+        return render(request, self.get_template(request), {'self': self})
+
+    @route(r'^collection/(?P<collection_id>\d+)/$', name='gallery_collection')
+    def category(self, request, collection_id):
+        if not collection_id:
+            # invalid collection filter
+            logger.error('Invalid collection filter')
+            return self.gallery(request)
+
+        collection = self.collections.get(id=collection_id)
+
+        return render(request, 'cms/collection.html',
+                      {'self': self, 'collection': collection})
+
+Gallery.content_panels = [
+    FieldPanel('title', classname='full title'),
+    FieldPanel('intro', classname='full'),
+    InlinePanel('collections', label='Collections'),
+]
+
+Gallery.promote_panels = Page.promote_panels
