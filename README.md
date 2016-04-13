@@ -5,6 +5,7 @@ Shakespeare400 KCL website
 
 # Release 1.2.1
 * Google Analytics
+* Autoplay for slideshow in homepage
 
 # Release 1.2
 * Gallery
