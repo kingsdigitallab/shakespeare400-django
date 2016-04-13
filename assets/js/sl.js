@@ -7,7 +7,10 @@ define([
 
     $(document).ready(function() {
 
-        $('.slider-home').slick();
+        $('.slider-home').slick({
+            autoplay: true,
+            autoplaySpeed: 3000
+        });
         
         $('.slider-for').slick({
             slidesToShow: 1,
