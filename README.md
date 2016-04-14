@@ -3,6 +3,9 @@
 # shakespeare400-django
 Shakespeare400 KCL website
 
+# Release 1.2.2
+* Issue fixing
+
 # Release 1.2.1
 * Google Analytics
 * Autoplay for slideshow in homepage
