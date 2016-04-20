@@ -8,7 +8,7 @@
         {% endblock %}
 
         {% block review_author %}
-        <p class="byline">posted by <a href="{% routablepageurl review.review_index.specific 'author' review.owner %}">{{ review.owner|unslugify }}</a>
+        <p class="byline">posted by <a href="{% routablepageurl review.review_index.specific 'author' review.owner %}">{{ review.owner }}</a>
             <time datetime="{{ review.date|date:'c' }}">on {{ review.date }}</time>
         </p>
         {% endblock %}
