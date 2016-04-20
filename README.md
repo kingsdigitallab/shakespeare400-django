@@ -3,6 +3,9 @@
 # shakespeare400-django
 Shakespeare400 KCL website
 
+# Release 1.2.3
+* Issue fixing related with titles and index pages introductions not being displayed in the templates
+
 # Release 1.2.2
 * Issue fixing
 
