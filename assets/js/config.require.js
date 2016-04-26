@@ -14,7 +14,6 @@ requirejs.config({
 
         // Foundation
         'foundation': '../vendor/foundation-sites/js/foundation.core',
-        'foundation.dropdown': '../vendor/foundation-sites/js/foundation.dropdown',
         'foundation.equalizer': '../vendor/foundation-sites/js/foundation.equalizer',
         'foundation.util.box': '../vendor/foundation-sites/js/foundation.util.box',
         'foundation.util.keyboard': '../vendor/foundation-sites/js/foundation.util.keyboard',
@@ -22,8 +21,7 @@ requirejs.config({
         'foundation.util.motion': '../vendor/foundation-sites/js/foundation.util.motion',
         'foundation.util.timerAndImageLoader': '../vendor/foundation-sites/js/foundation.util.timerAndImageLoader',
         'foundation.util.touch': '../vendor/foundation-sites/js/foundation.util.touch',
-
-        'modernizr': '../vendor/modernizr/modernizr',
+        'foundation.util.triggers': '../vendor/foundation-sites/js/foundation.util.triggers',
 
         'requirejs': '../vendor/requirejs/require',
 
@@ -34,8 +32,7 @@ requirejs.config({
     shim: {
         'foundation': {
             deps: [
-                'jquery',
-                'modernizr'
+                'jquery'
             ],
             exports: 'Foundation'
         },
@@ -69,21 +66,17 @@ requirejs.config({
                 'foundation'
             ],
         },
-        'foundation.dropdown': {
+        'foundation.util.triggers': {
             deps: [
-                'foundation',
-                'foundation.util.box',
-                'foundation.util.keyboard'
+                'foundation'
             ],
         },
         'foundation.equalizer': {
             deps: [
                 'foundation',
-                'foundation.util.mediaQuery'
+                'foundation.util.mediaQuery',
+                'foundation.util.timerAndImageLoader'
             ],
-        },
-        'modernizr': {
-            exports: 'Modernizr'
         },
         'slick': {
             deps: [
@@ -93,8 +86,7 @@ requirejs.config({
         },
         'twitter': {
             deps: [
-                'jquery',
-                'modernizr'
+                'jquery'
             ]
         },
         'ga': {
