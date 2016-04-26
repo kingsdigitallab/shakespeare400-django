@@ -3,6 +3,10 @@
 # shakespeare400-django
 Shakespeare400 KCL website
 
+# Release 1.2.4
+* Removed Modernizr as a dependency
+* Removed Foundation's unused dependencies
+
 # Release 1.2.3
 * Issue fixing related with titles and index pages introductions not being displayed in the templates
 
