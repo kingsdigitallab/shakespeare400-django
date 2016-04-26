@@ -1,7 +1,14 @@
 {% extends "cms/rich_text_page.html" %}
 {% load cms_tags wagtailcore_tags %}
 
-{% block title %}{% endblock %}
+{% block title %}
+<h1 class="cat-title">
+<a href="{% pageurl self.review_index %}">
+<span class="bookmark reviewpage"></span>
+{{ self.review_index.title }}
+</a>
+</h1>
+{% endblock %}
 
 {% block main %}
 
