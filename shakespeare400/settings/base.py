@@ -7,6 +7,8 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 For production settings see
 https://docs.djangoproject.com/en/dev/howto/deployment/checklist/
 """
+import getpass
+import logging
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -92,8 +94,6 @@ INSTALLED_APPS += (
 
 INTERNAL_IPS = ('127.0.0.1', )
 
-# https://docs.djangoproject.com/en/dev/topics/logging/
-import logging
 
 LOGGING_ROOT = os.path.join(BASE_DIR, 'logs')
 LOGGING_LEVEL = logging.WARN
@@ -333,7 +333,6 @@ REQUIRE_ENVIRONMENT = 'node'
 # FABRIC
 # -----------------------------------------------------------------------------
 
-import getpass
 FABRIC_USER = getpass.getuser()
 
 # -----------------------------------------------------------------------------
