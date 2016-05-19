@@ -89,6 +89,7 @@ INSTALLED_APPS += (
 
 INSTALLED_APPS += (
     'cms',
+    'search',
     'shakespeare400',
 )
 
