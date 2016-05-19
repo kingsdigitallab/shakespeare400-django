@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
-from datetime import date
 import logging
+from datetime import date
 
 from django.conf import settings
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
@@ -20,6 +20,7 @@ from wagtail.wagtailadmin.edit_handlers import (
 )
 from wagtail.wagtailcore.fields import RichTextField, StreamField
 from wagtail.wagtailcore.models import Orderable, Page
+from wagtail.wagtailembeds.blocks import EmbedBlock
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailimages.models import Image
 from wagtail.wagtailsearch import index
@@ -316,7 +317,7 @@ class EventIndexPage(RoutablePageMixin, Page, WithIntroduction):
 
         return render(request, self.get_template(request),
                       {'self': self, 'filter_type': 'past',
-                      'events': _paginate(request, events)})
+                       'events': _paginate(request, events)})
 
     @route(r'^category/(?P<category>[\w ]+)/$')
     def category(self, request, category=None):
@@ -563,9 +564,14 @@ class GalleryCollection(Orderable, AbstractLinkFields):
     )
     description = models.CharField(max_length=255, blank=True)
 
+    videos = StreamField([
+        ('video', EmbedBlock(icon='media'))
+    ])
+
     panels = [
-        FieldPanel('collection'),
         FieldPanel('description'),
+        FieldPanel('collection'),
+        StreamFieldPanel('videos')
     ]
 
     @property
