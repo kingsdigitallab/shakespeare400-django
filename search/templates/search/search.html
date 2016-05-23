@@ -3,8 +3,8 @@
 
 {% block title %}
 <h1>
-Search
-{% if search_query %}<small>{{ search_query }}</small>{% endif %}
+    Search
+    {% if search_query %}<small>{{ search_query }}</small>{% endif %}
 </h1>
 {% endblock %}
 
@@ -21,6 +21,9 @@ Search
     </li>
     {% endfor %}
 </ul>
+
+{% include "cms/includes/pagination.html" with pages=search_results %}
+
 {% elif search_query %}
 No results found
 {% else %}
