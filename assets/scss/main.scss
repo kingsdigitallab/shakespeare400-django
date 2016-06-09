@@ -21,6 +21,7 @@
  *		Images
  *		Homepage
  *		Panels / Callouts
+ *		Search
  *	Footer
  */
 
@@ -212,7 +213,7 @@ nav {
 .menu.vertical {
 	background: $primary-color;
 	color: white;
-	margin-top: 50px;
+	margin-top: 20px;
 	margin-bottom: 30px;
 	a {
 		color: white;
@@ -550,6 +551,22 @@ ul.posts {
 .callout.alert {
 	margin-top: 1rem;
 	border: 1px solid scale-color($primary-color, $lightness: 70%) !important;
+}
+
+/* Search */
+
+.search-form {
+	margin-top: 50px;
+}
+
+h2.search-results {
+	font-size: 1.5rem;
+}
+
+ol.search-results li {
+	margin-top: .75rem;
+	padding-bottom: .5rem;
+	border-bottom: 1px solid $tertiary-color;
 }
 
 /** Footer **/

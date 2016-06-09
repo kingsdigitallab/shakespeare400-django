@@ -4,14 +4,14 @@
 {% block title %}
 <h1>
     Search
-    {% if search_query %}<small>{{ search_query }}</small>{% endif %}
 </h1>
 {% endblock %}
 
 {% block main %}
 
 {% if search_results %}
-<ul>
+<h2 class="search-results"><strong>{{ search_results.paginator.count }}</strong> result(s) found for <strong>{{ search_query }}</strong></h2>
+<ol start="{{ search_results.start_index }}" class="search-results">
     {% for result in search_results %}
     <li>
         <h4><a href="{% pageurl result %}">{{ result }}</a></h4>
@@ -20,7 +20,7 @@
         {% endif %}
     </li>
     {% endfor %}
-</ul>
+</ol>
 
 {% include "cms/includes/pagination.html" with pages=search_results %}
 
