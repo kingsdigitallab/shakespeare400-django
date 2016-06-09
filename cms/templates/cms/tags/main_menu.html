@@ -1,5 +1,14 @@
 {% load wagtailcore_tags %}
 
+<form role="search" method="get" id="searchform" action="{% url 'search' %}" class="search-form">
+	<div class="input-group">
+		<input class="input-group-field" type="search" name='q' placeholder="{% if search_query %}{{ search_query }}{% else %}Search...{% endif %}">
+		<div class="input-group-button">
+			<button type="submit" value="" id="searchsubmit" class="button"><i class="fa fa-search"></i></button>
+		</div>
+	</div>
+</form>
+
 <ul class="menu vertical">
     <li{% if root.active %} class="active"{% endif %}>
     <a href="{% pageurl root %}">{{ root.title }}</a>
