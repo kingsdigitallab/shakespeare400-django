@@ -3,6 +3,10 @@
 # shakespeare400-django
 Shakespeare400 KCL website
 
+# Release 1.2.5
+* Added search box and functionalities
+* Added search results page
+
 # Release 1.2.4
 * Removed Modernizr as a dependency
 * Removed Foundation's unused dependencies
