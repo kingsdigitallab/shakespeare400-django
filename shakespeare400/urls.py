@@ -4,12 +4,13 @@
 from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
+from search.views import search
+from wagtail.wagtailadmin import urls as wagtailadmin_urls
+from wagtail.wagtailcore import urls as wagtail_urls
+from wagtail.wagtaildocs import urls as wagtaildocs_urls
 
 admin.autodiscover()
 
-from wagtail.wagtailadmin import urls as wagtailadmin_urls
-from wagtail.wagtaildocs import urls as wagtaildocs_urls
-from wagtail.wagtailcore import urls as wagtail_urls
 
 urlpatterns = [
     url(r'^grappelli/', include('grappelli.urls')),
@@ -24,6 +25,7 @@ urlpatterns += [
     url(r'^wagtail/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
 
+    url(r'search', search, name='search'),
     url(r'', include(wagtail_urls)),
 ]
 
@@ -33,7 +35,9 @@ urlpatterns += [
 try:
     if settings.DEBUG:
         import debug_toolbar
-        urlpatterns += url(r'^__debug__/', include(debug_toolbar.urls))
+        urlpatterns += [
+            url(r'^__debug__/', include(debug_toolbar.urls))
+        ]
 except ImportError:
     pass
 

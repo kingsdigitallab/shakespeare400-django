@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+
+{% block title %}
+<h1>
+    Search
+</h1>
+{% endblock %}
+
+{% block main %}
+
+{% if search_results %}
+<h2 class="search-results">
+    <strong>{{ search_results.paginator.count }}</strong>
+     result{% if search_results.paginator.count > 1 %}s{% endif %}
+     found for <strong>{{ search_query }}</strong></h2>
+<ol start="{{ search_results.start_index }}" class="search-results">
+    {% for result in search_results %}
+    <li>
+        <h4><a href="{% pageurl result %}">{{ result }}</a></h4>
+        {% if result.search_description %}
+        {{ result.search_description|safe }}
+        {% endif %}
+    </li>
+    {% endfor %}
+</ol>
+
+{% include "cms/includes/pagination.html" with pages=search_results %}
+
+{% elif search_query %}
+<h2 class="search-results">No results found.</h2>
+{% else %}
+<p><strong>Please type something into the search box.</strong></p>
+{% endif %}
+
+{% endblock %}
