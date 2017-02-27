@@ -1,4 +1,4 @@
-django
+django<1.10
 django-compressor
 django-grappelli
 django-libsass
@@ -12,4 +12,4 @@ elasticsearch
 libsass==0.10.0
 pillow
 psycopg2
-wagtail
+wagtail==1.3.1
