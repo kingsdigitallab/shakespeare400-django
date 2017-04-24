@@ -60,5 +60,6 @@ target/
 # Local ignores
 .DS_Store
 .vagrant/
+playbook.retry
 shakespeare400/settings/local.py
 static/
