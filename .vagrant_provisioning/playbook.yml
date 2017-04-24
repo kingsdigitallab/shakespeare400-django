@@ -34,8 +34,9 @@
   - name: apt | add node key
     sudo: yes
     apt_key:
-      url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+      url: https://keyserver.ubuntu.com/pks/lookup?op=get&fingerprint=on&search=0x1655A0AB68576280
       state: present
+      validate_certs: no
     tags:
       - system
 
@@ -58,25 +59,26 @@
     apt_key:
       url: https://packages.elastic.co/GPG-KEY-elasticsearch
       state: present
+      validate_certs: no
     tags:
       - system
 
   - name: apt | add elasticsearch sources
     apt_repository:
-      repo: 'deb http://packages.elastic.co/elasticsearch/1.6/debian stable main'
+      repo: 'deb http://packages.elastic.co/elasticsearch/2.x/debian stable main'
       state: present
     tags:
       - system
 
-  - name: apt | install required system packages
+  - name: apt | Install required system packages.
     apt:
       pkg: "{{item}}"
       state: installed
       update_cache: yes
-    with_items: system_packages
+    with_items: "{{system_packages}}"
     tags:
       - system
-
+      
   - name: zsh | clone oh-my-zsh repo
     git: repo={{ zsh.oh_my_zsh }} dest={{ user_home }}/.oh-my-zsh
     tags:
