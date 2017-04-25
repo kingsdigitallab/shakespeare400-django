@@ -3,6 +3,9 @@
 # shakespeare400-django
 Shakespeare400 KCL website
 
+# Release 1.2.6
+* Fixed responsive objects (videos and Flickr embed)
+
 # Release 1.2.5
 * Added search box and functionalities
 * Added search results page
