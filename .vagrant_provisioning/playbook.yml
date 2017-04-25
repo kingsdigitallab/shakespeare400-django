@@ -225,29 +225,11 @@
       state: present
       owner: "{{ postgresql.user }}"
     notify:
-      - postgis | convert database to postgis
-      - postgis | convert database to postgis topology
       - postgresql | Apply privileges
-      - postgis | Apply privileges
     tags:
       - db
 
   handlers:
-  - name: postgis | convert database to postgis
-    sudo: yes
-    sudo_user: "{{ postgresql.admin_user }}"
-    action: command psql -d {{ app.name }} -c "CREATE EXTENSION postgis;"
-    tags:
-      - db
-      - postgis
-
-  - name: postgis | convert database to postgis topology
-    sudo: yes
-    sudo_user: "{{ postgresql.admin_user }}"
-    command: psql -d {{ app.name }} -c "CREATE EXTENSION postgis_topology;"
-    tags:
-      - db
-      - postgis
 
   - name: postgresql | Apply privileges
     sudo_user: "{{ postgresql.admin_user }}"
@@ -256,17 +238,6 @@
       privs: ALL
       type: database
       role: "{{ postgresql.user }}"
-    tags:
-      - db
-
-  - name: postgis | Apply privileges
-    sudo_user: "{{ postgresql.admin_user }}"
-    postgresql_privs:
-      db: "{{ app.name }}"
-      privs: ALL
-      type: table
-      objs: "geometry_columns,geography_columns,spatial_ref_sys"
-      role: "PUBLIC"
     tags:
       - db
 
