@@ -1,4 +1,4 @@
-django==1.9
+django<1.10
 django-compressor
 django-grappelli
 django-libsass
@@ -6,11 +6,9 @@ django-model-utils
 django-modelcluster
 django-redis
 django-require
-# -e git+git://github.com/etianen/django-require.git#egg=django-require
 django-taggit
 elasticsearch
-libsass==0.10.0
+libsass
 pillow
-# By default it's installing a higher version of psycopg2 which is causing issues!
-psycopg2==2.4.5
+psycopg2
 wagtail==1.4.6
