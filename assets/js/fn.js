@@ -1,9 +1,7 @@
 define([
     'module',
     'jquery',
-    'modernizr',
     'es6!foundation',
-    'es6!foundation.dropdown',
     'es6!foundation.equalizer',
     'es6!foundation.util.box',
     'es6!foundation.util.keyboard',
@@ -11,6 +9,7 @@ define([
     'es6!foundation.util.motion',
     'es6!foundation.util.timerAndImageLoader',
     'es6!foundation.util.touch',
+    'es6!foundation.util.triggers',
 ], function(module, $) {
     'use strict';
 

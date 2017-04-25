@@ -28,7 +28,7 @@ TEMPLATES[0]['OPTIONS']['debug'] = True
 # -----------------------------------------------------------------------------
 
 try:
-    import django_extensions
+    import django_extensions  # noqa
 
     INSTALLED_APPS = INSTALLED_APPS + ('django_extensions',)
 except ImportError:
@@ -40,7 +40,7 @@ except ImportError:
 # -----------------------------------------------------------------------------
 
 try:
-    import debug_toolbar
+    import debug_toolbar  # noqa
 
     INSTALLED_APPS = INSTALLED_APPS + ('debug_toolbar',)
     MIDDLEWARE_CLASSES = MIDDLEWARE_CLASSES + (
@@ -54,10 +54,10 @@ except ImportError:
 # -----------------------------------------------------------------------------
 
 try:
-    from local import *
+    from local import *  # noqa
 except ImportError:
     print('failed to import local settings')
 
-    from test import *
+    from test import *  # noqa
     print('the project is running with test settings')
     print('please create a local settings file')
