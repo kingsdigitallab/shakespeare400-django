@@ -11,5 +11,4 @@ elasticsearch
 libsass
 pillow
 psycopg2
-python-ldap==2.4.33
 wagtail==1.4.6
