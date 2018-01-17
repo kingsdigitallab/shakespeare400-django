@@ -347,9 +347,9 @@ GA_ID = 'UA-76283054-1'
 # Facebook and Twitter
 # -----------------------------------------------------------------------------
 
-FACEBOOK_URL = '//www.facebook.com/kclshakespeare/'
+FACEBOOK_URL = '//www.facebook.com/londonshakespearecentre/'
 
-TWITTER_NAME = 'Shakespeare_400'
+TWITTER_NAME = 'ldn_shakespeare'
 TWITTER_URL = '//twitter.com/{}/'.format(TWITTER_NAME)
 TWITTER_WIDGET_ID = '707508707500892161'
 
