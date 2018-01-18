@@ -4,7 +4,6 @@ require([
     'jquery',
     'fn',
     'sl',
-    'twitter',
     'ga'
 ], function(r, $) {
     'use strict';

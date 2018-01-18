@@ -25,9 +25,7 @@ requirejs.config({
 
         'requirejs': '../vendor/requirejs/require',
 
-        'slick': '../vendor/slick-carousel/slick/slick',
-
-        'twitter': 'widgets'
+        'slick': '../vendor/slick-carousel/slick/slick'
     },
     shim: {
         'foundation': {
@@ -83,11 +81,6 @@ requirejs.config({
                 'jquery'
             ],
             exports: 'Slick'
-        },
-        'twitter': {
-            deps: [
-                'jquery'
-            ]
         },
         'ga': {
             exports: '__ga__'
