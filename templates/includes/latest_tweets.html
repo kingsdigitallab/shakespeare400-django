@@ -7,8 +7,12 @@
         </a>
     </h3>
 
+    {% comment %}
     {% get_twitter_widget_id as twitter_widget_id %}
     {% if twitter_widget_id %}
     <a class="twitter-timeline" data-dnt="true" href="{% get_twitter_url %}" data-widget-id="{{ twitter_widget_id }}" data-chrome="nofooter noheader transparent" data-tweet-limit="2" data-aria-polite="assertive">Tweets by @{% get_twitter_name %}</a>
     {% endif %}
+    {% endcomment %}
+
+    <a class="twitter-timeline" href="https://twitter.com/ldn_shakespeare?ref_src=twsrc%5Etfw" data-chrome="nofooter noheader transparent" data-tweet-limit="2" data-aria-polite="assertive">Tweets by @{% get_twitter_name %}</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </div>

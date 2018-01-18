@@ -351,7 +351,8 @@ FACEBOOK_URL = '//www.facebook.com/londonshakespearecentre/'
 
 TWITTER_NAME = 'ldn_shakespeare'
 TWITTER_URL = '//twitter.com/{}/'.format(TWITTER_NAME)
-TWITTER_WIDGET_ID = '707508707500892161'
+TWITTER_WIDGET_ID = ''
+# TWITTER_WIDGET_ID = '707508707500892161'
 
 # -----------------------------------------------------------------------------
 # Wagtail
