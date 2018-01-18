@@ -12,3 +12,4 @@ libsass
 pillow
 psycopg2
 wagtail==1.4.6
+djangorestframework<3.7
