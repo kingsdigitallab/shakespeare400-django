@@ -3,6 +3,13 @@
 # shakespeare400-django
 Shakespeare400 KCL website
 
+# Release 1.3.1
+* Removed category key
+* Added `data-equalize-by-row="true"` to the homepage cards
+
+# Release 1.3
+* Updated social media links
+
 # Release 1.2.6
 * Fixed responsive objects (videos and Flickr embed)
 
