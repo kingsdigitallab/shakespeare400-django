@@ -3,7 +3,7 @@
 {% for featured_page in featured_pages %}
 
 {% with page=featured_page.featured_page.specific type=featured_page.featured_page.specific.content_type.model %}
-<div class="medium-12 large-6 columns">
+<div class="column">
     <div class="callout" data-equalizer-watch>
         <p class="type">
             <span class="bookmark {{ type }}"></span>
