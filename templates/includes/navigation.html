@@ -9,6 +9,7 @@
     <li><a href="{% get_facebook_url %}"><i class="fa fa-facebook-square fa-2x"></i></a> <a href="{% get_twitter_url %}"><i class="fa fa-twitter-square fa-2x"></i></a></li>
 </ul>
 
+{% comment %}
 {% get_event_categories as categories %}
 {% get_event_index_page as eip %}
 
@@ -26,3 +27,4 @@
         {% endfor %}
     </ul>
 </div>
+{% endcomment %}
