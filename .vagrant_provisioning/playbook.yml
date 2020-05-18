@@ -147,7 +147,7 @@
       become: yes
       service:
         name: elasticsearch
-        state: started
+        state: restarted
       tags:
         - db
 
