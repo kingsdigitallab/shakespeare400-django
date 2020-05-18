@@ -19,7 +19,7 @@
 
             {% if type == 'eventpage' or 'reviewpage' %}
             {% for c in page.categories.all %}
-            <i class="fa fa-circle {{ c.category.title|lower }} float-right">&#160;</i>
+            <span class="icons {{ c.category.title|lower }} float-right">&#xf111;</span>
             {% endfor %}
             {% endif %}
         </p>
@@ -46,12 +46,12 @@
         </p>
         {% endif %}
 
-        <h5><a href="{% pageurl page %}">{{ page.title }}</a></h5>
+        <strong><a href="{% pageurl page %}">{{ page.title }}</a></strong>
 
         {% if type == 'reviewpage' or type == 'blogpost' %}
         <p class="post-meta">Posted on <time>{{ page.date }}</time>
             <br>by
-            <a href="{% routablepageurl page.get_parent.specific 'author' page.owner %}" rel="author">{{ page.owner }}</a>
+            <a href="{% routablepageurl page.get_parent.specific 'author' page.owner %}" rel="author" aria-label="{{ page.title }} by {{ page.owner }}">{{ page.owner }}</a>
         </p>
         {% else %}
         <p class="post-meta">
@@ -85,7 +85,7 @@
         {% endif %}
     </div>
 
-    <a href="{% pageurl page %}" class="button expanded">Find out more</a>
+    <a href="{% pageurl page %}" class="button expanded" aria-label="find out more about {% pageurl page %}">Find out more</a>
 </div>
 {% endwith %}
 

@@ -2,9 +2,9 @@
 
 <form role="search" method="get" id="searchform" action="{% url 'search' %}" class="search-form">
 	<div class="input-group">
-		<input class="input-group-field" type="search" name='q' placeholder="{% if search_query %}{{ search_query }}{% else %}Search...{% endif %}">
+		<input class="input-group-field" aria-label="search input field" type="search" name='q' placeholder="{% if search_query %}{{ search_query }}{% else %}Search...{% endif %}">
 		<div class="input-group-button">
-			<button type="submit" value="" id="searchsubmit" class="button"><i class="fa fa-search"></i></button>
+			<button type="submit" value="" id="searchsubmit" class="button"><span class="icons">&#xf002;</span></button>
 		</div>
 	</div>
 </form>

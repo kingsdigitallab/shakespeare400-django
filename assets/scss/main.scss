@@ -35,6 +35,16 @@ p a {
 	font-weight: 700;
 }
 
+.icons {
+	font-family:"FontAwesome"
+}
+
+.skip-main { 
+	font-size: 1px; 
+	position: absolute; 
+	top:-25px; 
+}
+
 .black-bar {
 	width: 100%;
 	height: 55px;
@@ -425,6 +435,10 @@ ul.posts {
 	width: 40px;
 	height: 40px;
 	top: 45%;
+	&:focus, &:hover {
+		background-color: darken ($primary-color, 15%);
+		border-bottom: 1px solid scale-color($primary-color, $lightness: -15%);
+	}
 }
 
 .slick-prev:before,
@@ -589,7 +603,7 @@ ol.search-results li {
 
 footer {
 	padding: 1rem 0;
-	color: $primary-color;
+	color: scale-color($primary-color, $lightness: -50%);
 
 	.logo {
 		img {
@@ -598,7 +612,7 @@ footer {
 	}
 
 	a {
-		color: $primary-color;
+		color: scale-color($primary-color, $lightness:-50%) !important;
 	}
 }
 
