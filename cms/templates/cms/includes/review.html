@@ -1,7 +1,7 @@
 {% if review %}
 {% load cms_tags wagtailcore_tags wagtailroutablepage_tags %}
 
-<article class="post" id="post{{ review.id }}">
+<article class="post" id="post{{ review.id }}" aria-label="post review of {{ review.id }}">
     <header>
         {% block review_title %}
         <h1 class="posttitle">{{ review.title }}</h1>
@@ -28,7 +28,7 @@
             {% for category in categories %}
             <li class="category">
                 <a href="{% routablepageurl review.review_index.specific 'category' category.category.title %}" class="{{ category.category.title|lower }}">
-                    <i class="fa fa-circle {{ category.category.title|lower }}"></i>
+                    <span class="icons {{ category.category.title|lower }}">&#xf111;</span>
                     {{ category.category.title|unslugify }}
                 </a>
             </li>

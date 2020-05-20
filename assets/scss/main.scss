@@ -32,11 +32,14 @@ body {
 }
 
 p a {
-	font-weight: 700;
+	font-weight: bold !important;
+	&:focus, &:hover {
+		text-decoration: underline;
+	}
 }
 
 .icons {
-	font-family:"FontAwesome"
+	font-family:"FontAwesome";
 }
 
 .skip-main { 
