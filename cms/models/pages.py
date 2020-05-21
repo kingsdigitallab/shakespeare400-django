@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
-from datetime import date
 import logging
+from datetime import date
 
 from django.conf import settings
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
@@ -14,10 +14,10 @@ from modelcluster.fields import ParentalKey
 from modelcluster.tags import ClusterTaggableManager
 from taggit.models import TaggedItemBase
 from wagtail.contrib.wagtailroutablepage.models import RoutablePageMixin, route
-from wagtail.wagtailadmin.edit_handlers import (
-    FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel, PageChooserPanel,
-    StreamFieldPanel
-)
+from wagtail.wagtailadmin.edit_handlers import (FieldPanel, FieldRowPanel,
+                                                InlinePanel, MultiFieldPanel,
+                                                PageChooserPanel,
+                                                StreamFieldPanel)
 from wagtail.wagtailcore.fields import RichTextField, StreamField
 from wagtail.wagtailcore.models import Orderable, Page
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
@@ -176,7 +176,6 @@ class BlogIndexPage(RoutablePageMixin, Page, WithIntroduction):
     @route(r'^$')
     def all_posts(self, request):
         posts = self.posts
-        logger.debug('Posts: {}'.format(posts))
 
         return render(request, self.get_template(request),
                       {'self': self, 'posts': _paginate(request, posts)})
@@ -304,7 +303,6 @@ class EventIndexPage(RoutablePageMixin, Page, WithIntroduction):
     @route(r'^$', name='live_events')
     def get_live_events(self, request):
         events = self.live_events
-        logger.debug('Live events: {}'.format(events))
 
         return render(request, self.get_template(request),
                       {'self': self, 'events': _paginate(request, events)})
@@ -312,7 +310,6 @@ class EventIndexPage(RoutablePageMixin, Page, WithIntroduction):
     @route(r'^past/$', name='past_events')
     def get_past_events(self, request):
         events = self.past_events
-        logger.debug('Past events: {}'.format(events))
 
         return render(request, self.get_template(request),
                       {'self': self, 'filter_type': 'past',
@@ -457,7 +454,6 @@ class ReviewIndexPage(RoutablePageMixin, Page, WithIntroduction):
     @route(r'^$')
     def all_reviews(self, request):
         reviews = self.reviews
-        logger.debug('Reviews: {}'.format(reviews))
 
         return render(request, self.get_template(request),
                       {'self': self, 'reviews': _paginate(request, reviews)})
