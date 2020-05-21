@@ -366,7 +366,7 @@ article {
 	padding: .5rem 0;
 	a {
 		color: white !important;
-		background: $secondary-color;
+		background: scale-color($secondary-color, $lightness:-20%);
 		padding: .3125rem !important;
 		&:before {
 			content:"\f02b";

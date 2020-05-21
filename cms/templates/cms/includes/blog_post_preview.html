@@ -16,7 +16,7 @@
 		<div class="large-{% if post.feed_image %}9{% else %}12{% endif %} columns">
 			<p>
 			    {% if post.search_description %}
-			    {{ post.search_description }} <a href="{% pageurl post %}">Read more...</a>
+			    {{ post.search_description }} <a href="{% pageurl post %}" aria-label="read more about {{ post.title }}">Read more...</a>
 			    {% endif %}
 		    </p>
 		</div>

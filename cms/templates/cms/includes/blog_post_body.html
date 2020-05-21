@@ -1,7 +1,7 @@
 {% if post %}
 {% load cms_tags wagtailcore_tags wagtailroutablepage_tags %}
 
-<article class="post" id="post{{ post.id }}">
+<article class="post" id="post{{ post.id }}" aria-label="post of {{ post.id }}">
     <header>
         {% block blog_post_title %}
         <h1 class="posttitle">{{ post.title }}</h1>
