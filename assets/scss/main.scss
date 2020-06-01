@@ -31,9 +31,10 @@ body {
 	background: url("/static/images/half-right2.png") right 0 fixed no-repeat, url("/static/images/half-left.png") left 0 fixed no-repeat !important;
 }
 
-p a {
-	font-weight: bold !important;
-	&:focus, &:hover {
+a {
+	text-decoration: none !important;
+	font-weight: bold;
+	&:hover {
 		text-decoration: underline;
 	}
 }
@@ -146,6 +147,12 @@ a.talk {
 }
 
 // Responsive iframe
+
+iframe {
+	&:focus, &:hover {
+		border-bottom:2px solid $white;
+	}
+}
 
 .iframe-container {
 
