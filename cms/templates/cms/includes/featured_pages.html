@@ -19,7 +19,7 @@
 
             {% if type == 'eventpage' or 'reviewpage' %}
             {% for c in page.categories.all %}
-            <span class="icons {{ c.category.title|lower }} float-right">&#xf111;</span>
+            <span class="fa fa-circle {{ c.category.title|lower }} float-right"></span>
             {% endfor %}
             {% endif %}
         </p>

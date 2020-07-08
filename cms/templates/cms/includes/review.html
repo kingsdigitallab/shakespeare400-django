@@ -28,7 +28,7 @@
             {% for category in categories %}
             <li class="category">
                 <a href="{% routablepageurl review.review_index.specific 'category' category.category.title %}" class="{{ category.category.title|lower }}">
-                    <span class="icons {{ category.category.title|lower }}">&#xf111;</span>
+                    <span class="fa fa-circle {{ c.category.title|lower }} float-right"></span>
                     {{ category.category.title|unslugify }}
                 </a>
             </li>
