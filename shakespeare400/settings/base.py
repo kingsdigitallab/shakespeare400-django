@@ -158,12 +158,10 @@ MIDDLEWARE = (
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'wagtail.wagtailcore.middleware.SiteMiddleware',
-    'wagtail.wagtailredirects.middleware.RedirectMiddleware',
+    'wagtail.contrib.redirects.middleware.RedirectMiddleware'
 )
 
 ROOT_URLCONF = PROJECT_NAME + '.urls'
@@ -234,8 +232,8 @@ STATICFILES_FINDERS = (
 
 STATICFILES_STORAGE = 'require.storage.OptimizedStaticFilesStorage'
 
-MEDIA_URL = STATIC_URL + 'media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, MEDIA_URL.strip('/'))
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 if not os.path.exists(MEDIA_ROOT):
     os.makedirs(MEDIA_ROOT)

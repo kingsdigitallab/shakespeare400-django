@@ -55,7 +55,7 @@ def get_site_root(context):
     """Returns the site root Page, not the implementation-specific model used.
     Object-comparison to self will return false as objects would differ.
 
-    :rtype: `wagtail.wagtailcore.models.Page`
+    :rtype: `wagtail.core.models.Page`
     """
     return context['request'].site.root_page
 
