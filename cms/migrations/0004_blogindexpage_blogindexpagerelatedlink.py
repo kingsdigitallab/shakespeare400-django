@@ -5,8 +5,8 @@ from __future__ import unicode_literals
 from django.db import migrations, models
 import django.db.models.deletion
 import modelcluster.fields
-import wagtail.contrib.wagtailroutablepage.models
-import wagtail.wagtailcore.fields
+import wagtail.contrib.routable_page.models
+import wagtail.core.fields
 
 
 class Migration(migrations.Migration):
@@ -22,17 +22,17 @@ class Migration(migrations.Migration):
             name='BlogIndexPage',
             fields=[
                 ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.Page')),
-                ('intro', wagtail.wagtailcore.fields.RichTextField(blank=True)),
+                ('intro', wagtail.core.fields.RichTextField(blank=True)),
             ],
             options={
                 'abstract': False,
             },
-            bases=('wagtailcore.page', wagtail.contrib.wagtailroutablepage.models.RoutablePageMixin, models.Model),
+            bases=('wagtailcore.page', wagtail.contrib.routable_page.models.RoutablePageMixin, models.Model),
         ),
         migrations.CreateModel(
             name='BlogIndexPageRelatedLink',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('sort_order', models.IntegerField(blank=True, editable=False, null=True)),
                 ('link_external', models.URLField(blank=True, null=True, verbose_name='External link')),
                 ('title', models.CharField(help_text='Link title', max_length=256)),

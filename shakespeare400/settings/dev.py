@@ -1,4 +1,4 @@
-from base import *
+from .base import *
 
 DEBUG = True
 REQUIRE_DEBUG = DEBUG
@@ -43,7 +43,7 @@ try:
     import debug_toolbar  # noqa
 
     INSTALLED_APPS = INSTALLED_APPS + ('debug_toolbar',)
-    MIDDLEWARE_CLASSES = MIDDLEWARE_CLASSES + (
+    MIDDLEWARE = MIDDLEWARE + (
         'debug_toolbar.middleware.DebugToolbarMiddleware',)
     DEBUG_TOOLBAR_PATCH_SETTINGS = True
 except ImportError:
@@ -54,10 +54,10 @@ except ImportError:
 # -----------------------------------------------------------------------------
 
 try:
-    from local import *  # noqa
+    from .local import *  # noqa
 except ImportError:
     print('failed to import local settings')
 
-    from test import *  # noqa
+    from .test import *  # noqa
     print('the project is running with test settings')
     print('please create a local settings file')

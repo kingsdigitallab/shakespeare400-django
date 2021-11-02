@@ -60,31 +60,32 @@ INSTALLED_APPS = (
     'taggit',
     'modelcluster',
     'rest_framework',
-
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     'compressor',
     'require',
 )
 
 INSTALLED_APPS += (
-    'wagtail.wagtailcore',
-    'wagtail.wagtailadmin',
-    'wagtail.wagtaildocs',
-    'wagtail.wagtailsnippets',
-    'wagtail.wagtailusers',
-    'wagtail.wagtailimages',
-    'wagtail.wagtailembeds',
-    'wagtail.wagtailsearch',
-    'wagtail.wagtailredirects',
-    'wagtail.wagtailforms',
-    'wagtail.wagtailsites',
-    'wagtail.contrib.wagtailroutablepage',
+    "wagtail.core",
+    "wagtail.admin",
+    "wagtail.documents",
+    "wagtail.snippets",
+    "wagtail.users",
+    "wagtail.images",
+    "wagtail.embeds",
+    "wagtail.search",
+    "wagtail.contrib.redirects",
+    "wagtail.contrib.forms",
+    "wagtail.sites",
+    "wagtail.api",
+    "wagtail.contrib.routable_page",
+    "wagtail.contrib.table_block",
+
 )
 
 INSTALLED_APPS += (
@@ -152,7 +153,7 @@ LOGGING = {
 }
 
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -161,7 +162,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
     'wagtail.wagtailcore.middleware.SiteMiddleware',
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
 )
@@ -377,3 +377,5 @@ WAGTAILSEARCH_BACKENDS = {
 }
 
 ITEMS_PER_PAGE = 10
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'

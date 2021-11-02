@@ -2,19 +2,23 @@ from __future__ import unicode_literals
 
 from django.db import models
 
-from wagtail.wagtailadmin.edit_handlers import (
+from wagtail.admin.edit_handlers import (
     FieldPanel, MultiFieldPanel, PageChooserPanel
 )
-from wagtail.wagtaildocs.edit_handlers import DocumentChooserPanel
+from wagtail.documents.edit_handlers import DocumentChooserPanel
 
 
 class AbstractLinkFields(models.Model):
     """Abstract class for link fields."""
     link_document = models.ForeignKey('wagtaildocs.Document', blank=True,
-                                      null=True, related_name='+')
-    link_external = models.URLField('External link', blank=True, null=True)
+                                      null=True, related_name='+',
+                                      on_delete=models.SET_NULL
+                                      )
+    link_external = models.URLField('External link', blank=True, null=True
+                                    )
     link_page = models.ForeignKey('wagtailcore.Page', blank=True,
-                                  null=True, related_name='+')
+                                  null=True, related_name='+',
+                                  on_delete=models.SET_NULL)
 
     panels = [
         DocumentChooserPanel('link_document'),

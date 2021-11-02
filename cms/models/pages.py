@@ -13,18 +13,18 @@ from django.shortcuts import render
 from modelcluster.fields import ParentalKey
 from modelcluster.tags import ClusterTaggableManager
 from taggit.models import TaggedItemBase
-from wagtail.contrib.wagtailroutablepage.models import RoutablePageMixin, route
-from wagtail.wagtailadmin.edit_handlers import (FieldPanel, FieldRowPanel,
-                                                InlinePanel, MultiFieldPanel,
-                                                PageChooserPanel,
-                                                StreamFieldPanel)
-from wagtail.wagtailcore.fields import RichTextField, StreamField
-from wagtail.wagtailcore.models import Orderable, Page
-from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
-from wagtail.wagtailimages.models import Image
-from wagtail.wagtailsearch import index
-from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
-from wagtail.wagtailsnippets.models import register_snippet
+from wagtail.contrib.routable_page.models import RoutablePageMixin, route
+from wagtail.admin.edit_handlers import (FieldPanel, FieldRowPanel,
+                                         InlinePanel, MultiFieldPanel,
+                                         PageChooserPanel,
+                                         StreamFieldPanel)
+from wagtail.core.fields import RichTextField, StreamField
+from wagtail.core.models import Orderable, Page
+from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.images.models import Image
+from wagtail.search import index
+from wagtail.snippets.edit_handlers import SnippetChooserPanel
+from wagtail.snippets.models import register_snippet
 
 from .behaviours import WithFeedImage, WithIntroduction, WithStreamField
 from .carousel import AbstractCarouselItem
@@ -41,7 +41,7 @@ class HomePageCarouselItem(Orderable, AbstractCarouselItem):
 
 class HomePageFeaturedPage(Orderable):
     page = ParentalKey('HomePage', related_name='featured_pages')
-    featured_page = models.ForeignKey(Page)
+    featured_page = models.ForeignKey(Page, null=True, on_delete=models.SET_NULL)
 
     panels = [
         PageChooserPanel('featured_page')
@@ -58,16 +58,17 @@ class HomePageRelatedLink(Orderable, AbstractRelatedLink):
 class HomePage(Page, WithStreamField):
     announcement = StreamField(CMSStreamBlock())
 
-    search_fields = Page.search_fields + (
+    search_fields = Page.search_fields + [
         index.SearchField('body'),
         index.SearchField('announcement'),
-    )
+    ]
 
     subpage_types = ['EventIndexPage', 'ReviewIndexPage', 'BlogIndexPage',
                      'IndexPage', 'RichTextPage', 'Gallery']
 
     class Meta:
         verbose_name = 'Homepage'
+
 
 HomePage.content_panels = [
     FieldPanel('title', classname='full title'),
@@ -87,11 +88,12 @@ class IndexPageRelatedLink(Orderable, AbstractRelatedLink):
 
 
 class IndexPage(Page, WithFeedImage, WithIntroduction):
-    search_fields = Page.search_fields + (
+    search_fields = Page.search_fields + [
         index.SearchField('intro'),
-    )
+    ]
 
     subpage_types = ['IndexPage', 'RichTextPage']
+
 
 IndexPage.content_panels = [
     FieldPanel('title', classname='full title'),
@@ -116,12 +118,13 @@ class RichTextPageRelatedLink(Orderable, AbstractRelatedLink):
 class RichTextPage(Page, WithFeedImage):
     body = RichTextField(blank=True)
 
-    search_fields = Page.search_fields + (
+    search_fields = Page.search_fields + [
         index.SearchField('intro'),
         index.SearchField('body'),
-    )
+    ]
 
     subpage_types = []
+
 
 RichTextPage.content_panels = [
     FieldPanel('title', classname='full title'),
@@ -157,9 +160,9 @@ class BlogIndexPageRelatedLink(Orderable, AbstractRelatedLink):
 
 
 class BlogIndexPage(RoutablePageMixin, Page, WithIntroduction):
-    search_fields = Page.search_fields + (
+    search_fields = Page.search_fields + [
         index.SearchField('intro'),
-    )
+    ]
 
     subpage_types = ['BlogPost']
 
@@ -212,6 +215,7 @@ class BlogIndexPage(RoutablePageMixin, Page, WithIntroduction):
             }
         )
 
+
 BlogIndexPage.content_panels = [
     FieldPanel('title', classname='full title'),
     FieldPanel('intro', classname='full'),
@@ -238,9 +242,9 @@ class BlogPost(Page, WithFeedImage, WithStreamField):
     tags = ClusterTaggableManager(through=BlogPostTag, blank=True)
     date = models.DateField('Post date')
 
-    search_fields = Page.search_fields + (
+    search_fields = Page.search_fields + [
         index.SearchField('body'),
-    )
+    ]
 
     subpage_types = []
 
@@ -248,6 +252,7 @@ class BlogPost(Page, WithFeedImage, WithStreamField):
     def blog_index(self):
         # finds closest ancestor which is a blog index
         return self.get_ancestors().type(BlogIndexPage).last()
+
 
 BlogPost.content_panels = [
     FieldPanel('title', classname='full title'),
@@ -270,9 +275,9 @@ class EventIndexPageRelatedLink(Orderable, AbstractRelatedLink):
 
 
 class EventIndexPage(RoutablePageMixin, Page, WithIntroduction):
-    search_fields = Page.search_fields + (
+    search_fields = Page.search_fields + [
         index.SearchField('intro'),
-    )
+    ]
 
     subpage_types = ['EventPage']
 
@@ -313,7 +318,7 @@ class EventIndexPage(RoutablePageMixin, Page, WithIntroduction):
 
         return render(request, self.get_template(request),
                       {'self': self, 'filter_type': 'past',
-                      'events': _paginate(request, events)})
+                       'events': _paginate(request, events)})
 
     @route(r'^category/(?P<category>[\w ]+)/$')
     def category(self, request, category=None):
@@ -332,6 +337,7 @@ class EventIndexPage(RoutablePageMixin, Page, WithIntroduction):
                 'filter_type': 'category', 'filter': category
             }
         )
+
 
 EventIndexPage.content_panels = [
     FieldPanel('title', classname='full title'),
@@ -352,12 +358,13 @@ class EventCategory(models.Model):
     class Meta:
         verbose_name_plural = 'Event categories'
 
+
 register_snippet(EventCategory)
 
 
 class EventPageCategory(Orderable):
     page = ParentalKey('EventPage', related_name='categories')
-    category = models.ForeignKey(EventCategory)
+    category = models.ForeignKey(EventCategory, null=True, on_delete=models.SET_NULL)
 
     panels = [
         SnippetChooserPanel('category')
@@ -383,10 +390,10 @@ class EventPage(Page, WithFeedImage, WithStreamField):
     location = models.CharField(max_length=256)
     signup_link = models.URLField(null=True, blank=True)
 
-    search_fields = Page.search_fields + (
+    search_fields = Page.search_fields + [
         index.SearchField('location'),
         index.SearchField('body'),
-    )
+    ]
 
     subpage_types = []
 
@@ -394,6 +401,7 @@ class EventPage(Page, WithFeedImage, WithStreamField):
     def event_index(self):
         # finds closest ancestor which is an event index
         return self.get_ancestors().type(EventIndexPage).last()
+
 
 EventPage.content_panels = [
     FieldPanel('title', classname='full title'),
@@ -435,9 +443,9 @@ class ReviewIndexPageRelatedLink(Orderable, AbstractRelatedLink):
 
 
 class ReviewIndexPage(RoutablePageMixin, Page, WithIntroduction):
-    search_fields = Page.search_fields + (
+    search_fields = Page.search_fields + [
         index.SearchField('intro'),
-    )
+    ]
 
     subpage_types = ['ReviewPage']
 
@@ -491,6 +499,7 @@ class ReviewIndexPage(RoutablePageMixin, Page, WithIntroduction):
             }
         )
 
+
 ReviewIndexPage.content_panels = [
     FieldPanel('title', classname='full title'),
     FieldPanel('intro', classname='full'),
@@ -504,7 +513,7 @@ ReviewIndexPage.promote_panels = Page.promote_panels
 class ReviewPageCategory(Orderable):
     page = ParentalKey('ReviewPage', related_name='categories')
 
-    category = models.ForeignKey(EventCategory)
+    category = models.ForeignKey(EventCategory, null=True, on_delete=models.SET_NULL)
 
     panels = [
         SnippetChooserPanel('category')
@@ -525,9 +534,9 @@ class ReviewPageRelatedLink(Orderable, AbstractRelatedLink):
 class ReviewPage(Page, WithFeedImage, WithStreamField):
     date = models.DateField('Post date')
 
-    search_fields = Page.search_fields + (
+    search_fields = Page.search_fields + [
         index.SearchField('body'),
-    )
+    ]
 
     subpage_types = []
 
@@ -535,6 +544,7 @@ class ReviewPage(Page, WithFeedImage, WithStreamField):
     def review_index(self):
         # finds closest ancestor which is a review index
         return self.get_ancestors().type(ReviewIndexPage).last()
+
 
 ReviewPage.content_panels = [
     FieldPanel('title', classname='full title'),
@@ -577,9 +587,9 @@ class GalleryCollection(Orderable, AbstractLinkFields):
 
 
 class Gallery(RoutablePageMixin, Page, WithIntroduction):
-    search_fields = Page.search_fields + (
+    search_fields = Page.search_fields + [
         index.SearchField('intro'),
-    )
+    ]
 
     subpage_types = []
 
@@ -598,6 +608,7 @@ class Gallery(RoutablePageMixin, Page, WithIntroduction):
 
         return render(request, 'cms/collection.html',
                       {'self': self, 'collection': collection})
+
 
 Gallery.content_panels = [
     FieldPanel('title', classname='full title'),

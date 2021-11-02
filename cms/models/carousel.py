@@ -1,8 +1,8 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel
-from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
+from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel
+from wagtail.images.edit_handlers import ImageChooserPanel
 
 from .links import AbstractLinkFields
 
