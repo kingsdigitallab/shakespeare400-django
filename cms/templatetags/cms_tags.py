@@ -3,6 +3,7 @@ from django.conf import settings
 from django.template.defaultfilters import stringfilter
 
 from ..models.pages import EventCategory
+from wagtail.core.models import Site
 
 register = template.Library()
 
@@ -57,7 +58,8 @@ def get_site_root(context):
 
     :rtype: `wagtail.core.models.Page`
     """
-    return context['request'].site.root_page
+
+    return Site.find_for_request(context["request"]).root_page
 
 
 @register.simple_tag(takes_context=False)
